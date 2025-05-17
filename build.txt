@@ -1,0 +1,3 @@
+displayName = Azure Striker Mod
+author = Reboot
+version = 0.1

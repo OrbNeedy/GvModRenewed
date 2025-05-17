@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GvMod", "GvMod.csproj", "{0400A06B-2188-1900-A3C3-A570DAC612EE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0400A06B-2188-1900-A3C3-A570DAC612EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0400A06B-2188-1900-A3C3-A570DAC612EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0400A06B-2188-1900-A3C3-A570DAC612EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0400A06B-2188-1900-A3C3-A570DAC612EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23D66E92-1205-4D37-861C-2A2F5D3A23F0}
+	EndGlobalSection
+EndGlobal
