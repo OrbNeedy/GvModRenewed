@@ -229,3 +229,4 @@ C:\Users\Reboot\Documents\My Games\Terraria\tModLoader\ModSources\GvMod\obj\Debu
 C:\Users\Reboot\Documents\My Games\Terraria\tModLoader\ModSources\GvMod\obj\Debug\net8.0\refint\GvMod.dll
 C:\Users\Reboot\Documents\My Games\Terraria\tModLoader\ModSources\GvMod\obj\Debug\net8.0\GvMod.pdb
 C:\Users\Reboot\Documents\My Games\Terraria\tModLoader\ModSources\GvMod\obj\Debug\net8.0\ref\GvMod.dll
+C:\Users\Reboot\Documents\My Games\Terraria\tModLoader\ModSources\GvMod\obj\Debug\net8.0\GvMod.sourcelink.json

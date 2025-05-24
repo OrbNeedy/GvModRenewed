@@ -9,15 +9,14 @@ namespace GvMod.Common.Players.Skills
         public virtual int StageRequirement { get; set; } = 0;
         public virtual int APCost { get; set; } = 0;
         public virtual bool Invincible { get; set; } = false;
-        public int MaxCooldownTime { get; set; } = 0;
+        public virtual int MaxCooldownTime { get; set; } = 0;
         public int CooldownTime { get; set; } = 0;
         /// <summary>
-        /// Used by the <see cref="SeptimaPlayer"/> to determine if movement is allowed while using this special skill. 
-        /// It doesn't stop the player's innertia, if that is something the skill does, it must be done in <see cref="MoveUpdate(Player, SeptimaPlayer)"/>. 
-        /// Note: <see cref="Player.noFallDmg"/> is essential for skills that stop the player, if not true, the player will die of fall damage even if 
-        /// it was activated mid air.
+        /// Used by the <see cref="SeptimaPlayer"/> to determine if movement is allowed while using this special skill. <br/>
+        /// It doesn't stop the player's innertia, if that is something the skill does, it must be done in <see cref="MoveUpdate(Player, SeptimaPlayer)"/>. <br/>
+        /// Note: <see cref="Player.noFallDmg"/> is essential for skills that stop the player, if not true, the player will die of fall damage even if it was activated mid air.
         /// </summary>
-        public virtual bool AllowsMovement { get; set; } = false;
+        public virtual bool AllowsMovement { get; set; } = true;
 
         /// <summary>
         /// Determines if the special can be used at any moment.
@@ -67,6 +66,15 @@ namespace GvMod.Common.Players.Skills
             ref Player.HurtModifiers modifiers)
         {
             return true;
+        }
+
+        /// <summary>
+        /// Happens any time the skill is forced to end early, used for special interactions and stopping processes.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        public virtual void ForcedSkillEnd(Player player, SeptimaPlayer adept)
+        {
         }
     }
 }

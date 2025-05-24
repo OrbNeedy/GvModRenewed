@@ -92,27 +92,91 @@ namespace GvMod.Common.Players
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            if (Player.DeadOrGhost) return;
+            if (UsingSpecialSkill)
+            {
+                Main.NewText("Checking");
+                if (!septima.AvailableSkills[SelectedSkill].AllowsMovement)
+                {
+                    Main.NewText("No movement");
+                    Player.controlJump = false;
+                    Player.controlDown = false;
+                    Player.controlLeft = false;
+                    Player.controlRight = false;
+                    Player.controlUp = false;
+                    Player.controlUseItem = false;
+                    Player.controlUseTile = false;
+                    Player.controlThrow = false;
+                    Player.gravDir = 1f;
+                }
+            }
 
-            UsingMainSkill = KeybindSystem.primaryAbility.Current;
+            if (Player.DeadOrGhost || Player.CCed) return;
 
-            UsingSecondarySkill = KeybindSystem.secondaryAbility.Current;
+            if (KeybindSystem.primaryAbility.JustPressed)
+            {
+                UsingMainSkill = true;
+            }
+            if (!KeybindSystem.primaryAbility.Current)
+            {
+                UsingMainSkill = false;
+            }
+
+            if (KeybindSystem.secondaryAbility.JustPressed)
+            {
+                if (CanUseSecondarySkill())
+                {
+                    UsingSecondarySkill = true;
+                }
+            }
 
             if (KeybindSystem.specialAbility.JustPressed)
             {
                 // Skilless adepts don't get to use specials
                 if (septima.SkillList.Count <= 0) return;
 
+                SelectedSkill = (int)MathHelper.Clamp(SelectedSkill, 0, septima.SkillList.Count - 1);
                 SpecialSkill special = septima.SkillList[SelectedSkill];
 
-                if (special.CanUse(Player, this) && CurrentAP >= special.APCost)
+                if (special.CanUse(Player, this) && CurrentAP >= special.APCost && !UsingSpecialSkill && 
+                    !UsingSecondarySkill && !Player.CCed && special.CooldownTime <= 0)
                 {
                     UsingSpecialSkill = special.OnSkillUse(Player, this);
                     CurrentAP -= special.APCost;
+                    special.CooldownTime = special.MaxCooldownTime;
                 }
             }
 
-            // Skill selection must not trigger if a skill is being used
+            if (KeybindSystem.nextAbility.JustPressed)
+            {
+                ChangeSkill(1);
+            }
+            if (KeybindSystem.previousAbility.JustPressed)
+            {
+                ChangeSkill(-1);
+            }
+
+            if (KeybindSystem.abilityMenu.JustPressed)
+            {
+                ModContent.GetInstance<UISystem>().SwitchUIVisibility();
+            }
+        }
+
+        public void ChangeSkill(int displacement)
+        {
+            if (UsingSpecialSkill) return;
+
+            SelectedSkill += (int)MathHelper.Clamp(displacement, -1, 1);
+
+            if (SelectedSkill >= septima.SkillList.Count)
+            {
+                SelectedSkill = 0;
+            }
+
+            if (SelectedSkill < 0)
+            {
+                SelectedSkill = septima.SkillList.Count - 1;
+            }
+
         }
 
         public override void OnEnterWorld()
@@ -120,6 +184,7 @@ namespace GvMod.Common.Players
             CurrentEP = GetTotalMaxEP();
             CurrentAP = GetTotalMaxAP();
             EPCooldownTimer = 0;
+            SecondarySkillCooldown = 0;
         }
 
         public override void SaveData(TagCompound tag)
@@ -185,28 +250,51 @@ namespace GvMod.Common.Players
             base.PreUpdateMovement();
         }
 
+        public override void PreUpdateBuffs()
+        {
+            septima.MiscEffects(Player, this);
+            base.PreUpdateBuffs();
+        }
+
         public override void PreUpdate()
         {
             TaggedNPCs.Update(this);
-
+            
             // Dead men have no septima
             if (Player.DeadOrGhost) return;
 
             // TODO: Test if this actually works for stat modifications
-            septima.MiscEffects(Player, this);
+            // septima.MiscEffects(Player, this);
 
             if (UsingSpecialSkill)
             {
-                UsingSpecialSkill = septima.SkillList[SelectedSkill].MiscUpdate(Player, this);
-                SpecialSkillUseTime++;
+                SpecialSkill special = septima.SkillList[SelectedSkill];
+                if (Player.CCed && !special.Invincible)
+                {
+                    special.ForcedSkillEnd(Player, this);
+                    UsingSpecialSkill = false;
+                } else
+                {
+                    special.CooldownTime = special.MaxCooldownTime;
+                    UsingSpecialSkill = special.MiscUpdate(Player, this);
+                    if (!special.AllowsMovement)
+                    {
+                        //Player.webbed = true;
+                        if (Player.mount.Active)
+                        {
+                            Player.mount.Dismount(Player);
+                        }
+                        Player.CancelAllBootRunVisualEffects();
+                    }
+                    SpecialSkillUseTime++;
+                }
             } else
             {
                 SpecialSkillUseTime = 0;
             }
 
             // Main Skill logic
-            if (UsingMainSkill && !Overheated && septima.CanUseMainSkill(Player, this) && !UsingSpecialSkill
-                && !UsingSecondarySkill)
+            if (UsingMainSkill && CanUseMainSkill())
             {
                 // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
                 if (septima.MainSkillUse(Player, this))
@@ -227,10 +315,15 @@ namespace GvMod.Common.Players
             }
 
             // Secondary Skill logic
-            if (UsingSecondarySkill && septima.CanUseSecondarySkill(Player, this) && !UsingSpecialSkill)
+            if (UsingSecondarySkill)
             {
-                septima.SecondarySkillUse(Player, this);
+                int cooldownRegistered = septima.SecondarySkillUse(Player, this);
                 SecondarySkillUseTime++;
+                if (cooldownRegistered > 0)
+                {
+                    UsingSecondarySkill = false;
+                    SecondarySkillCooldown = cooldownRegistered;
+                }
             }
             else
             {
@@ -238,15 +331,9 @@ namespace GvMod.Common.Players
             }
 
             // Check EP before the recovery and overheat if EP is 0 or less
-            if (CurrentEP <= 0)
+            if (CurrentEP <= 0 && !Overheated)
             {
-                septima.OnOverheat(Player, this);
-                // Visual effects
-                for (int i = 0; i < 50; i++)
-                {
-                    Dust.NewDustPerfect(Player.Center, DustID.MartianSaucerSpark);
-                }
-                Overheated = true;
+                ForceOverheat();
             }
 
             // EP recovery, depends on the overheat state, but all recovery scales with max EP
@@ -269,7 +356,7 @@ namespace GvMod.Common.Players
             }
 
             // AP recovers the same always
-            CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier();
+            CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier() * 10;
 
             // Clamp EP and AP
             CurrentEP = MathHelper.Clamp(CurrentEP, 0, GetTotalMaxEP());
@@ -289,6 +376,8 @@ namespace GvMod.Common.Players
         public override bool FreeDodge(Player.HurtInfo info)
         {
             // Note: Activating prevasion also causes tags on the enemy to disappear
+            // CCed will bypass all forms of prevasion, for balance with other mods 
+            if (Player.CCed) return false;
             return base.FreeDodge(info);
         }
 
@@ -356,14 +445,13 @@ namespace GvMod.Common.Players
             ModifiedMaxEP = 0;
             ModifiedMaxAP = 0;
 
-            UsingMainSkill = false;
-            UsingSecondarySkill = false;
-            UsingSpecialSkill = false;
-
             EPUseModifier = 1;
             EPRecoveryModifier = 1;
             EPCooldownModifier = 1;
             APRecoveryModifier = 1;
+
+            septima.UpdateTimers();
+            if (SecondarySkillCooldown > 0) SecondarySkillCooldown--;
         }
 
         /// <summary>
@@ -371,11 +459,17 @@ namespace GvMod.Common.Players
         /// </summary>
         /// <param name="resetBuffs">Forces buffs related to EP duration to be reset.</param>
         /// <param name="ignoreBuffs">Forces overheat even with buffs that give infinite EP.</param>
-        /// <returns></returns>
+        /// <returns>False if a buff prevented the forced overheat.</returns>
         public bool ForceOverheat(bool resetBuffs = false, bool ignoreBuffs = false)
         {
-            CurrentEP = -1;
+            septima.OnOverheat(Player, this);
+            // Visual effects
+            for (int i = 0; i < 50; i++)
+            {
+                Dust.NewDustPerfect(Player.Center, DustID.MartianSaucerSpark);
+            }
             Overheated = true;
+
             return true;
         }
 
@@ -417,6 +511,18 @@ namespace GvMod.Common.Players
         public float GetEPPercent()
         {
             return MathHelper.Clamp(CurrentEP / (GetTotalMaxEP() + 0.0000001f), 0, 1);
+        }
+
+        public bool CanUseMainSkill()
+        {
+            return CurrentEP > 0 && !Overheated && septima.CanUseMainSkill(Player, this) && !UsingSpecialSkill
+                && !UsingSecondarySkill && !Player.CCed;
+        }
+
+        public bool CanUseSecondarySkill()
+        {
+            return SecondarySkillCooldown <= 0 && septima.CanUseSecondarySkill(Player, this) && 
+                !UsingSpecialSkill && !Player.CCed && !UsingSecondarySkill;
         }
     }
 }

@@ -64,6 +64,11 @@ namespace GvMod.Common.UI
 
         public override void Update(GameTime gameTime)
         {
+            barFill.Left.Set(4, 0f);
+            barFill.Top.Set(4, 0f);
+            barEffect.Left.Set(4, 0f);
+            barEffect.Top.Set(4, 0f);
+
             if (Main.LocalPlayer.GetModPlayer<SeptimaPlayer>().septimaType == SeptimaType.None || Main.dedServ)
             {
                 return;

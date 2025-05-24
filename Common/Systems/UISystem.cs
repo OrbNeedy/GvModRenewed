@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using GvMod.Common.UI;
-using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -17,6 +12,13 @@ namespace GvMod.Common.Systems
         private GameTime _lastUpdatedGameTime;
         private UserInterface EPBarUserInterface;
         private EPBar EPBar;
+        private UserInterface APBarUserInterface;
+        private APBar APBar;
+        private UserInterface SkillUserInterface;
+        private SkillDisplay SkillDisplay;
+        private SkillSelect SkillSelect;
+        private bool lastSkillUI;
+        private bool hidingUI = false;
 
         public override void Load()
         {
@@ -27,11 +29,29 @@ namespace GvMod.Common.Systems
             EPBar = new EPBar();
             EPBar.Activate();
             EPBarUserInterface.SetState(EPBar);
+
+            APBarUserInterface = new UserInterface();
+
+            APBar = new APBar();
+            APBar.Activate();
+            APBarUserInterface.SetState(APBar);
+
+            SkillUserInterface = new UserInterface();
+
+            SkillDisplay = new SkillDisplay();
+            SkillDisplay.Activate(); 
+            SkillSelect = new SkillSelect();
+            SkillSelect.Activate();
+            SkillUserInterface.SetState(SkillDisplay);
+            lastSkillUI = false;
         }
 
         public override void Unload()
         {
             EPBar = null;
+            APBar = null;
+            SkillDisplay = null;
+            SkillSelect = null;
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -41,6 +61,16 @@ namespace GvMod.Common.Systems
             if (EPBarUserInterface?.CurrentState != null)
             {
                 EPBarUserInterface.Update(gameTime);
+            }
+
+            if (APBarUserInterface?.CurrentState != null)
+            {
+                APBarUserInterface.Update(gameTime);
+            }
+
+            if (SkillUserInterface?.CurrentState != null)
+            {
+                SkillUserInterface.Update(gameTime);
             }
         }
 
@@ -60,17 +90,74 @@ namespace GvMod.Common.Systems
                     },
                     InterfaceScaleType.UI)
                 );
+
+                layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
+                    "Gunvolt Mod: AP Bar",
+                    delegate {
+                        if (_lastUpdatedGameTime != null && APBarUserInterface?.CurrentState != null)
+                        {
+                            APBarUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                        }
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+
+                layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
+                    "Gunvolt Mod: Skill UI",
+                    delegate {
+                        if (_lastUpdatedGameTime != null && SkillUserInterface?.CurrentState != null)
+                        {
+                            SkillUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                        }
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
             }
         }
 
+        public void SwitchSkillScreenState(bool selecting)
+        {
+            lastSkillUI = selecting;
+            if (selecting)
+            {
+                SkillUserInterface?.SetState(SkillSelect);
+            } else
+            {
+                SkillUserInterface?.SetState(SkillDisplay);
+            }
+        }
+
+
+        public void SwitchUIVisibility()
+        {
+            if (hidingUI)
+            {
+                EPBarUserInterface?.SetState(EPBar);
+                APBarUserInterface?.SetState(APBar);
+                SwitchSkillScreenState(lastSkillUI);
+                hidingUI = false;
+            } else
+            {
+                EPBarUserInterface?.SetState(null);
+                APBarUserInterface?.SetState(null);
+                SkillUserInterface?.SetState(null);
+                hidingUI = true;
+            }
+        }
         public void ShowUI()
         {
             EPBarUserInterface?.SetState(EPBar);
+            APBarUserInterface?.SetState(APBar);
+            SwitchSkillScreenState(lastSkillUI);
         }
 
         public void HideUI()
         {
             EPBarUserInterface?.SetState(null);
+            APBarUserInterface?.SetState(null);
+            SkillUserInterface?.SetState(null);
         }
     }
 }

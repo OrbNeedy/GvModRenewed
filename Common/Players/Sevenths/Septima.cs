@@ -96,9 +96,9 @@ namespace GvMod.Common.Players.Sevenths
             return true;
         }
 
-        public virtual bool SecondarySkillUse(Player player, SeptimaPlayer adept)
+        public virtual int SecondarySkillUse(Player player, SeptimaPlayer adept)
         {
-            return true;
+            return 0;
         }
 
         public virtual void OnOverheat(Player player, SeptimaPlayer adept)
@@ -109,6 +109,18 @@ namespace GvMod.Common.Players.Sevenths
         public virtual void OnOverheatRecovery(Player player, SeptimaPlayer adept)
         {
 
+        }
+
+        public void UpdateTimers()
+        {
+            // For balance purposes, cooldown time reduction will not be modified regardless of septima or items
+            foreach (SpecialSkill skill in AvailableSkills)
+            {
+                if (skill.CooldownTime > 0)
+                {
+                    skill.CooldownTime--;
+                }
+            }
         }
     }
 }

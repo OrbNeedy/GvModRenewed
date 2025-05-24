@@ -1,11 +1,17 @@
 Keybinds: {
 	"Primary ability.DisplayName": Primary ability
 	"Secondary ability.DisplayName": Secondary ability
+	"Special ability.DisplayName": Special ability
+	"Select next ability.DisplayName": Select next ability
+	"Select previous ability.DisplayName": Select previous ability
+	"Use special ability.DisplayName": Use special ability
+	"Hide UI.DisplayName": Hide  U I
 }
 
 Projectiles: {
 	Flashfield.DisplayName: Flashfield
 	HairDartProjectile.DisplayName: Dart
+	Thunder.DisplayName: Thunder
 }
 
 DamageClasses: {
@@ -18,12 +24,12 @@ DamageClasses: {
 Items: {
 	HairDart: {
 		DisplayName: Tag Dart
-		Tooltip: "A dart meant to be used with the Dart Leader."
+		Tooltip: A dart meant to be used with the Dart Leader.
 	}
 
 	DartLeader: {
 		DisplayName: Dart Leader
-		Tooltip: 
+		Tooltip:
 			'''
 				A weapon designed to shoot darts to tag enemies.
 				Tagged enemies will be damaged regardless of distance 
@@ -33,10 +39,10 @@ Items: {
 
 	WrathfulEye: {
 		DisplayName: Wrathful Eye
-		Tooltip: 
-		'''
-			A set of glasses that increase damage dealt by the septima's 
-			main ability by {0}, but increases EP consumption by {1}.
-		'''
+		Tooltip:
+			'''
+				A set of glasses that increase damage dealt by the septima's 
+				main ability by {0}, but increases EP consumption by {1}.
+			'''
 	}
 }

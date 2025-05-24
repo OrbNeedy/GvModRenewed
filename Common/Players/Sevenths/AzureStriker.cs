@@ -1,4 +1,6 @@
-﻿using GvMod.Common.GlobalNPCs;
+﻿using System.Collections.Generic;
+using GvMod.Common.GlobalNPCs;
+using GvMod.Common.Players.Skills;
 using GvMod.Content;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
@@ -16,6 +18,8 @@ namespace GvMod.Common.Players.Sevenths
 
         public override int BasicAttackDamage { get; protected set; } = 8;
         public override int SecondaryAttackDamage { get; protected set; } = 30;
+        public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(), 
+            new Astrasphere(), new GalvanicPatch() };
         public override float EPUseBase { get; protected set; } = 0.45f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
@@ -53,6 +57,13 @@ namespace GvMod.Common.Players.Sevenths
             };
         }
 
+        public override void MiscEffects(Player player, SeptimaPlayer adept)
+        {
+            //player.GetDamage<SecondaryAttackDamage>() += 2;
+            player.GetArmorPenetration<SecondaryAttackDamage>() += 1000;
+            //Main.NewText("Modifying defense");
+        }
+
         public override void MovementEffects(Player player, SeptimaPlayer adept)
         {
             player.maxRunSpeed *= 1.075f;
@@ -67,9 +78,9 @@ namespace GvMod.Common.Players.Sevenths
                 return true;
             }
 
-            if (!activeFlashfield)
+            if (!activeFlashfield || flashfieldIndex == -1)
             {
-                flashfieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Seventh"), player.Center,
+                flashfieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center,
                     Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0, player.whoAmI,
                     (int)FlashfieldBehavior.Default);
             }
@@ -124,6 +135,18 @@ namespace GvMod.Common.Players.Sevenths
             }
 
             return true;
+        }
+
+        public override int SecondarySkillUse(Player player, SeptimaPlayer adept)
+        {
+            if (adept.SecondarySkillUseTime == 0)
+            {
+                int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
+                    ApplyTo(40);
+                Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero, 
+                    ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
+            }
+            return adept.SecondarySkillUseTime >= 60 ? 300 : 0;
         }
     }
 }

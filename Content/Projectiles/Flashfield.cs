@@ -26,7 +26,7 @@ namespace GvMod.Content.Projectiles
             Projectile.scale = 1f;
             // Main.projFrames[Projectile.type] = 4;
 
-            Projectile.DamageType = DamageClass.Generic; //ModContent.GetInstance<SeptimaDamageClass>();
+            Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
             Projectile.damage = 1;
             Projectile.knockBack = 0;
             Projectile.usesLocalNPCImmunity = true;
