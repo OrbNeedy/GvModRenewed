@@ -35,8 +35,8 @@ namespace GvMod.Common.UI
             for (int i = 0; i < barFilling.Length; i++)
             {
                 barFilling[i] = new UIImageFramed(fillingTexture, new Rectangle(0, 0, 14, 24));
-                barFilling[i].Left.Set(3 + (28*i), 0f);
-                barFilling[i].Top.Set(5, 0f);
+                barFilling[i].Left.Set(4 + (28 * i), 0f);
+                barFilling[i].Top.Set(6, 0f);
                 barFilling[i].Width.Set(14, 0f);
                 barFilling[i].Height.Set(24, 0f);
 

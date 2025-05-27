@@ -56,16 +56,14 @@ namespace GvMod.Common.Players.Skills
 
         }
 
-        public virtual bool NPCHitUpdate(Player player, SeptimaPlayer adept, NPC npc, 
+        public virtual void NPCHitUpdate(Player player, SeptimaPlayer adept, NPC npc, 
             ref Player.HurtModifiers modifiers)
         {
-            return true;
         }
 
-        public virtual bool ProjectileHitUpdate(Player player, SeptimaPlayer adept, Projectile projectile,
+        public virtual void ProjectileHitUpdate(Player player, SeptimaPlayer adept, Projectile projectile,
             ref Player.HurtModifiers modifiers)
         {
-            return true;
         }
 
         /// <summary>

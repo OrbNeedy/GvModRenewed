@@ -40,6 +40,7 @@ namespace GvMod.Content.Projectiles
             Projectile.penetrate = -1;
 
             Projectile.friendly = true;
+            Projectile.hostile = false;
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 60;
@@ -107,20 +108,20 @@ namespace GvMod.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (Delay && timer < 60) return false;
-            return timer > 2;
+            if ((Delay && timer < 60) || timer < 2) return false;
+            return base.CanHitNPC(target);
         }
 
         public override bool CanHitPlayer(Player target)
         {
-            if (Delay && timer < 60) return false;
-            return timer > 2;
+            if ((Delay && timer < 60) || timer < 2) return false;
+            return base.CanHitPlayer(target);
         }
 
         public override bool CanHitPvp(Player target)
         {
-            if (Delay && timer < 60) return false;
-            return timer > 2;
+            if ((Delay && timer < 60) || timer < 2) return false;
+            return base.CanHitPvp(target);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -170,7 +171,7 @@ namespace GvMod.Content.Projectiles
                         Projectile.rotation,
                         extras.Bounds.Size() / 2,
                         1f,
-                        flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+                        independentFlip ? SpriteEffects.FlipHorizontally : SpriteEffects.None
                     );
                 }
             }

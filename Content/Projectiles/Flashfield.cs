@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,6 +11,7 @@ namespace GvMod.Content.Projectiles
     public enum FlashfieldBehavior
     {
         Default, // Follow the owner
+        Astrasphere, // A different hitbox size and texture from Default
         Launch // Gets sent to the mouse position
     }
     public class Flashfield : ModProjectile
@@ -18,6 +20,15 @@ namespace GvMod.Content.Projectiles
         private Vector2 target = new Vector2(0, 0);
         private int timer = 0;
         private int cycle = 0;
+        private Asset<Texture2D> field;
+        private Asset<Texture2D> extras;
+        private float extrasRotation = 0;
+
+        private Rectangle bounds;
+        private int extrasFrame = 0;
+        private int frame = 0;
+        private int frameTimer = 0;
+        private bool hideExtras = false;
 
         public override void SetDefaults()
         {
@@ -27,8 +38,8 @@ namespace GvMod.Content.Projectiles
             // Main.projFrames[Projectile.type] = 4;
 
             Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
-            Projectile.damage = 1;
-            Projectile.knockBack = 0;
+            Projectile.damage = 50;
+            Projectile.knockBack = 3;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
             Projectile.penetrate = -1;
@@ -37,7 +48,7 @@ namespace GvMod.Content.Projectiles
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3;
-            Projectile.ownerHitCheck = false;
+            Projectile.ownerHitCheck = true;
             Projectile.netImportant = true;
         }
 
@@ -45,6 +56,25 @@ namespace GvMod.Content.Projectiles
         {
             // Play sound effect
             // TODO: Separate the sound effect into a start and begining
+            switch (Behavior)
+            {
+                case (int)FlashfieldBehavior.Astrasphere:
+                case (int)FlashfieldBehavior.Launch:
+                    Projectile.Size = new Vector2(268);
+                    Projectile.localNPCHitCooldown = 15;
+                    Projectile.timeLeft = 120;
+                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Astrasphere");
+                    Projectile.ownerHitCheck = false;
+                    bounds = new Rectangle(0, 0, 360, 362);
+                    Projectile.netUpdate = true;
+                    break;
+                default:
+                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Flashfield");
+                    bounds = field.Value.Bounds;
+                    break;
+            }
+            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
+            timer++;
         }
 
         public override void AI()
@@ -66,6 +96,41 @@ namespace GvMod.Content.Projectiles
                     break;
             }
             timer++;
+            TextureCycles();
+        }
+
+        private void TextureCycles()
+        {
+            switch (Behavior)
+            {
+                case (int)FlashfieldBehavior.Launch:
+                case (int)FlashfieldBehavior.Astrasphere:
+                    if (frameTimer >= 4)
+                    {
+                        frame++;
+                        frameTimer = 0;
+                        if (frame > 4)
+                        {
+                            frame = 2;
+                            hideExtras = !hideExtras;
+                            if (!hideExtras)
+                            {
+                                extrasFrame++;
+                                if (extrasFrame > 1)
+                                {
+                                    extrasFrame = 0;
+                                }
+                            }
+                        }
+                        bounds = new Rectangle(bounds.Width * frame, 0, bounds.Width, bounds.Height);
+                    }
+                    // Add ending frames
+                    extrasRotation -= MathHelper.TwoPi / 100;
+                    break;
+                default:
+                    break;
+            }
+            frameTimer++;
         }
 
         public override bool? CanCutTiles()
@@ -104,16 +169,36 @@ namespace GvMod.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Flashfield").Value;
             Main.EntitySpriteDraw(
-                field, 
+                field.Value, 
                 Projectile.Center - Main.screenPosition, 
-                field.Bounds, 
+                bounds, 
                 Color.White, 
                 0, 
-                field.Bounds.Size() * 0.5f, 
+                bounds.Size() * 0.5f, 
                 1f, SpriteEffects.None
             );
+
+            if ((Behavior == (int)FlashfieldBehavior.Astrasphere || Behavior == (int)FlashfieldBehavior.Launch) && 
+                !hideExtras)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    float rotationOffset = (MathHelper.TwoPi * i / 3);
+                    Vector2 positionOffset = new Vector2(0, 120 * Projectile.scale).
+                        RotatedBy(rotationOffset + extrasRotation);
+
+                    Main.EntitySpriteDraw(
+                        extras.Value,
+                        Projectile.Center - Main.screenPosition + positionOffset,
+                        new Rectangle(218 * extrasFrame, 0, 218, 184),
+                        Color.White * 0.75f,
+                        extrasRotation + rotationOffset - MathHelper.Pi,
+                        new Vector2(109, 92),
+                        1f, SpriteEffects.None
+                    );
+                }
+            }
 
             return false;
         }

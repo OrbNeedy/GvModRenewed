@@ -12,6 +12,8 @@ Projectiles: {
 	Flashfield.DisplayName: Flashfield
 	HairDartProjectile.DisplayName: Dart
 	// Thunder.DisplayName: Thunder
+	// AstrasphereOrbits.DisplayName: Astrasphere Orbits
+	// OrochiDrone.DisplayName: Orochi Drone
 }
 
 DamageClasses: {
@@ -44,5 +46,50 @@ Items: {
 				A set of glasses that increase damage dealt by the septima's 
 				main ability by {0}, but increases EP consumption by {1}.
 			'''
+	}
+
+	CapacityUpgrade: {
+		// DisplayName: Capacity Upgrade
+		// Tooltip: ""
+	}
+
+	ClearUpgrade: {
+		// DisplayName: Clear Upgrade
+		// Tooltip: ""
+	}
+
+	DullahanUpgrade: {
+		// DisplayName: Dullahan Upgrade
+		// Tooltip: ""
+	}
+
+	MizuchiUpgrade: {
+		// DisplayName: Mizuchi Upgrade
+		// Tooltip: ""
+	}
+
+	NagaUpgrade: {
+		// DisplayName: Naga Upgrade
+		// Tooltip: ""
+	}
+
+	OrochiUpgrade: {
+		// DisplayName: Orochi Upgrade
+		// Tooltip: ""
+	}
+
+	OuroborosUpgrade: {
+		// DisplayName: Ouroboros Upgrade
+		// Tooltip: ""
+	}
+
+	TechnosUpgrade: {
+		// DisplayName: Technos Upgrade
+		// Tooltip: ""
+	}
+
+	VasukiUpgrade: {
+		// DisplayName: Vasuki Upgrade
+		// Tooltip: ""
 	}
 }

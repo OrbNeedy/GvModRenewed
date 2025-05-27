@@ -16,7 +16,7 @@ namespace GvMod.Common.Players.Sevenths
         public bool activeFlashfield = false;
         public int flashfieldIndex = -1;
 
-        public override int BasicAttackDamage { get; protected set; } = 8;
+        public override int BasicAttackDamage { get; protected set; } = 12;
         public override int SecondaryAttackDamage { get; protected set; } = 30;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(), 
             new Astrasphere(), new GalvanicPatch() };
@@ -60,7 +60,7 @@ namespace GvMod.Common.Players.Sevenths
         public override void MiscEffects(Player player, SeptimaPlayer adept)
         {
             //player.GetDamage<SecondaryAttackDamage>() += 2;
-            player.GetArmorPenetration<SecondaryAttackDamage>() += 1000;
+            //player.GetArmorPenetration<SecondaryAttackDamage>() += 1000;
             //Main.NewText("Modifying defense");
         }
 
@@ -101,10 +101,17 @@ namespace GvMod.Common.Players.Sevenths
             // Give player fall immunity
             player.noFallDmg = true;
             player.maxFallSpeed *= 0.2f;
-            if (adept.MainSkillUseTime <= 0) adept.CurrentEP -= EPUseBase * adept.GetTotalEPUseModifier() * 19;
+
+            float knockback = 0;
+            if (adept.MainSkillUseTime <= 0)
+            {
+                adept.CurrentEP -= adept.GetTotalMaxEP() * 0.075f;
+                knockback = 2.5f;
+            }
 
             //Main.NewText("Main Skill: " + adept.MainSkillUseTime);
             // Deal damage to tagged NPCs
+            // TODO: Move this loop to the septima player with a method for the septima to use 
             for (int i = 0; i < adept.TaggedNPCs.targetCount; i++)
             {
                 // Tell the taggedNPC to show damage effects
@@ -114,19 +121,17 @@ namespace GvMod.Common.Players.Sevenths
 
                 if (adept.TaggedNPCs.damageTimer[i] > 0) continue;
 
-                float knockback = 0;
-                if (adept.MainSkillUseTime <= 0) knockback = 2.5f;
+                // Damage gets reduced if the player has too many tags
+                float adjustedDamage = BasicAttackDamage * (1f + (adept.TaggedNPCs.tagLevel[i] * 0.625f)) 
+                    / (1 + (adept.TaggedNPCs.targetCount * 0.075f));
                 int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
-                    ApplyTo(BasicAttackDamage * (1 + (adept.TaggedNPCs.tagLevel[i] * 0.625f)));
+                    ApplyTo(adjustedDamage);
                 float finalKnockback = player.GetTotalKnockback<MainAttackDamage>().ApplyTo(knockback);
                 int direction = 1;
                 if ((target.Center.X - player.Center.X) < 0)
                 {
                     direction = -1;
                 }
-
-                NPC.HitInfo info = target.CalculateHitInfo(20, direction,
-                    false, knockback, ModContent.GetInstance<MainAttackDamage>(), true);
 
                 player.ApplyDamageToNPC(target, finalDamage, knockback, direction, 
                     damageType: ModContent.GetInstance<MainAttackDamage>(), damageVariation: true);
@@ -146,7 +151,7 @@ namespace GvMod.Common.Players.Sevenths
                 Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero, 
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }
-            return adept.SecondarySkillUseTime >= 60 ? 300 : 0;
+            return adept.SecondarySkillUseTime >= 60 ? 600 : 0;
         }
     }
 }

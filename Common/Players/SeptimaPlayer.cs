@@ -94,10 +94,10 @@ namespace GvMod.Common.Players
         {
             if (UsingSpecialSkill)
             {
-                Main.NewText("Checking");
+                //Main.NewText("Checking");
                 if (!septima.AvailableSkills[SelectedSkill].AllowsMovement)
                 {
-                    Main.NewText("No movement");
+                    //Main.NewText("No movement");
                     Player.controlJump = false;
                     Player.controlDown = false;
                     Player.controlLeft = false;
@@ -355,8 +355,11 @@ namespace GvMod.Common.Players
                 }
             }
 
-            // AP recovers the same always
-            CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier() * 10;
+            // AP recovers the same always, unless the player is using a special Skill
+            if (!UsingSpecialSkill)
+            {
+                CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier() * 10;
+            }
 
             // Clamp EP and AP
             CurrentEP = MathHelper.Clamp(CurrentEP, 0, GetTotalMaxEP());
@@ -383,6 +386,7 @@ namespace GvMod.Common.Players
 
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
+            //Main.NewText($"Player hit");
             if (septima.NPCDamageResistances.ContainsKey(npc.type))
             {
                 switch (septima.NPCDamageResistances[npc.type])
@@ -404,6 +408,7 @@ namespace GvMod.Common.Players
 
             if (UsingSpecialSkill)
             {
+                //Main.NewText($"Septima modifying the hurt");
                 septima.SkillList[SelectedSkill].NPCHitUpdate(Player, this, npc, ref modifiers);
             }
         }
