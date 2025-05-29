@@ -9,7 +9,7 @@ namespace GvMod.Content.Items.Upgrades
     {
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Lime;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 30;
@@ -50,6 +50,23 @@ namespace GvMod.Content.Items.Upgrades
                 return null;
             }
             return null;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddRecipeGroup("GoldBar", 5)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredient<UpgradeComponent>(3)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe()
+                .AddRecipeGroup("GoldBar", 3)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredient<UpgradeComponent>(2)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
         }
     }
 }

@@ -8,9 +8,12 @@ using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 using System.Collections.Generic;
+using Terraria.Localization;
+using GvMod.Content.Items.Upgrades;
 
 namespace GvMod.Content.Items.Weapons
 {
+    // This order is also the priority of each element
     public enum DartLeaderUpgrades
     {
         None,
@@ -19,8 +22,9 @@ namespace GvMod.Content.Items.Weapons
         Orochi,
         Mizuchi,
         Vasuki, 
-        Dullahan, 
-        Ouroboros
+        VasukiVisuals, 
+        Ouroboros,
+        Dullahan,
     }
     public class DartLeader : ModItem
     {
@@ -31,6 +35,18 @@ namespace GvMod.Content.Items.Weapons
             DartLeaderUpgrades.None, 
             DartLeaderUpgrades.None };
         private int orochiTimer = 0;
+
+        public static Dictionary<DartLeaderUpgrades, Color> UpgradeAssociatedColor = new() {
+            [DartLeaderUpgrades.None] = new Color(29, 210, 210),
+            [DartLeaderUpgrades.Naga] = new Color(26, 10, 204),
+            [DartLeaderUpgrades.Technos] = new Color(18, 255, 18),
+            [DartLeaderUpgrades.Orochi] = new Color(255, 213, 0),
+            [DartLeaderUpgrades.Mizuchi] = new Color(255, 13, 13),
+            [DartLeaderUpgrades.Vasuki] = new Color(204, 0, 190),
+            [DartLeaderUpgrades.VasukiVisuals] = new Color(204, 0, 190),
+            [DartLeaderUpgrades.Ouroboros] = new Color(64, 255, 150),
+            [DartLeaderUpgrades.Dullahan] = new Color(250, 201, 55)
+        };
 
         public override void SetDefaults()
         {
@@ -55,6 +71,8 @@ namespace GvMod.Content.Items.Weapons
             Item.autoReuse = true;
         }
 
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(capacity);
+
         public override void SaveData(TagCompound tag)
         {
             tag["Capacity"] = capacity;
@@ -77,6 +95,40 @@ namespace GvMod.Content.Items.Weapons
                     upgrades[i] = (DartLeaderUpgrades)tag.GetInt($"Upgrade{i}");
                 }
             }
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            int index = tooltips.FindLastIndex((x) => x.Name.StartsWith("Tooltip") && x.Mod == "Terraria");
+
+            if (index != -1)
+            {
+                if (capacity >= 3)
+                {
+                    tooltips.Insert(index + 1, new TooltipLine(Mod, "DartLeaderCapacity",
+                        Language.GetTextValue("Mods.GvMod.UpgradeDescription.MaxCapacity")));
+                } else
+                {
+                    tooltips.Insert(index + 1, new TooltipLine(Mod, "DartLeaderCapacity",
+                        Language.GetTextValue("Mods.GvMod.UpgradeDescription.Capacity", capacity)));
+                }
+            }
+
+            // I messed up, this could have been a normal for loop, but I forgot to add i to index and ended up adding 
+            // the lines in reverse order
+            // But it works, therefore, it should stay this way until a problem arises 
+            for (int i = 0; i < capacity; i++)
+            {
+                DartLeaderUpgrades upgrade = upgrades[i];
+                if (index != -1)
+                {
+                    // VasukiVisuals would not make sense, but because there is no way to add it to the weapon, 
+                    // The player will never see it 
+                    tooltips.Insert(index + 1 + i, new TooltipLine(Mod, $"DartLeaderUpgrades{i}", upgrade.ToString()));
+                    tooltips[index + 1 + i].OverrideColor = UpgradeAssociatedColor[upgrade];
+                }
+            }
+            base.ModifyTooltips(tooltips);
         }
 
         public override void UpdateInventory(Player player)
@@ -103,7 +155,7 @@ namespace GvMod.Content.Items.Weapons
             {
                 if (upgrades[i] == DartLeaderUpgrades.Dullahan)
                 {
-                    damage += 39;
+                    damage += DullahanUpgrade.additionalDamage;
                     break;
                 }
             }

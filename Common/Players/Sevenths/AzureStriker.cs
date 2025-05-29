@@ -78,7 +78,7 @@ namespace GvMod.Common.Players.Sevenths
                 return true;
             }
 
-            if (!activeFlashfield || flashfieldIndex == -1)
+            if ((!activeFlashfield || flashfieldIndex == -1) && Main.myPlayer == player.whoAmI)
             {
                 flashfieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center,
                     Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0, player.whoAmI,
@@ -144,7 +144,7 @@ namespace GvMod.Common.Players.Sevenths
 
         public override int SecondarySkillUse(Player player, SeptimaPlayer adept)
         {
-            if (adept.SecondarySkillUseTime == 0)
+            if (adept.SecondarySkillUseTime == 0 && Main.myPlayer == player.whoAmI)
             {
                 int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
                     ApplyTo(40);

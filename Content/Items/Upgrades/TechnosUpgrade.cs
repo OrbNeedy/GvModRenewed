@@ -9,7 +9,7 @@ namespace GvMod.Content.Items.Upgrades
     {
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.LightRed;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 30;

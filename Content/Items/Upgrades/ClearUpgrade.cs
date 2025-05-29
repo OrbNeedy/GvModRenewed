@@ -9,7 +9,7 @@ namespace GvMod.Content.Items.Upgrades
     {
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.LightRed;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 30;
@@ -40,6 +40,17 @@ namespace GvMod.Content.Items.Upgrades
                 }
             }
             return true;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddRecipeGroup(RecipeGroupID.IronBar, 5)
+                .AddIngredient(ItemID.Glass, 5)
+                .AddCondition(Condition.PlayerCarriesItem(ModContent.ItemType<DartLeader>()))
+                .AddTile(TileID.Anvils)
+                .Register();
+            base.AddRecipes();
         }
     }
 }

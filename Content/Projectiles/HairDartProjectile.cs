@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GvMod.Common.Players;
 using GvMod.Common.Players.Sevenths;
 using GvMod.Content.Items.Weapons;
@@ -14,7 +10,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 
 namespace GvMod.Content.Projectiles
 {
@@ -22,6 +17,8 @@ namespace GvMod.Content.Projectiles
     {
         private Vector2 mizuchiTargetPosition = new Vector2(0, 0);
         private Vector2 mizuchiTargetDirection = new Vector2(0, 0);
+        private int dartFrame = 0;
+        private int dartTimer = 0;
         private int reticleFrame = 0;
         private int reticleTimer = 0;
         private List<DartLeaderUpgrades> registeredUpgrades = new();
@@ -30,9 +27,9 @@ namespace GvMod.Content.Projectiles
             Projectile.width = 8;
             Projectile.height = 8;
             Projectile.scale = 1f;
-            Projectile.light = 0.1f;
+            Projectile.light = 0.175f;
 
-            Projectile.DamageType = DamageClass.Default;
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.damage = 1;
             Projectile.knockBack = 0;
 
@@ -60,6 +57,7 @@ namespace GvMod.Content.Projectiles
                     case DartLeaderUpgrades.Dullahan:
                         Projectile.width = 12;
                         Projectile.height = 12;
+                        Projectile.light = 0.5f;
                         break;
                     case DartLeaderUpgrades.Mizuchi:
                         mizuchiTargetPosition = Projectile.Center + (Projectile.velocity * 60);
@@ -68,6 +66,10 @@ namespace GvMod.Content.Projectiles
                             mizuchiTargetDirection = mizuchiTargetPosition.DirectionTo(Main.MouseWorld);
                         }
                         Projectile.netUpdate = true;
+                        break;
+                    case DartLeaderUpgrades.Vasuki:
+                    case DartLeaderUpgrades.VasukiVisuals:
+                        Projectile.tileCollide = false;
                         break;
                 }
                 registeredUpgrades.Add(upgrade);
@@ -87,9 +89,20 @@ namespace GvMod.Content.Projectiles
             base.ReceiveExtraAI(reader);
         }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (Projectile.ai[i] == (int)DartLeaderUpgrades.VasukiVisuals && Projectile.timeLeft >= 355)
+                {
+                    return false;
+                }
+            }
+            return base.CanHitNPC(target);
+        }
+
         public override void AI()
         {
-            Projectile.light = 1;
             for (int i = 0; i < 3; i++)
             {
                 DartLeaderUpgrades upgrade = (DartLeaderUpgrades)Projectile.ai[i];
@@ -117,6 +130,16 @@ namespace GvMod.Content.Projectiles
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
+            dartTimer++;
+            if (dartTimer > 3)
+            {
+                dartFrame++;
+                dartTimer = 0;
+                if (dartFrame >= 2)
+                {
+                    dartFrame = 0;
+                }
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -178,7 +201,97 @@ namespace GvMod.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
-            return base.PreDraw(ref lightColor);
+            if (Projectile.ai[0] == (int)DartLeaderUpgrades.Dullahan || 
+                Projectile.ai[1] == (int)DartLeaderUpgrades.Dullahan ||
+                Projectile.ai[2] == (int)DartLeaderUpgrades.Dullahan)
+            {
+                Asset<Texture2D> dullahanTexture = ModContent.
+                    Request<Texture2D>("GvMod/Content/Projectiles/DullahanBolt");
+                Main.EntitySpriteDraw(
+                    dullahanTexture.Value,
+                    Projectile.Center - Main.screenPosition,
+                    new Rectangle(56 * dartFrame, 0, 56, 38),
+                    lightColor,
+                    Projectile.rotation,
+                    new Vector2(28, 19),
+                    1,
+                    SpriteEffects.None
+                );
+
+                return false;
+            }
+
+            Point centerPoint = Projectile.Center.ToTileCoordinates();
+
+            int currentVisuals = (int)DartLeaderUpgrades.None;
+            Color selectedColor = Lighting.GetColor(centerPoint, new Color(29, 210, 210));
+
+            Asset<Texture2D> coloredTexture = ModContent.
+                Request<Texture2D>("GvMod/Content/Projectiles/HairDartProjectile_Colored");
+            Asset<Texture2D> centerTexture = ModContent.
+                Request<Texture2D>("GvMod/Content/Projectiles/HairDartProjectile");
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (Projectile.ai[i] > currentVisuals)
+                {
+                    currentVisuals = (int)Projectile.ai[i];
+                    switch ((DartLeaderUpgrades)Projectile.ai[i])
+                    {
+                        default:
+                        case DartLeaderUpgrades.None:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(29, 210, 210));
+                            break;
+                        case DartLeaderUpgrades.Naga:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(26, 10, 204));
+                            break;
+                        case DartLeaderUpgrades.Technos:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(18, 255, 18));
+                            break;
+                        case DartLeaderUpgrades.Orochi:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(255, 213, 0));
+                            break;
+                        case DartLeaderUpgrades.Mizuchi:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(255, 13, 13));
+                            break;
+                        case DartLeaderUpgrades.Ouroboros:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(64, 255, 150));
+                            break;
+                        case DartLeaderUpgrades.Vasuki:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(204, 0, 190));
+                            break;
+                        case DartLeaderUpgrades.VasukiVisuals:
+                            selectedColor = Lighting.GetColor(centerPoint, new Color(204, 0, 190));
+                            break;
+                    }
+                }
+            }
+
+            //Main.NewText("Color: " + selectedColor);
+            //Main.NewText("Id: " + currentVisuals);
+
+            Main.EntitySpriteDraw(
+                coloredTexture.Value,
+                Projectile.Center - Main.screenPosition,
+                new Rectangle(42 * dartFrame, 0, 42, 26),
+                selectedColor,
+                Projectile.rotation,
+                new Vector2(21, 13),
+                1,
+                SpriteEffects.None
+            );
+
+            Main.EntitySpriteDraw(
+                centerTexture.Value,
+                Projectile.Center - Main.screenPosition,
+                new Rectangle(42 * dartFrame, 0, 42, 26),
+                lightColor,
+                Projectile.rotation,
+                new Vector2(21, 13),
+                1,
+                SpriteEffects.None
+            );
+            return false;
         }
 
         public override bool PreDrawExtras()

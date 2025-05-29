@@ -5,15 +5,15 @@ Keybinds: {
 	// "Select next ability.DisplayName": Select next ability
 	// "Select previous ability.DisplayName": Select previous ability
 	// "Use special ability.DisplayName": Use special ability
-	// "Hide UI.DisplayName": Hide  U I
+	// "Hide UI.DisplayName": Hide  UI
 }
 
 Projectiles: {
 	Flashfield.DisplayName: Flashfield
 	HairDartProjectile.DisplayName: Dart
 	// Thunder.DisplayName: Thunder
-	// AstrasphereOrbits.DisplayName: Astrasphere Orbits
-	// OrochiDrone.DisplayName: Orochi Drone
+	// AstrasphereOrbits.DisplayName: Orbits
+	// OrochiDrone.DisplayName: Drone
 }
 
 DamageClasses: {
@@ -50,46 +50,82 @@ Items: {
 
 	CapacityUpgrade: {
 		// DisplayName: Capacity Upgrade
-		// Tooltip: ""
+		// Tooltip: Increases the Dart Leader's upgrade capacity by 1.
 	}
 
 	ClearUpgrade: {
 		// DisplayName: Clear Upgrade
-		// Tooltip: ""
+		// Tooltip: Clears all upgrades.
 	}
 
 	DullahanUpgrade: {
 		// DisplayName: Dullahan Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			Increases the dart's damage by {0}.
+			''' */
 	}
 
 	MizuchiUpgrade: {
 		// DisplayName: Mizuchi Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			Makes a reticle in front of the darts that redirects them to 
+			the mouse position.
+			''' */
 	}
 
 	NagaUpgrade: {
 		// DisplayName: Naga Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			Allows darts to penetrate enemies.
+			''' */
 	}
 
 	OrochiUpgrade: {
 		// DisplayName: Orochi Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			Deploys a drone that shoots darts at different directions
+			''' */
 	}
 
 	OuroborosUpgrade: {
 		// DisplayName: Ouroboros Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			Triples the tag time and gives a chance to not use ammo.
+			''' */
 	}
 
 	TechnosUpgrade: {
 		// DisplayName: Technos Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			Shoots two additional darts at an angle.
+			''' */
 	}
 
 	VasukiUpgrade: {
 		// DisplayName: Vasuki Upgrade
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			{$UpgradeDescription.Darts}
+			After tagging an enemy, it shoots another dart to the mouse position.
+			Allows the darts to penetrate the ground.
+			''' */
 	}
 }
+
+/* UpgradeDescription.Darts:
+	'''
+	An upgrade for the Dart Leader, only adds the described effect to the 
+	first Dart Leader found on the inventory.
+	''' */
