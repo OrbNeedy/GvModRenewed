@@ -358,7 +358,7 @@ namespace GvMod.Common.Players
             // AP recovers the same always, unless the player is using a special Skill
             if (!UsingSpecialSkill)
             {
-                CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier() * 10;
+                CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier();
             }
 
             // Clamp EP and AP

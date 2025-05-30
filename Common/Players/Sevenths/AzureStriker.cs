@@ -4,7 +4,11 @@ using GvMod.Common.Players.Skills;
 using GvMod.Content;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,9 +20,13 @@ namespace GvMod.Common.Players.Sevenths
         public bool activeFlashfield = false;
         public int flashfieldIndex = -1;
 
+        public int attackFrame = 0;
+        public int attackTimer = 0;
+        public float attackRotation = 0;
+
         public override int BasicAttackDamage { get; protected set; } = 12;
         public override int SecondaryAttackDamage { get; protected set; } = 30;
-        public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(), 
+        public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch() };
         public override float EPUseBase { get; protected set; } = 0.45f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
@@ -32,7 +40,7 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void InitializeSeptima(Player player, SeptimaPlayer adept)
         {
-            NPCDamageResistances =  new() {
+            NPCDamageResistances = new() {
                 [NPCID.WaterSphere] = Resistance.Penetrate,
                 [NPCID.Sharkron] = Resistance.Penetrate,
                 [NPCID.Sharkron2] = Resistance.Penetrate
@@ -59,6 +67,22 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void MiscEffects(Player player, SeptimaPlayer adept)
         {
+            attackTimer++;
+            if (attackTimer >= 2)
+            {
+                attackFrame += Main.rand.Next(-3, 3);
+                attackTimer = 0;
+                if (attackFrame > 6)
+                {
+                    attackFrame = 0;
+                }
+                if (attackFrame < 0)
+                {
+                    attackFrame = 6;
+                }
+            }
+
+            attackRotation -= 0.001745329252f;
             //player.GetDamage<SecondaryAttackDamage>() += 2;
             //player.GetArmorPenetration<SecondaryAttackDamage>() += 1000;
             //Main.NewText("Modifying defense");
@@ -86,7 +110,7 @@ namespace GvMod.Common.Players.Sevenths
             }
 
             Projectile flashfield = Main.projectile[flashfieldIndex];
-            activeFlashfield = flashfield.active && flashfield.ModProjectile is Flashfield && 
+            activeFlashfield = flashfield.active && flashfield.ModProjectile is Flashfield &&
                 flashfield.owner == player.whoAmI;
 
             // Reset timer and assert friendlyness
@@ -97,7 +121,7 @@ namespace GvMod.Common.Players.Sevenths
                 flashfield.hostile = false;
                 flashfield.netUpdate = true;
             }
-            
+
             // Give player fall immunity
             player.noFallDmg = true;
             player.maxFallSpeed *= 0.2f;
@@ -122,7 +146,7 @@ namespace GvMod.Common.Players.Sevenths
                 if (adept.TaggedNPCs.damageTimer[i] > 0) continue;
 
                 // Damage gets reduced if the player has too many tags
-                float adjustedDamage = BasicAttackDamage * (1f + (adept.TaggedNPCs.tagLevel[i] * 0.625f)) 
+                float adjustedDamage = BasicAttackDamage * (1f + (adept.TaggedNPCs.tagLevel[i] * 0.625f))
                     / (1 + (adept.TaggedNPCs.targetCount * 0.075f));
                 int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
                     ApplyTo(adjustedDamage);
@@ -133,7 +157,7 @@ namespace GvMod.Common.Players.Sevenths
                     direction = -1;
                 }
 
-                player.ApplyDamageToNPC(target, finalDamage, knockback, direction, 
+                player.ApplyDamageToNPC(target, finalDamage, knockback, direction,
                     damageType: ModContent.GetInstance<MainAttackDamage>(), damageVariation: true);
 
                 adept.TaggedNPCs.damageTimer[i] = 10;
@@ -148,10 +172,90 @@ namespace GvMod.Common.Players.Sevenths
             {
                 int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
                     ApplyTo(40);
-                Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero, 
+                Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero,
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }
             return adept.SecondarySkillUseTime >= 60 ? 600 : 0;
+        }
+
+        public override void DrawAttack(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)
+        {
+            if (drawInfo.shadow == 0f && activeFlashfield)
+            {
+                if (adept.MainSkillUseTime <= 0 || attackTimer % 2 == 0) return;
+
+                Asset<Texture2D> thunder = ModContent.
+                    Request<Texture2D>("GvMod/Content/Projectiles/ReachingLightning");
+
+                for (int i = 0; i < adept.TaggedNPCs.targetCount; i++)
+                {
+                    if (i > 9) break;
+                    NPC target = Main.npc[adept.TaggedNPCs.taggedTargets[i]];
+                    float totalDistance = player.Center.Distance(target.Center);
+                    Vector2 baseDirection = new Vector2(0, -1).
+                        RotatedBy((MathHelper.TwoPi / adept.TaggedNPCs.targetCount * i));
+                    Vector2 currentPosition = player.MountedCenter;
+                    float alpha = 1f;
+                    //Main.NewText("Target: " + target.FullName, MainColor);
+                    //Main.NewText("ID: " + i, MainColor);
+                    // 22x20
+                    for (int k = 0; k < 10; k++)
+                    {
+                        //Main.NewText("Segment: " + k, new Color(255, 0, 0));
+                        //Main.NewText("Distance: " + totalDistance, new Color(255, 0, 0));
+
+                        if (k >= 6)
+                        {
+                            alpha -= 0.25f;
+                        }
+                        int finalFrame = attackFrame + k;
+                        if (finalFrame > 6) finalFrame = 0;
+                        Rectangle bounds = new Rectangle(140*finalFrame, 0, 140, 76);
+
+                        Vector2 targetDirection = currentPosition.DirectionTo(target.Center);
+
+                        Vector2 nextDirection = Vector2.Lerp(baseDirection, targetDirection, 
+                            0.8f/((totalDistance*0.0005f)+0.001f));
+                        float rotationToNext = currentPosition.DirectionTo(currentPosition+nextDirection).ToRotation();
+
+                        if (currentPosition.Distance(target.Center) <= 128)
+                        {
+                            rotationToNext = currentPosition.DirectionTo(target.Center).ToRotation();
+                            bounds.Width = (int)(140 * (currentPosition.Distance(target.Center)/128));
+                        }
+
+                        Main.EntitySpriteDraw(
+                            thunder.Value,
+                            currentPosition - Main.screenPosition,
+                            bounds,
+                            Color.White * alpha,
+                            rotationToNext,
+                            new Vector2(0, 38),
+                            1f,
+                            SpriteEffects.None
+                        );
+
+                        if (currentPosition.Distance(target.Center) <= 128) break;
+
+                        nextDirection.Normalize();
+                        //float rotationNeeded = Vector2.Lerp(baseDirection, targetDirection, 0.01f).ToRotation();
+                        /*MathHelper.Clamp((currentPosition.DirectionTo(target.Center).
+                        ToRotation() - baseDirection.ToRotation()) * 0.4f, - MathHelper.PiOver4 / 2,
+                        MathHelper.PiOver4 / 2);*/
+                        /*MathHelper.Lerp(baseDirection.ToRotation(),
+                        currentPosition.DirectionTo(target.Center).ToRotation(), 0.001f);*/
+                        //Vector2.Lerp(baseDirection, currentPosition.DirectionTo(target.Center), 0.001f).
+                        //ToRotation();
+                        /*Main.NewText("Base direction: " + baseDirection.ToRotation());
+                        Main.NewText("Target direction: " + currentPosition.DirectionTo(target.Center).ToRotation());
+                        Main.NewText("Rotation needed: " + rotationNeeded);*/
+                        baseDirection = nextDirection;
+                        currentPosition += baseDirection * 128f;//16f;
+                        //Main.NewText("Final direction: " + baseDirection.ToRotation());
+                    }
+                }
+            }
+            base.DrawAttack(ref drawInfo, player, adept);
         }
     }
 }

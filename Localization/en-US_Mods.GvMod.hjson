@@ -122,6 +122,11 @@ Items: {
 			Allows the darts to penetrate the ground.
 			'''
 	}
+
+	UpgradeComponent: {
+		DisplayName: Upgrade Component
+		Tooltip: ""
+	}
 }
 
 UpgradeDescription: {
@@ -132,12 +137,6 @@ UpgradeDescription: {
 		Will override the latest upgrade if applied to a Dart leader with no 
 		free upgrade slots.
 		'''
-	Capacity:
-		'''
-		Capacity: {0}
-		'''
-	MaxCapacity:
-		'''
-		Capacity: Max
-		'''
+	Capacity: Capacity: {0}
+	MaxCapacity: Capacity: Max
 }

@@ -58,6 +58,8 @@ namespace GvMod.Content.Projectiles
                         Projectile.width = 12;
                         Projectile.height = 12;
                         Projectile.light = 0.5f;
+                        Projectile.ArmorPenetration += 50;
+                        Projectile.velocity *= 1.2f;
                         break;
                     case DartLeaderUpgrades.Mizuchi:
                         mizuchiTargetPosition = Projectile.Center + (Projectile.velocity * 60);

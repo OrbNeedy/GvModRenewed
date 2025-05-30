@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GvMod.Common.Players.Skills;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace GvMod.Common.Players.Sevenths
@@ -121,6 +122,16 @@ namespace GvMod.Common.Players.Sevenths
                     skill.CooldownTime--;
                 }
             }
+        }
+
+        public virtual void DrawPassive(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)
+        {
+
+        }
+
+        public virtual void DrawAttack(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)
+        {
+
         }
     }
 }

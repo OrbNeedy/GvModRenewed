@@ -55,7 +55,7 @@ Items: {
 
 	ClearUpgrade: {
 		// DisplayName: Clear Upgrade
-		// Tooltip: Clears all upgrades.
+		// Tooltip: Clears all upgrades from a Dart Leader.
 	}
 
 	DullahanUpgrade: {
@@ -122,10 +122,21 @@ Items: {
 			Allows the darts to penetrate the ground.
 			''' */
 	}
+
+	UpgradeComponent: {
+		// DisplayName: Upgrade Component
+		// Tooltip: ""
+	}
 }
 
-/* UpgradeDescription.Darts:
-	'''
-	An upgrade for the Dart Leader, only adds the described effect to the 
-	first Dart Leader found on the inventory.
-	''' */
+UpgradeDescription: {
+	/* Darts:
+		'''
+		An upgrade for the Dart Leader, only adds the described effect to the 
+		first Dart Leader found on the inventory.
+		Will override the latest upgrade if applied to a Dart leader with no 
+		free upgrade slots.
+		''' */
+	// Capacity: Capacity: {0}
+	// MaxCapacity: Capacity: Max
+}
