@@ -13,6 +13,9 @@ namespace GvMod.Common.Players
 {
     public class SeptimaPlayer : ModPlayer
     {
+        // Cheating check, for testing purposes
+        public bool perfectionCheck = false;
+
         // Septima identifiers
         public SeptimaType septimaType = SeptimaType.None;
         public Septima septima = null;
@@ -51,10 +54,25 @@ namespace GvMod.Common.Players
 
         // Stat modifiers
         // Base modifiers, septima and item modifiers get added to this
+        /// <summary>
+        /// Multiplicative modifier to the recovery rate of EP after the cooldown time is over.
+        /// </summary>
         public float EPRecoveryModifier { get; set; } = 1;
+        /// <summary>
+        /// Multiplicative modifier to the cooldown applied to the EP recovery after the main skill is used.
+        /// </summary>
         public float EPCooldownModifier { get; set; } = 1;
+        /// <summary>
+        /// Multiplicative modifier to the use rate of EP when the main skill is used.
+        /// </summary>
         public float EPUseModifier { get; set; } = 1;
+        /// <summary>
+        /// Multiplicative modifier to the recovery rate of EP when the player is in an <see cref="Overheated"/> state.
+        /// </summary>
         public float OverheatRecoveryModifier { get; set; } = 1;
+        /// <summary>
+        /// Multiplicative modifier to the recovery rate of AP.
+        /// </summary>
         public float APRecoveryModifier { get; set; } = 1;
         // Skills will only have one key to activate it, and another key to select it quickly 
         public int SelectedSkill { get; set; } = 0;
@@ -79,7 +97,6 @@ namespace GvMod.Common.Players
             }
 
             septima.InitializeSeptima(Player, this);
-            septima.CalculateSkills(Player, this);
         }
 
         public override void Load()
@@ -209,6 +226,10 @@ namespace GvMod.Common.Players
             if (tag.ContainsKey("SeptimaType"))
             {
                 septimaType = (SeptimaType)tag.GetInt("SeptimaType");
+                if (septima.Type != septimaType)
+                {
+                    septima = GetSeptima(septimaType);
+                }
             }
             if (tag.ContainsKey("SeptimaSubType"))
             {
@@ -239,10 +260,14 @@ namespace GvMod.Common.Players
                 }
             }
 
+            septima.CalculateSkills(Player, this);
+
             if (tag.ContainsKey("SelectedSkill"))
             {
                 SelectedSkill = tag.GetInt("SelectedSkill");
             }
+
+            septima.PostLoadSeptima(Player, this);
         }
 
         public override void PreUpdateMovement()
@@ -364,6 +389,12 @@ namespace GvMod.Common.Players
             // Clamp EP and AP
             CurrentEP = MathHelper.Clamp(CurrentEP, 0, GetTotalMaxEP());
             CurrentAP = MathHelper.Clamp(CurrentAP, 0, GetTotalMaxAP());
+            if (perfectionCheck)
+            {
+                CurrentEP = GetTotalMaxEP();
+                CurrentAP = GetTotalMaxAP();
+                Overheated = false;
+            }
         }
 
         public override void PostUpdateRunSpeeds()
@@ -445,8 +476,34 @@ namespace GvMod.Common.Players
             base.OnHurt(info);
         }
 
+        public override void OnRespawn()
+        {
+            CurrentEP = GetTotalMaxEP();
+            CurrentAP = GetTotalMaxAP();
+            SecondarySkillCooldown = 0;
+
+            septima.ForceCooldownEnd();
+            base.OnRespawn();
+        }
+
+        public override void UpdateDead()
+        {
+            perfectionCheck = false;
+            UsingMainSkill = false;
+            UsingSecondarySkill = false;
+            UsingSpecialSkill = false;
+
+            EPUseModifier = 0;
+            EPRecoveryModifier = 0;
+            EPCooldownModifier = 0;
+            APRecoveryModifier = 0;
+            base.UpdateDead();
+        }
+
         public override void ResetEffects()
         {
+            perfectionCheck = false;
+
             ModifiedMaxEP = 0;
             ModifiedMaxAP = 0;
 
@@ -468,7 +525,7 @@ namespace GvMod.Common.Players
         public bool ForceOverheat(bool resetBuffs = false, bool ignoreBuffs = false)
         {
             septima.OnOverheat(Player, this);
-            // Visual effects
+
             for (int i = 0; i < 50; i++)
             {
                 Dust.NewDustPerfect(Player.Center, DustID.MartianSaucerSpark);
@@ -528,6 +585,17 @@ namespace GvMod.Common.Players
         {
             return SecondarySkillCooldown <= 0 && septima.CanUseSecondarySkill(Player, this) && 
                 !UsingSpecialSkill && !Player.CCed && !UsingSecondarySkill;
+        }
+
+        public static Septima GetSeptima(SeptimaType type)
+        {
+            switch (type)
+            {
+                case SeptimaType.AzureStriker:
+                    return new AzureStriker();
+                default:
+                    return new Septima();
+            }
         }
     }
 }

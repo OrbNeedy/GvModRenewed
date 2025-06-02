@@ -9,6 +9,8 @@ namespace GvMod.Content.Items
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Lime;
+
+            Item.maxStack = 999;
         }
     }
 }

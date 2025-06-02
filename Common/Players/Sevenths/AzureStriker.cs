@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -24,8 +23,8 @@ namespace GvMod.Common.Players.Sevenths
         public int attackTimer = 0;
         public float attackRotation = 0;
 
-        public override int BasicAttackDamage { get; protected set; } = 12;
-        public override int SecondaryAttackDamage { get; protected set; } = 30;
+        public override int BasicAttackDamage { get; protected set; } = 7;
+        public override int SecondaryAttackDamage { get; protected set; } = 22;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch() };
         public override float EPUseBase { get; protected set; } = 0.45f;
@@ -63,6 +62,8 @@ namespace GvMod.Common.Players.Sevenths
                 [ProjectileID.CultistBossLightningOrbArc] = Resistance.Absorb,
                 [ModContent.ProjectileType<Flashfield>()] = Resistance.Penetrate
             };
+
+
         }
 
         public override void MiscEffects(Player player, SeptimaPlayer adept)
@@ -238,20 +239,9 @@ namespace GvMod.Common.Players.Sevenths
                         if (currentPosition.Distance(target.Center) <= 128) break;
 
                         nextDirection.Normalize();
-                        //float rotationNeeded = Vector2.Lerp(baseDirection, targetDirection, 0.01f).ToRotation();
-                        /*MathHelper.Clamp((currentPosition.DirectionTo(target.Center).
-                        ToRotation() - baseDirection.ToRotation()) * 0.4f, - MathHelper.PiOver4 / 2,
-                        MathHelper.PiOver4 / 2);*/
-                        /*MathHelper.Lerp(baseDirection.ToRotation(),
-                        currentPosition.DirectionTo(target.Center).ToRotation(), 0.001f);*/
-                        //Vector2.Lerp(baseDirection, currentPosition.DirectionTo(target.Center), 0.001f).
-                        //ToRotation();
-                        /*Main.NewText("Base direction: " + baseDirection.ToRotation());
-                        Main.NewText("Target direction: " + currentPosition.DirectionTo(target.Center).ToRotation());
-                        Main.NewText("Rotation needed: " + rotationNeeded);*/
+
                         baseDirection = nextDirection;
-                        currentPosition += baseDirection * 128f;//16f;
-                        //Main.NewText("Final direction: " + baseDirection.ToRotation());
+                        currentPosition += baseDirection * 128f;
                     }
                 }
             }

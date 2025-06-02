@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GvMod.Content.Items;
+using GvMod.Content.Items.Accessories;
 using GvMod.Content.Items.Upgrades;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -21,6 +22,12 @@ namespace GvMod.Common.GlobalNPCs
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+            if (npc.boss)
+            {
+                npcLoot.Add(ItemDropRule.ByCondition(new MirrorShardDropCondition(), 
+                    ModContent.ItemType<MirrorShard>(), 3));
+            }
+
             if (npc.boss || npc.rarity >= 4)
             {
                 npcLoot.Add(ItemDropRule.ExpertGetsRerolls(ModContent.ItemType<CapacityUpgrade>(), 500, 3));

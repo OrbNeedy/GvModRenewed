@@ -74,6 +74,8 @@ namespace GvMod.Common.UI
 
             for (int i = 0; i < barFilling.Length; i++)
             {
+                barFilling[i].Left.Set(2 + (30 * i), 0f);
+                barFilling[i].Top.Set(6, 0f);
                 if (i >= maxAP)
                 {
                     barFrame[i].Remove();

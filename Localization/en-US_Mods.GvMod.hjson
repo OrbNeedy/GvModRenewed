@@ -127,6 +127,20 @@ Items: {
 		DisplayName: Upgrade Component
 		Tooltip: ""
 	}
+
+	MirrorShard: {
+		DisplayName: Mirror Shard
+		Tooltip: 
+			'''
+			A shard imbued with the power of the Cyber Diva.
+			Allows the user to resurrect after dying with improved abilities.
+			'''
+	}
+
+	RingOfPerfection: {
+		DisplayName: Ring Of Perfection
+		Tooltip: "The most perfect ring ever created, become perfect."
+	}
 }
 
 UpgradeDescription: {
@@ -139,4 +153,41 @@ UpgradeDescription: {
 		'''
 	Capacity: Capacity: {0}
 	MaxCapacity: Capacity: Max
+}
+
+Buffs: {
+	Anthem: {
+		DisplayName: Anthem
+		Description: 
+			'''
+			Resurrected by the power of the cyber diva.
+			All septimal abilities are increased.
+			'''
+	}
+
+	ResurrectionCooldown: {
+		DisplayName: Anthem Cooldown
+		Description: 
+			'''
+			Your body is unable to be resurrected again.
+			'''
+	}
+}
+
+Configs: {
+	GameplayConfig: {
+		DisplayName: Gameplay Config
+		Headers.Resurrection: Resurrection
+
+		BossResurrection: {
+			Label: Boss Resurrection
+			Tooltip: 
+				'''
+				Turn off to disable bosses having a chance to resurrect after dying if they were 
+				defeated before. 
+				This will not disrupt player resurrection, but make it impossible to accquire 
+				resurrection related items.
+				'''
+		}
+	}
 }

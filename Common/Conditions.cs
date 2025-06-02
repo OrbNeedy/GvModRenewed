@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GvMod.Common.GlobalNPCs;
 using Terraria.GameContent.ItemDropRules;
 
 namespace GvMod.Common
@@ -11,17 +7,18 @@ namespace GvMod.Common
     {
         public bool CanDrop(DropAttemptInfo info)
         {
-            throw new NotImplementedException();
+            return info.npc.GetGlobalNPC<BossResurrection>().resurrected;
         }
 
         public bool CanShowItemDropInUI()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public string GetConditionDescription()
         {
-            throw new NotImplementedException();
+            // TODO: Get the translations for this string
+            return "When killing a resurrected enemy.";
         }
     }
 }

@@ -127,6 +127,16 @@ Items: {
 		// DisplayName: Upgrade Component
 		// Tooltip: ""
 	}
+
+	MirrorShard: {
+		// DisplayName: Mirror Shard
+		// Tooltip: ""
+	}
+
+	RingOfPerfection: {
+		// DisplayName: Ring Of Perfection
+		// Tooltip: ""
+	}
 }
 
 UpgradeDescription: {
@@ -139,4 +149,28 @@ UpgradeDescription: {
 		''' */
 	// Capacity: Capacity: {0}
 	// MaxCapacity: Capacity: Max
+}
+
+Buffs: {
+	Anthem: {
+		// DisplayName: Anthem
+		// Description: Mods.GvMod.Buffs.Anthem.Description
+	}
+
+	ResurrectionCooldown: {
+		// DisplayName: Resurrection Cooldown
+		// Description: Mods.GvMod.Buffs.ResurrectionCooldown.Description
+	}
+}
+
+Configs: {
+	GameplayConfig: {
+		// DisplayName: Gameplay Config
+		// Headers.Resurrection: Resurrection Header
+
+		BossResurrection: {
+			// Label: Boss Resurrection
+			// Tooltip: ""
+		}
+	}
 }

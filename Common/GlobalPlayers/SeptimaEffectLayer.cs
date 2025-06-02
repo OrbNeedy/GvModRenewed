@@ -10,7 +10,7 @@ namespace GvMod.Common.GlobalNPCs
     {
         public override Position GetDefaultPosition()
         {
-            return new Between(PlayerDrawLayers.BeetleBuff, PlayerDrawLayers.EyebrellaCloud);
+            return new BeforeParent(PlayerDrawLayers.BeetleBuff);
         }
 
         protected override void Draw(ref PlayerDrawSet drawInfo)

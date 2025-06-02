@@ -43,7 +43,7 @@ namespace GvMod.Common.Players.Sevenths
         public virtual string InternalName { get; private set; } = "None";
         public virtual Color MainColor { get; private set; } = Color.White;
         // Two separate colors so any septima can have distinct overheat and normal EP bar colors
-        // This was basically made for Metallica and Energy Wool
+        // This was basically made for septimas with red colors in their design
         public virtual Color OverheatColor { get; private set; } = Color.DarkRed;
 
         // Modifiers
@@ -67,6 +67,10 @@ namespace GvMod.Common.Players.Sevenths
         }
 
         public virtual void InitializeSeptima(Player player, SeptimaPlayer adept)
+        {
+        }
+
+        public virtual void PostLoadSeptima(Player player, SeptimaPlayer adept)
         {
         }
 
@@ -121,6 +125,14 @@ namespace GvMod.Common.Players.Sevenths
                 {
                     skill.CooldownTime--;
                 }
+            }
+        }
+
+        public void ForceCooldownEnd()
+        {
+            foreach (SpecialSkill skill in SkillList)
+            {
+                skill.CooldownTime = 0;
             }
         }
 
