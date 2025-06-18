@@ -1,4 +1,5 @@
 ﻿using GvMod.Common.Configs;
+using GvMod.Common.Systems;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -27,6 +28,12 @@ namespace GvMod.Common.GlobalNPCs
                 //npc.damage *= 1.5f;
             }
             base.OnSpawn(npc, source);
+        }
+
+        public override bool PreAI(NPC npc)
+        {
+            if (resurrected) ModContent.GetInstance<TimeModificationSystem>().stoppingTime = true;
+            return base.PreAI(npc);
         }
 
         public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers)

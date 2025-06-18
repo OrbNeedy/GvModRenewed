@@ -3,52 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\globalplayers\\resurrectioneffectlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\globalplayers\\resurrectioneffectlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\systems\\worldgensystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\systems\\worldgensystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\globalplayers\\septimaeffectlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\globalplayers\\septimaeffectlayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\systems\\dragonveinssystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\systems\\dragonveinssystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\content\\items\\accessories\\mirrorshard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:content\\items\\accessories\\mirrorshard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\dragonveinsmaplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\dragonveinsmaplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\resurrectionplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\resurrectionplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\content\\buffs\\resurrectioncooldown.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:content\\buffs\\resurrectioncooldown.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\content\\buffs\\anthem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:content\\buffs\\anthem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\localization\\en-us_mods.gvmod.hjson||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:localization\\en-us_mods.gvmod.hjson||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\septimaplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\septimaplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\configs\\gameplayconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\configs\\gameplayconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\sevenths\\septima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\sevenths\\septima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\resurrectionplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\resurrectionplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\systems\\timemodificationsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\systems\\timemodificationsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\sevenths\\azurestriker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\sevenths\\azurestriker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\content\\items\\accessories\\ringofperfection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:content\\items\\accessories\\ringofperfection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\globalnpcs\\bosskilltracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\globalnpcs\\bosskilltracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\globalnpcs\\bossresurrection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\globalnpcs\\bossresurrection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\globalnpcs\\itemdrops.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\globalnpcs\\itemdrops.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,82 +54,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "RingOfPerfection.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Items\\Accessories\\RingOfPerfection.cs",
-              "RelativeDocumentMoniker": "Content\\Items\\Accessories\\RingOfPerfection.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Items\\Accessories\\RingOfPerfection.cs",
-              "RelativeToolTip": "Content\\Items\\Accessories\\RingOfPerfection.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-01T00:18:41.847Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AzureStriker.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\AzureStriker.cs",
-              "RelativeDocumentMoniker": "Common\\Players\\Sevenths\\AzureStriker.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\AzureStriker.cs",
-              "RelativeToolTip": "Common\\Players\\Sevenths\\AzureStriker.cs",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAQwL4AAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T21:13:49.29Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ResurrectionEffectLayer.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalPlayers\\ResurrectionEffectLayer.cs",
-              "RelativeDocumentMoniker": "Common\\GlobalPlayers\\ResurrectionEffectLayer.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalPlayers\\ResurrectionEffectLayer.cs",
-              "RelativeToolTip": "Common\\GlobalPlayers\\ResurrectionEffectLayer.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T21:05:35.731Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SeptimaEffectLayer.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalPlayers\\SeptimaEffectLayer.cs",
-              "RelativeDocumentMoniker": "Common\\GlobalPlayers\\SeptimaEffectLayer.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalPlayers\\SeptimaEffectLayer.cs",
-              "RelativeToolTip": "Common\\GlobalPlayers\\SeptimaEffectLayer.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T19:12:18.44Z",
+              "DocumentIndex": 3,
+              "Title": "en-US_Mods.GvMod.hjson",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Localization\\en-US_Mods.GvMod.hjson",
+              "RelativeDocumentMoniker": "Localization\\en-US_Mods.GvMod.hjson",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Localization\\en-US_Mods.GvMod.hjson",
+              "RelativeToolTip": "Localization\\en-US_Mods.GvMod.hjson",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAAANoAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-06-17T16:37:48.32Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MirrorShard.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Items\\Accessories\\MirrorShard.cs",
-              "RelativeDocumentMoniker": "Content\\Items\\Accessories\\MirrorShard.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Items\\Accessories\\MirrorShard.cs",
-              "RelativeToolTip": "Content\\Items\\Accessories\\MirrorShard.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwBUAAABMAAAAAAAAAA==",
+              "Title": "DragonVeinsMapLayer.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\DragonVeinsMapLayer.cs",
+              "RelativeDocumentMoniker": "Common\\DragonVeinsMapLayer.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\DragonVeinsMapLayer.cs",
+              "RelativeToolTip": "Common\\DragonVeinsMapLayer.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAgwCEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T06:58:50.887Z",
+              "WhenOpened": "2025-06-17T15:46:40.422Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ItemDrops.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalNPCs\\ItemDrops.cs",
-              "RelativeDocumentMoniker": "Common\\GlobalNPCs\\ItemDrops.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalNPCs\\ItemDrops.cs",
-              "RelativeToolTip": "Common\\GlobalNPCs\\ItemDrops.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAQwBsAAAA8AAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "DragonVeinsSystem.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\DragonVeinsSystem.cs",
+              "RelativeDocumentMoniker": "Common\\Systems\\DragonVeinsSystem.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\DragonVeinsSystem.cs",
+              "RelativeToolTip": "Common\\Systems\\DragonVeinsSystem.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAqwGMAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T06:20:39.279Z"
+              "WhenOpened": "2025-06-15T21:46:25.307Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WorldGenSystem.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\WorldGenSystem.cs",
+              "RelativeDocumentMoniker": "Common\\Systems\\WorldGenSystem.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\WorldGenSystem.cs",
+              "RelativeToolTip": "Common\\Systems\\WorldGenSystem.cs",
+              "ViewState": "AgIAAGQAAAAAAAAAAAA0wHQAAABzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T23:36:41.917Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TimeModificationSystem.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\TimeModificationSystem.cs",
+              "RelativeDocumentMoniker": "Common\\Systems\\TimeModificationSystem.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\TimeModificationSystem.cs",
+              "RelativeToolTip": "Common\\Systems\\TimeModificationSystem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-10T22:05:16.18Z"
             },
             {
               "$type": "Document",
@@ -143,71 +128,69 @@
               "RelativeDocumentMoniker": "Common\\GlobalNPCs\\BossResurrection.cs",
               "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalNPCs\\BossResurrection.cs",
               "RelativeToolTip": "Common\\GlobalNPCs\\BossResurrection.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAcwDwAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAwwBsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T06:14:44.39Z"
+              "WhenOpened": "2025-06-10T21:59:33Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "GameplayConfig.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Configs\\GameplayConfig.cs",
-              "RelativeDocumentMoniker": "Common\\Configs\\GameplayConfig.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Configs\\GameplayConfig.cs",
-              "RelativeToolTip": "Common\\Configs\\GameplayConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "BossKillTracking.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalNPCs\\BossKillTracking.cs",
+              "RelativeDocumentMoniker": "Common\\GlobalNPCs\\BossKillTracking.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\GlobalNPCs\\BossKillTracking.cs",
+              "RelativeToolTip": "Common\\GlobalNPCs\\BossKillTracking.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwCMAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T06:04:47.716Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ResurrectionCooldown.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Buffs\\ResurrectionCooldown.cs",
-              "RelativeDocumentMoniker": "Content\\Buffs\\ResurrectionCooldown.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Buffs\\ResurrectionCooldown.cs",
-              "RelativeToolTip": "Content\\Buffs\\ResurrectionCooldown.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAxwBsAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T05:54:34.889Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-10T19:33:46.514Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Anthem.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Buffs\\Anthem.cs",
-              "RelativeDocumentMoniker": "Content\\Buffs\\Anthem.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Buffs\\Anthem.cs",
-              "RelativeToolTip": "Content\\Buffs\\Anthem.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCYAAAAOAAAAAAAAAA==",
+              "Title": "Septima.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\Septima.cs",
+              "RelativeDocumentMoniker": "Common\\Players\\Sevenths\\Septima.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\Septima.cs",
+              "RelativeToolTip": "Common\\Players\\Sevenths\\Septima.cs",
+              "ViewState": "AgIAAIcAAAAAAAAAAAA8wJMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T05:47:42.182Z",
+              "WhenOpened": "2025-06-02T03:24:53.606Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
+              "Title": "AzureStriker.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\AzureStriker.cs",
+              "RelativeDocumentMoniker": "Common\\Players\\Sevenths\\AzureStriker.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\AzureStriker.cs",
+              "RelativeToolTip": "Common\\Players\\Sevenths\\AzureStriker.cs",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAAAL4AAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-31T21:13:49.29Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "ResurrectionPlayer.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\ResurrectionPlayer.cs",
               "RelativeDocumentMoniker": "Common\\Players\\ResurrectionPlayer.cs",
               "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\ResurrectionPlayer.cs",
               "RelativeToolTip": "Common\\Players\\ResurrectionPlayer.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAwwEYAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAwwBUAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T04:55:15.097Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "SeptimaPlayer.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\SeptimaPlayer.cs",
               "RelativeDocumentMoniker": "Common\\Players\\SeptimaPlayer.cs",
               "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\SeptimaPlayer.cs",
               "RelativeToolTip": "Common\\Players\\SeptimaPlayer.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAA9wF0AAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAABMCAAAAAAAAAAAIwBsCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-31T04:38:31.409Z",
               "EditorCaption": ""

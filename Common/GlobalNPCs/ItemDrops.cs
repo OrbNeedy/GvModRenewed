@@ -17,6 +17,8 @@ namespace GvMod.Common.GlobalNPCs
     {
         public override void ModifyGlobalLoot(GlobalLoot globalLoot)
         {
+            globalLoot.Add(ItemDropRule.ByCondition(new RarityDropCondition(4), 
+                ModContent.ItemType<UniversalUpgradeItem>(), 1250));
             base.ModifyGlobalLoot(globalLoot);
         }
 
@@ -25,7 +27,7 @@ namespace GvMod.Common.GlobalNPCs
             if (npc.boss)
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new MirrorShardDropCondition(), 
-                    ModContent.ItemType<MirrorShard>(), 3));
+                    ModContent.ItemType<MirrorShard>(), 4));
             }
 
             if (npc.boss || npc.rarity >= 4)

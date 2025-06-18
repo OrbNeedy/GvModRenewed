@@ -8,9 +8,12 @@ using Terraria.ModLoader.IO;
 using Terraria.ID;
 using GvMod.Common.Utils;
 using GvMod.Common.Players.Skills;
+using Terraria.Localization;
+using GvMod.Content.Buffs;
 
 namespace GvMod.Common.Players
 {
+    // TODO: Add recharge by double tap down
     public class SeptimaPlayer : ModPlayer
     {
         // Cheating check, for testing purposes
@@ -43,6 +46,7 @@ namespace GvMod.Common.Players
 
 
         // State related
+        public bool QueueStageCheck { get; set; } = false;
         public bool Overheated { get; set; } = false;
         public bool UsingMainSkill { get; set; } = false;
         public int MainSkillUseTime { get; set; } = 0;
@@ -77,8 +81,9 @@ namespace GvMod.Common.Players
         // Skills will only have one key to activate it, and another key to select it quickly 
         public int SelectedSkill { get; set; } = 0;
         public int SecondarySkillCooldown { get; set; } = 0;
-        // Upgrades affect max EP and AP
-        public bool[] SeptimaUpgrades = new bool[] { false, false, false, false };
+        // Flags for the dragon veins this player already visited
+        public bool[] DragonVeinsVisited { get; set; } = new bool[] { false, false, false, false, false, false, 
+            false };
 
         static SeptimaType[] _selectableSeptimas = { SeptimaType.AzureStriker };
 
@@ -149,10 +154,12 @@ namespace GvMod.Common.Players
             if (KeybindSystem.specialAbility.JustPressed)
             {
                 // Skilless adepts don't get to use specials
-                if (septima.SkillList.Count <= 0) return;
+                if (septima.AvailableSkills.Count <= 0) return;
 
-                SelectedSkill = (int)MathHelper.Clamp(SelectedSkill, 0, septima.SkillList.Count - 1);
-                SpecialSkill special = septima.SkillList[SelectedSkill];
+                ModContent.GetInstance<GvMod>().Logger.Warn($"");
+
+                SelectedSkill = (int)MathHelper.Clamp(SelectedSkill, 0, septima.AvailableSkills.Count - 1);
+                SpecialSkill special = septima.AvailableSkills[SelectedSkill];
 
                 if (special.CanUse(Player, this) && CurrentAP >= special.APCost && !UsingSpecialSkill && 
                     !UsingSecondarySkill && !Player.CCed && special.CooldownTime <= 0)
@@ -184,14 +191,14 @@ namespace GvMod.Common.Players
 
             SelectedSkill += (int)MathHelper.Clamp(displacement, -1, 1);
 
-            if (SelectedSkill >= septima.SkillList.Count)
+            if (SelectedSkill >= septima.AvailableSkills.Count)
             {
                 SelectedSkill = 0;
             }
 
             if (SelectedSkill < 0)
             {
-                SelectedSkill = septima.SkillList.Count - 1;
+                SelectedSkill = septima.AvailableSkills.Count - 1;
             }
 
         }
@@ -202,6 +209,7 @@ namespace GvMod.Common.Players
             CurrentAP = GetTotalMaxAP();
             EPCooldownTimer = 0;
             SecondarySkillCooldown = 0;
+            StageCheck();
         }
 
         public override void SaveData(TagCompound tag)
@@ -213,10 +221,6 @@ namespace GvMod.Common.Players
             tag["Stage"] = Stage;
             tag["MaxEP"] = BaseMaxEP;
             tag["MaxAP"] = BaseMaxAP;
-            for (int i = 0; i < SeptimaUpgrades.Length; i++)
-            {
-                tag[$"SeptimaUpgrades{i}"] = SeptimaUpgrades[i];
-            }
 
             tag["SelectedSkill"] = SelectedSkill;
         }
@@ -252,11 +256,11 @@ namespace GvMod.Common.Players
             {
                 BaseMaxAP = tag.GetInt("MaxAP");
             }
-            for (int i = 0; i < SeptimaUpgrades.Length; i++)
+            for (int i = 0; i < DragonVeinsVisited.Length; i++)
             {
-                if (tag.ContainsKey($"SeptimaUpgrades{i}"))
+                if (tag.ContainsKey($"DragonVein{i}"))
                 {
-                    SeptimaUpgrades[i] = tag.GetBool($"SeptimaUpgrades{i}");
+                    DragonVeinsVisited[i] = tag.GetBool($"DragonVein{i}");
                 }
             }
 
@@ -288,12 +292,19 @@ namespace GvMod.Common.Players
             // Dead men have no septima
             if (Player.DeadOrGhost) return;
 
+            if (QueueStageCheck)
+            {
+                // Main.NewText("Checking after boss death");
+                StageCheck();
+                QueueStageCheck = false;
+            }
+
             // TODO: Test if this actually works for stat modifications
             // septima.MiscEffects(Player, this);
 
             if (UsingSpecialSkill)
             {
-                SpecialSkill special = septima.SkillList[SelectedSkill];
+                SpecialSkill special = septima.AvailableSkills[SelectedSkill];
                 if (Player.CCed && !special.Invincible)
                 {
                     special.ForcedSkillEnd(Player, this);
@@ -403,7 +414,7 @@ namespace GvMod.Common.Players
 
             if (UsingSpecialSkill)
             {
-                septima.SkillList[SelectedSkill].MoveUpdate(Player, this);
+                septima.AvailableSkills[SelectedSkill].MoveUpdate(Player, this);
             }
         }
 
@@ -440,7 +451,7 @@ namespace GvMod.Common.Players
             if (UsingSpecialSkill)
             {
                 //Main.NewText($"Septima modifying the hurt");
-                septima.SkillList[SelectedSkill].NPCHitUpdate(Player, this, npc, ref modifiers);
+                septima.AvailableSkills[SelectedSkill].NPCHitUpdate(Player, this, npc, ref modifiers);
             }
         }
 
@@ -467,7 +478,7 @@ namespace GvMod.Common.Players
 
             if (UsingSpecialSkill)
             {
-                septima.SkillList[SelectedSkill].ProjectileHitUpdate(Player, this, proj, ref modifiers);
+                septima.AvailableSkills[SelectedSkill].ProjectileHitUpdate(Player, this, proj, ref modifiers);
             }
         }
 
@@ -517,6 +528,166 @@ namespace GvMod.Common.Players
         }
 
         /// <summary>
+        /// Run every frame when the player is inside of a dragon vein point in the world. <br/>
+        /// The flag in this septima player has not been updated yet.
+        /// </summary>
+        /// <param name="index">The index of the vein being visited. <br/>
+        /// It's a different location for each world, but the same player will still keep the flags from other 
+        /// worlds.</param>
+        /// <param name="distance">The distance in tile coordinates from the player to the vein.</param>
+        public void UpdateInsideDragonVein(int index, float distance)
+        {
+            septima.DuringVeinVisit(Player, this, index, distance);
+
+            if (distance <= 64 && Player.HasBuff<Anthem>())
+            {
+                //Main.NewText("Conditions");
+                // Very rarely, when the player is near a dragon vein and is in an Anthem state, increase
+                // it's level up to 1000
+                if (Main.rand.NextBool(18000))
+                {
+                    // I hope I don't regret this choice
+                    if (UpgradeLevel(0, 1000))
+                    {
+                        int randomMessage = Main.rand.Next(0, 7);
+                        Main.NewText(Language.GetTextValue($"Mods.GvMod.LevelUpMessage.DragonVein{randomMessage}"), 
+                            septima.MainColor);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Increases the level of the adept and checks if the stage can increase too.
+        /// </summary>
+        /// <param name="minLevel">Minimum level the player needs to be able to increase it via this method (Exclusive).</param>
+        /// <param name="maxLevel">Maximum level the player can get through this method (Inclusive).</param>
+        /// <returns>True if the upgrade was successful, false if it wasn't.</returns>
+        public bool UpgradeLevel(int minLevel, int maxLevel)
+        {
+            if (Level >= maxLevel || Level < minLevel) return false;
+
+            Level++;
+
+            StageCheck();
+            septima.CalculateSkills(Player, this);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks the state of the player and the world to determine if the stage can increase or not. <br/>
+        /// Runs after a boss is defeated, the player levels up, or enters the world.
+        /// </summary>
+        public void StageCheck()
+        {
+            // Main.NewText("Beginning check");
+
+            // Upgrade condition idea: A system of points scattered at random in the world which the player has to 
+            // visit before the upgrade can happen, perhaps at the endgame
+            bool stageChanged = false;
+            int checks = 0;
+            // I pray to god this never makes an infinite loop
+            do
+            {
+                checks++;
+                stageChanged = false;
+                switch (Stage)
+                {
+                    case 1:
+                        if (Level >= 10 && (NPC.downedBoss1 || NPC.downedSlimeKing))
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 125
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 2:
+                        if (Level >= 25 && NPC.downedBoss3)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 150
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 3:
+                        if (Level >= 30 && Main.hardMode)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxAP == 2) BaseMaxAP += 1;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 175
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 4:
+                        if (Level >= 40 && (NPC.downedMechBossAny || NPC.downedQueenSlime))
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 200
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 5:
+                        if (Level >= 50 && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 225
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 6:
+                        if (Level >= 60 && NPC.downedGolemBoss)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 250
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 7:
+                        if (Level >= 65 && NPC.downedAncientCultist)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 275
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 8:
+                        if (Level >= 75 && DragonVeinsVisited.Count(true) >= DragonVeinsVisited.Length)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 300
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                    case 9:
+                        if (Level >= 90 && NPC.downedMoonlord)
+                        {
+                            stageChanged = true;
+                            if (BaseMaxAP == 3) BaseMaxAP += 1;
+                            if (BaseMaxEP < 400) BaseMaxEP += 100; // Expected: 400
+                            Stage++;
+                            septima.OnStageChange(Player, this);
+                        }
+                        break;
+                }
+            } while (stageChanged);
+
+            if (stageChanged || checks > 1)
+            {
+                Main.NewText("Your septima feels stronger.", septima.MainColor);
+            }
+            //Main.NewText($"Final checks: {checks}");
+        }
+
+        /// <summary>
         /// Causes the adept to overheat instantly.
         /// </summary>
         /// <param name="resetBuffs">Forces buffs related to EP duration to be reset.</param>
@@ -524,13 +695,15 @@ namespace GvMod.Common.Players
         /// <returns>False if a buff prevented the forced overheat.</returns>
         public bool ForceOverheat(bool resetBuffs = false, bool ignoreBuffs = false)
         {
+            Overheated = true;
+            CurrentEP = 0;
+
             septima.OnOverheat(Player, this);
 
             for (int i = 0; i < 50; i++)
             {
                 Dust.NewDustPerfect(Player.Center, DustID.MartianSaucerSpark);
             }
-            Overheated = true;
 
             return true;
         }

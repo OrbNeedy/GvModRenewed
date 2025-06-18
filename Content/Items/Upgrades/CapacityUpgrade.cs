@@ -10,6 +10,7 @@ namespace GvMod.Content.Items.Upgrades
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Lime;
+            Item.maxStack = 99;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 30;

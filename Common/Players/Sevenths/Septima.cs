@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using GvMod.Common.Players.Skills;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace GvMod.Common.Players.Sevenths
 {
@@ -28,8 +23,10 @@ namespace GvMod.Common.Players.Sevenths
     public class Septima
     {
         // Base values
-        public virtual int BasicAttackDamage { get; protected set; } = 0;
-        public virtual int SecondaryAttackDamage { get; protected set; } = 0;
+        public virtual float BaseBasicAttackDamage { get; protected set; } = 0;
+        public virtual float BasicAttackDamage { get; protected set; } = 0;
+        public virtual float BaseSecondaryAttackDamage { get; protected set; } = 0;
+        public virtual float SecondaryAttackDamage { get; protected set; } = 0;
         public virtual List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill() };
         public virtual List<SpecialSkill> AvailableSkills { get; protected set; } = new();
         public virtual float EPUseBase { get; protected set; } = 0;
@@ -130,10 +127,41 @@ namespace GvMod.Common.Players.Sevenths
 
         public void ForceCooldownEnd()
         {
-            foreach (SpecialSkill skill in SkillList)
+            foreach (SpecialSkill skill in AvailableSkills)
             {
                 skill.CooldownTime = 0;
             }
+        }
+
+        public virtual void OnLevelUp(Player player, SeptimaPlayer adept)
+        {
+
+        }
+
+        public virtual void OnStageChange(Player player, SeptimaPlayer adept)
+        {
+
+        }
+
+        public virtual void OnVeinVisit(Player player, SeptimaPlayer adept, int index)
+        {
+
+        }
+
+        public virtual void DuringVeinVisit(Player player, SeptimaPlayer adept, int index, float distance)
+        {
+
+        }
+
+        /// <summary>
+        /// Runs after any enemy with the boss flag on is defeated, the boss' defeat flag is still not set here.
+        /// </summary>
+        /// <param name="bossID"></param>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        public virtual void OnBossDefeat(int bossID, Player player, SeptimaPlayer adept)
+        {
+
         }
 
         public virtual void DrawPassive(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)

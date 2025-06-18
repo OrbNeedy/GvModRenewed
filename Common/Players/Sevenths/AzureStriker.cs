@@ -23,11 +23,13 @@ namespace GvMod.Common.Players.Sevenths
         public int attackTimer = 0;
         public float attackRotation = 0;
 
-        public override int BasicAttackDamage { get; protected set; } = 7;
-        public override int SecondaryAttackDamage { get; protected set; } = 22;
+        public override float BaseBasicAttackDamage { get; protected set; } = 5;
+        public override float BasicAttackDamage { get; protected set; } = 5;
+        public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
+        public override float SecondaryAttackDamage { get; protected set; } = 20;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch() };
-        public override float EPUseBase { get; protected set; } = 0.45f;
+        public override float EPUseBase { get; protected set; } = 0.7f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
         public override float OverheatRecoveryBaseRate { get; protected set; } = 0.003333f;
@@ -62,8 +64,14 @@ namespace GvMod.Common.Players.Sevenths
                 [ProjectileID.CultistBossLightningOrbArc] = Resistance.Absorb,
                 [ModContent.ProjectileType<Flashfield>()] = Resistance.Penetrate
             };
+        }
 
-
+        public override void PostLoadSeptima(Player player, SeptimaPlayer adept)
+        {
+            // Increase by 0.5 every level
+            // Sounds like little, but it's a lot with flashfield
+            BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
+            base.PostLoadSeptima(player, adept);
         }
 
         public override void MiscEffects(Player player, SeptimaPlayer adept)
@@ -97,10 +105,17 @@ namespace GvMod.Common.Players.Sevenths
 
         public override bool MainSkillUse(Player player, SeptimaPlayer adept)
         {
+            // Reminder to give wet immunity to high level players
             if (player.wet)
             {
-                adept.ForceOverheat();
-                return true;
+                if (adept.Stage <= 5)
+                {
+                    adept.ForceOverheat();
+                    return true;
+                } else if (adept.Stage <= 7)
+                {
+                    adept.EPUseModifier *= 2;
+                }
             }
 
             if ((!activeFlashfield || flashfieldIndex == -1) && Main.myPlayer == player.whoAmI)
@@ -151,7 +166,6 @@ namespace GvMod.Common.Players.Sevenths
                     / (1 + (adept.TaggedNPCs.targetCount * 0.075f));
                 int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
                     ApplyTo(adjustedDamage);
-                float finalKnockback = player.GetTotalKnockback<MainAttackDamage>().ApplyTo(knockback);
                 int direction = 1;
                 if ((target.Center.X - player.Center.X) < 0)
                 {
@@ -177,6 +191,12 @@ namespace GvMod.Common.Players.Sevenths
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }
             return adept.SecondarySkillUseTime >= 60 ? 600 : 0;
+        }
+
+        public override void OnLevelUp(Player player, SeptimaPlayer adept)
+        {
+            BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f) + ((int)(adept.Stage / 5) * 20);
+            base.OnLevelUp(player, adept);
         }
 
         public override void DrawAttack(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)

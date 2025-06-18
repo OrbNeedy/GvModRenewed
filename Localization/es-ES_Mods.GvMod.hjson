@@ -130,12 +130,34 @@ Items: {
 
 	MirrorShard: {
 		// DisplayName: Mirror Shard
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A shard imbued with the power of the Cyber Diva.
+			Allows the user to resurrect after dying with improved abilities.
+			''' */
 	}
 
 	RingOfPerfection: {
 		// DisplayName: Ring Of Perfection
-		// Tooltip: ""
+		// Tooltip: The most perfect ring ever created, become perfect.
+	}
+
+	Stage1Upgrade: {
+		// DisplayName: Contained Empowerment
+		/* Tooltip:
+			'''
+			A container of strange energy that ressonates with your septima.
+			Can be used to upgrade your septima up to level 10.
+			''' */
+	}
+
+	UniversalUpgradeItem: {
+		// DisplayName: Tonic of septima empowerment
+		/* Tooltip:
+			'''
+			A special recipe that is guaranteed to enhance a septima no matter how powerful it 
+			already is.
+			''' */
 	}
 }
 
@@ -154,23 +176,59 @@ UpgradeDescription: {
 Buffs: {
 	Anthem: {
 		// DisplayName: Anthem
-		// Description: Mods.GvMod.Buffs.Anthem.Description
+		/* Description:
+			'''
+			Resurrected by the power of the cyber diva.
+			All septimal abilities are increased.
+			''' */
 	}
 
 	ResurrectionCooldown: {
-		// DisplayName: Resurrection Cooldown
-		// Description: Mods.GvMod.Buffs.ResurrectionCooldown.Description
+		// DisplayName: Anthem Cooldown
+		// Description: Your body is unable to be resurrected again.
 	}
 }
 
 Configs: {
 	GameplayConfig: {
 		// DisplayName: Gameplay Config
-		// Headers.Resurrection: Resurrection Header
+		// Headers.Resurrection: Resurrection
 
 		BossResurrection: {
 			// Label: Boss Resurrection
-			// Tooltip: ""
+			/* Tooltip:
+				'''
+				Turn off to disable bosses having a chance to resurrect after dying if they were 
+				defeated before. 
+				This will not disrupt player resurrection, but make it impossible to accquire 
+				resurrection related items.
+				''' */
 		}
 	}
+}
+
+Generation: {
+	// Upgrade1: Generating Upgrades
+	// Upgrade9: Draconizing the earth
+}
+
+LevelUpMessage: {
+	// DragonVein0: A mysterious force powers your septima.
+	// DragonVein1: The earth itself empowers your septima.
+	// DragonVein2: You feel a sudden surge of power.
+	// DragonVein3: The environment nurtures your septima.
+	// DragonVein4: A primal power fills you.
+	// DragonVein5: The planet acknowledges your struggles.
+	// DragonVein6: Septimal power fills your veins.
+}
+
+DragonVeins: {
+	// Visited: Visited
+	// Unseen: Unseen
+	// Visit0: Your septima reacts to the environment.
+	// Visit1: You feel power surging through the air.
+	// Visit2: This place feels special.
+	// Visit3: The ground beneat rumbles with power.
+	// Visit4: Waves of primal energy spread from this place.
+	// Visit5: An unseen aura permeates the air.
 }
