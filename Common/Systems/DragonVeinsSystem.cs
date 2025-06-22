@@ -35,25 +35,10 @@ namespace GvMod.Common.Systems
                     veinPoints.Add(new Point16(Xpoint, Ypoint));
                 } else
                 {
-                    int attempts = 0;
-                    while (attempts < 100)
-                    {
-                        int x = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        int y = WorldGen.genRand.Next((int)GenVars.worldSurfaceLow, Main.maxTilesY);
-
-                        if ((Main.tile[x, y].TileType == TileID.Dirt || Main.tile[x, y].TileType == TileID.Stone ||
-                            Main.tile[x, y].TileType == TileID.Sandstone || 
-                            Main.tile[x, y].TileType == TileID.SnowBlock ||
-                            Main.tile[x, y].TileType == TileID.LivingWood ||
-                            Main.tile[x, y].TileType == TileID.LivingMahogany || 
-                            Main.tile[x, y].TileType == TileID.Mud ||
-                            Main.tile[x, y].TileType == TileID.DesertFossil))
-                        {
-                            if (AddVein(new Point16(x, y))) break;
-                        }
-
-                        attempts++;
-                    }
+                    int x = Main.rand.Next(0, Main.maxTilesX);
+                    int y = Main.rand.Next((int)GenVars.worldSurfaceLow, Main.maxTilesY);
+                    
+                    veinPoints.Add(new Point16(x, y));
                 }
             }
             base.LoadWorldData(tag);
@@ -70,6 +55,13 @@ namespace GvMod.Common.Systems
                 Point16 tilePosition = player.position.ToTileCoordinates16();
                 for (int i = 0; i < adept.DragonVeinsVisited.Length; i++)
                 {
+                    if (veinPoints.Count >= i)
+                    {
+                        int x = Main.rand.Next(0, Main.maxTilesX);
+                        int y = Main.rand.Next((int)GenVars.worldSurfaceLow, Main.maxTilesY);
+
+                        veinPoints.Add(new Point16(x, y));
+                    }
                     float dX = tilePosition.X - veinPoints[i].X, dY = tilePosition.Y - veinPoints[i].Y;
                     float distance = (float)Math.Sqrt((dX * dX) + (dY * dY));
 

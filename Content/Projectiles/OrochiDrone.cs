@@ -1,5 +1,4 @@
 ﻿
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -57,7 +56,6 @@ namespace GvMod.Content.Projectiles
             {
                 if (Projectile.timeLeft >= 109)
                 {
-
                     if ((Projectile.timeLeft - 109) % 7 == 0 || (Projectile.timeLeft - 109) == 0)
                     {
                         SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/GunShot_G") with

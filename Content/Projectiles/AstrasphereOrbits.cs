@@ -33,7 +33,7 @@ namespace GvMod.Content.Projectiles
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 120;
+            Projectile.timeLeft = 100;
             Projectile.ownerHitCheck = true;
             Projectile.netImportant = true;
         }
@@ -54,9 +54,7 @@ namespace GvMod.Content.Projectiles
                 {
                     Projectile targetField = Main.projectile[fieldIndex];
                     if (targetField.active && targetField.owner == Projectile.owner && 
-                        targetField.ModProjectile is Flashfield && 
-                        (targetField.ai[0] == (int)FlashfieldBehavior.Astrasphere || 
-                        targetField.ai[0] == (int)FlashfieldBehavior.Launch))
+                        targetField.ModProjectile is AstrasphereProjectile)
                     {
                         target = targetField.Center;
                     }

@@ -14,6 +14,7 @@ Projectiles: {
 	// Thunder.DisplayName: Thunder
 	// AstrasphereOrbits.DisplayName: Orbits
 	// OrochiDrone.DisplayName: Drone
+	// AstrasphereProjectile.DisplayName: Astrasphere Projectile
 }
 
 DamageClasses: {

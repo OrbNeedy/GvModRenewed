@@ -30,12 +30,11 @@ namespace GvMod.Common.Players.Skills
         {
             player.oldPosition = player.position;
             int finalFieldDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
-                    ApplyTo(66);
+                    ApplyTo(73);
             int finalSphereDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
-                    ApplyTo(33);
+                    ApplyTo(39);
             fieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero, 
-                ModContent.ProjectileType<Flashfield>(), finalFieldDamage, 3, player.whoAmI, 
-                (int)FlashfieldBehavior.Astrasphere);
+                ModContent.ProjectileType<AstrasphereProjectile>(), finalFieldDamage, 3, player.whoAmI);
             for (int i = 0; i < 3; i++)
             {
                 Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero,
@@ -61,7 +60,7 @@ namespace GvMod.Common.Players.Skills
                 Main.NewText($"Player index: {player.whoAmI}");
             }*/
 
-            return adept.SpecialSkillUseTime < 150;
+            return adept.SpecialSkillUseTime < 130;
         }
 
         public override void NPCHitUpdate(Player player, SeptimaPlayer adept, NPC npc, ref Player.HurtModifiers modifiers)

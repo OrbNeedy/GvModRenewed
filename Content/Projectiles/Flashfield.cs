@@ -1,6 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -8,15 +10,8 @@ using Terraria.ModLoader;
 
 namespace GvMod.Content.Projectiles
 {
-    public enum FlashfieldBehavior
-    {
-        Default, // Follow the owner
-        Astrasphere, // A different hitbox size and texture from Default
-        Launch // Gets sent to the mouse position
-    }
     public class Flashfield : ModProjectile
     {
-        private int Behavior { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         private Vector2 target = new Vector2(0, 0);
         private int timer = 0;
         private int cycle = 0;
@@ -29,6 +24,9 @@ namespace GvMod.Content.Projectiles
         private int frame = 0;
         private int frameTimer = 0;
         private bool hideExtras = false;
+
+        private int soundTimer = 0;
+        private SlotId soundID;
 
         public override void SetDefaults()
         {
@@ -54,82 +52,76 @@ namespace GvMod.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            // Play sound effect
-            // TODO: Separate the sound effect into a start and begining
-            switch (Behavior)
+            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Flashfield");
+            bounds = new Rectangle(0, 0, 382, 378);
+            soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlashfieldActive") with
             {
-                case (int)FlashfieldBehavior.Astrasphere:
-                case (int)FlashfieldBehavior.Launch:
-                    Projectile.Size = new Vector2(268);
-                    Projectile.localNPCHitCooldown = 15;
-                    Projectile.timeLeft = 120;
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Astrasphere");
-                    Projectile.ownerHitCheck = false;
-                    bounds = new Rectangle(0, 0, 360, 362);
-                    Projectile.netUpdate = true;
-                    break;
-                default:
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Flashfield");
-                    bounds = field.Value.Bounds;
-                    break;
-            }
-            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
-            timer++;
+                PitchVariance = 0.1f,
+                Volume = 0.25f
+            }, Projectile.Center, StopSound);
+            frame = Main.rand.Next(0, 4);
         }
 
         public override void AI()
         {
-            switch (Behavior)
+            if (Main.myPlayer == Projectile.owner)
             {
-                case (int)FlashfieldBehavior.Launch:
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        target = Main.MouseWorld;
-                    }
-                    break;
-                default:
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        Projectile.Center = Main.LocalPlayer.Center;
-                        Projectile.netUpdate = true;
-                    }
-                    break;
+                Projectile.Center = Main.LocalPlayer.Center;
+                Projectile.netUpdate = true;
             }
-            timer++;
+            ActiveSound soundInstance;
+            SoundEngine.TryGetActiveSound(soundID, out soundInstance);
+
+            if (soundInstance == null)
+            {
+                soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlashfieldUse") with
+                {
+                    PitchVariance = 0.15f,
+                    Volume = 0.25f
+                }, Projectile.Center, StopSound);
+            } else
+            {
+                if (!soundInstance.IsPlaying)
+                {
+                    soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlashfieldUse") with
+                    {
+                        PitchVariance = 0.15f,
+                        Volume = 0.25f
+                    }, Projectile.Center, StopSound);
+                }
+            }
             TextureCycles();
+        }
+
+        private bool StopSound(ActiveSound soundInstance)
+        {
+            if (Projectile.active)
+            {
+                return true;
+            } else
+            {
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlashfieldEnd") with
+                {
+                    PitchVariance = 0.1f,
+                    Volume = 0.25f
+                }, Projectile.Center);
+                return false;
+            }
         }
 
         private void TextureCycles()
         {
-            switch (Behavior)
+            if (frameTimer >= 2)
             {
-                case (int)FlashfieldBehavior.Launch:
-                case (int)FlashfieldBehavior.Astrasphere:
-                    if (frameTimer >= 4)
-                    {
-                        frame++;
-                        frameTimer = 0;
-                        if (frame > 4)
-                        {
-                            frame = 2;
-                            hideExtras = !hideExtras;
-                            if (!hideExtras)
-                            {
-                                extrasFrame++;
-                                if (extrasFrame > 1)
-                                {
-                                    extrasFrame = 0;
-                                }
-                            }
-                        }
-                        bounds = new Rectangle(bounds.Width * frame, 0, bounds.Width, bounds.Height);
-                    }
-                    // Add ending frames
-                    extrasRotation -= MathHelper.TwoPi / 100;
-                    break;
-                default:
-                    break;
+                frame++;
+                frameTimer = 0;
+                if (frame > 3)
+                {
+                    frame = 0;
+                }
+                bounds = new Rectangle(bounds.Width * frame, 0, bounds.Width, bounds.Height);
             }
+
             frameTimer++;
         }
 
@@ -178,27 +170,6 @@ namespace GvMod.Content.Projectiles
                 bounds.Size() * 0.5f, 
                 1f, SpriteEffects.None
             );
-
-            if ((Behavior == (int)FlashfieldBehavior.Astrasphere || Behavior == (int)FlashfieldBehavior.Launch) && 
-                !hideExtras)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    float rotationOffset = (MathHelper.TwoPi * i / 3);
-                    Vector2 positionOffset = new Vector2(0, 120 * Projectile.scale).
-                        RotatedBy(rotationOffset + extrasRotation);
-
-                    Main.EntitySpriteDraw(
-                        extras.Value,
-                        Projectile.Center - Main.screenPosition + positionOffset,
-                        new Rectangle(218 * extrasFrame, 0, 218, 184),
-                        Color.White * 0.75f,
-                        extrasRotation + rotationOffset - MathHelper.Pi,
-                        new Vector2(109, 92),
-                        1f, SpriteEffects.None
-                    );
-                }
-            }
 
             return false;
         }

@@ -46,6 +46,9 @@ namespace GvMod.Common.Players
 
 
         // State related
+        public int RechargeDelay { get; set; } = 0;
+        public int RechargeTimer { get; set; } = 0;
+        public bool DoubleTap { get; set; } = false;
         public bool QueueStageCheck { get; set; } = false;
         public bool Overheated { get; set; } = false;
         public bool UsingMainSkill { get; set; } = false;
@@ -154,19 +157,19 @@ namespace GvMod.Common.Players
             if (KeybindSystem.specialAbility.JustPressed)
             {
                 // Skilless adepts don't get to use specials
-                if (septima.AvailableSkills.Count <= 0) return;
-
-                ModContent.GetInstance<GvMod>().Logger.Warn($"");
-
-                SelectedSkill = (int)MathHelper.Clamp(SelectedSkill, 0, septima.AvailableSkills.Count - 1);
-                SpecialSkill special = septima.AvailableSkills[SelectedSkill];
-
-                if (special.CanUse(Player, this) && CurrentAP >= special.APCost && !UsingSpecialSkill && 
-                    !UsingSecondarySkill && !Player.CCed && special.CooldownTime <= 0)
+                if (septima.AvailableSkills.Count > 0)
                 {
-                    UsingSpecialSkill = special.OnSkillUse(Player, this);
-                    CurrentAP -= special.APCost;
-                    special.CooldownTime = special.MaxCooldownTime;
+                    //ModContent.GetInstance<GvMod>().Logger.Warn($"");
+
+                    SelectedSkill = (int)MathHelper.Clamp(SelectedSkill, 0, septima.AvailableSkills.Count - 1);
+                    SpecialSkill special = septima.AvailableSkills[SelectedSkill];
+
+                    if (CanUseSpecialSkill(special))
+                    {
+                        UsingSpecialSkill = special.OnSkillUse(Player, this);
+                        CurrentAP -= special.APCost;
+                        special.CooldownTime = special.MaxCooldownTime;
+                    }
                 }
             }
 
@@ -299,72 +302,13 @@ namespace GvMod.Common.Players
                 QueueStageCheck = false;
             }
 
-            // TODO: Test if this actually works for stat modifications
-            // septima.MiscEffects(Player, this);
-
-            if (UsingSpecialSkill)
-            {
-                SpecialSkill special = septima.AvailableSkills[SelectedSkill];
-                if (Player.CCed && !special.Invincible)
-                {
-                    special.ForcedSkillEnd(Player, this);
-                    UsingSpecialSkill = false;
-                } else
-                {
-                    special.CooldownTime = special.MaxCooldownTime;
-                    UsingSpecialSkill = special.MiscUpdate(Player, this);
-                    if (!special.AllowsMovement)
-                    {
-                        //Player.webbed = true;
-                        if (Player.mount.Active)
-                        {
-                            Player.mount.Dismount(Player);
-                        }
-                        Player.CancelAllBootRunVisualEffects();
-                    }
-                    SpecialSkillUseTime++;
-                }
-            } else
-            {
-                SpecialSkillUseTime = 0;
-            }
+            SpecialSkillLogic();
 
             // Main Skill logic
-            if (UsingMainSkill && CanUseMainSkill())
-            {
-                // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
-                if (septima.MainSkillUse(Player, this))
-                {
-                    CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
-                    EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
-                }
-                MainSkillUseTime++;
-            }
-            else
-            {
-                // If not using the main skill, set MainSkillUseTime to 0 and decrease EP cooldown 
-                MainSkillUseTime = 0;
-                if (EPCooldownTimer > 0)
-                {
-                    EPCooldownTimer--;
-                }
-            }
+            MainSkillLogic();
 
             // Secondary Skill logic
-            if (UsingSecondarySkill)
-            {
-                int cooldownRegistered = septima.SecondarySkillUse(Player, this);
-                SecondarySkillUseTime++;
-                if (cooldownRegistered > 0)
-                {
-                    UsingSecondarySkill = false;
-                    SecondarySkillCooldown = cooldownRegistered;
-                }
-            }
-            else
-            {
-                SecondarySkillUseTime = 0;
-            }
+            SecondarySkillLogic();
 
             // Check EP before the recovery and overheat if EP is 0 or less
             if (CurrentEP <= 0 && !Overheated)
@@ -397,6 +341,8 @@ namespace GvMod.Common.Players
                 CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier();
             }
 
+            RechargeLogic();
+
             // Clamp EP and AP
             CurrentEP = MathHelper.Clamp(CurrentEP, 0, GetTotalMaxEP());
             CurrentAP = MathHelper.Clamp(CurrentAP, 0, GetTotalMaxAP());
@@ -405,6 +351,102 @@ namespace GvMod.Common.Players
                 CurrentEP = GetTotalMaxEP();
                 CurrentAP = GetTotalMaxAP();
                 Overheated = false;
+            }
+        }
+
+        private void SpecialSkillLogic()
+        {
+            if (UsingSpecialSkill)
+            {
+                SpecialSkill special = septima.AvailableSkills[SelectedSkill];
+                if (Player.CCed && !special.Invincible)
+                {
+                    special.ForcedSkillEnd(Player, this);
+                    UsingSpecialSkill = false;
+                }
+                else
+                {
+                    special.CooldownTime = special.MaxCooldownTime;
+                    UsingSpecialSkill = special.MiscUpdate(Player, this);
+                    if (!special.AllowsMovement)
+                    {
+                        //Player.webbed = true;
+                        if (Player.mount.Active)
+                        {
+                            Player.mount.Dismount(Player);
+                        }
+                        Player.CancelAllBootRunVisualEffects();
+                    }
+                    SpecialSkillUseTime++;
+                }
+            }
+            else
+            {
+                SpecialSkillUseTime = 0;
+            }
+        }
+
+        private void MainSkillLogic()
+        {
+            if (UsingMainSkill && CanUseMainSkill())
+            {
+                // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
+                if (septima.MainSkillUse(Player, this))
+                {
+                    CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
+                    EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
+                }
+                MainSkillUseTime++;
+            }
+            else
+            {
+                // If not using the main skill, set MainSkillUseTime to 0 and decrease EP cooldown 
+                MainSkillUseTime = 0;
+                if (EPCooldownTimer > 0)
+                {
+                    EPCooldownTimer--;
+                }
+            }
+        }
+
+        private void SecondarySkillLogic()
+        {
+            if (UsingSecondarySkill)
+            {
+                int cooldownRegistered = septima.SecondarySkillUse(Player, this);
+                SecondarySkillUseTime++;
+                if (cooldownRegistered > 0)
+                {
+                    UsingSecondarySkill = false;
+                    SecondarySkillCooldown = cooldownRegistered;
+                }
+            }
+            else
+            {
+                SecondarySkillUseTime = 0;
+            }
+        }
+
+        private void RechargeLogic()
+        {
+            if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && !UsingSpecialSkill &&
+                !Overheated && septima.AllowRecharge)
+            {
+                RechargeDelay = 50;
+                RechargeTimer = 35;
+            }
+
+            if (RechargeDelay > 0) RechargeDelay--;
+            if (RechargeTimer > 0)
+            {
+                int limit = Main.rand.Next(5, 10);
+                for (int i = 0; i < limit; i++)
+                {
+                    Dust.NewDust(Player.position, Player.width, Player.height, DustID.MartianSaucerSpark);
+                }
+                EPCooldownTimer = 1;
+                CurrentEP += (float)GetTotalMaxEP()/35f;
+                RechargeTimer--;
             }
         }
 
@@ -525,6 +567,15 @@ namespace GvMod.Common.Players
 
             septima.UpdateTimers();
             if (SecondarySkillCooldown > 0) SecondarySkillCooldown--;
+
+            if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[0] < 15)
+            {
+                DoubleTap = true;
+            }
+            else
+            {
+                DoubleTap = false;
+            }
         }
 
         /// <summary>
@@ -682,6 +733,7 @@ namespace GvMod.Common.Players
 
             if (stageChanged || checks > 1)
             {
+                // TODO: Add localization
                 Main.NewText("Your septima feels stronger.", septima.MainColor);
             }
             //Main.NewText($"Final checks: {checks}");
@@ -751,13 +803,19 @@ namespace GvMod.Common.Players
         public bool CanUseMainSkill()
         {
             return CurrentEP > 0 && !Overheated && septima.CanUseMainSkill(Player, this) && !UsingSpecialSkill
-                && !UsingSecondarySkill && !Player.CCed;
+                && !UsingSecondarySkill && !Player.CCed && RechargeTimer <= 0;
         }
 
         public bool CanUseSecondarySkill()
         {
             return SecondarySkillCooldown <= 0 && septima.CanUseSecondarySkill(Player, this) && 
-                !UsingSpecialSkill && !Player.CCed && !UsingSecondarySkill;
+                !UsingSpecialSkill && !Player.CCed && !UsingSecondarySkill && RechargeTimer <= 0;
+        }
+
+        public bool CanUseSpecialSkill(SpecialSkill special)
+        {
+            return special.CanUse(Player, this) && CurrentAP >= special.APCost && !UsingSpecialSkill &&
+                        !UsingSecondarySkill && !Player.CCed && special.CooldownTime <= 0 && RechargeTimer <= 0;
         }
 
         public static Septima GetSeptima(SeptimaType type)

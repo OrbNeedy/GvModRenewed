@@ -121,8 +121,7 @@ namespace GvMod.Common.Players.Sevenths
             if ((!activeFlashfield || flashfieldIndex == -1) && Main.myPlayer == player.whoAmI)
             {
                 flashfieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center,
-                    Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0, player.whoAmI,
-                    (int)FlashfieldBehavior.Default);
+                    Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0, player.whoAmI);
             }
 
             Projectile flashfield = Main.projectile[flashfieldIndex];

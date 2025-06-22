@@ -22,7 +22,8 @@ namespace GvMod.Common
 
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
-            if (!NPC.downedAncientCultist && !Main.mapFullscreen) return;
+            if (!NPC.downedAncientCultist || !Main.mapFullscreen) return;
+            
             const float scaleIfNotSelected = 1f;
             const float scaleIfSelected = scaleIfNotSelected * 2f;
 

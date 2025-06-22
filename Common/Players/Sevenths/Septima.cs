@@ -34,6 +34,7 @@ namespace GvMod.Common.Players.Sevenths
         public virtual int EPCooldownBaseTimer { get; protected set; } = 0;
         public virtual float OverheatRecoveryBaseRate { get; protected set; } = 0;
         public virtual float APRecoveryBaseRate { get; protected set; } = 0f;
+        public virtual bool AllowRecharge { get; protected set; } = true;
 
         // Identifiers
         public virtual SeptimaType Type { get; protected set; } = SeptimaType.None;
