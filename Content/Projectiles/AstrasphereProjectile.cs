@@ -13,7 +13,8 @@ namespace GvMod.Content.Projectiles
     {
         Default, // Follow the owner
         Launch, // Gets sent to the mouse position
-        Expand // Same as the previous, but after getting to the position, disappears and sends the orbits outwards
+        Expand, // Same as the previous, but after getting to the position, disappears and sends the orbits outwards
+        Follow // The same behavior as Flashfield, but has higher damage and keeps the orbits
     }
     public class AstrasphereProjectile : ModProjectile
     {
@@ -31,11 +32,9 @@ namespace GvMod.Content.Projectiles
         private int frameTimer = 0;
         private bool hideExtras = false;
 
-        private int soundTimer = 0;
-
         public override void SetDefaults()
         {
-            Projectile.Size = new Vector2(242);
+            Projectile.Size = new Vector2(268);
             Projectile.light = 1f;
             Projectile.scale = 1f;
             // Main.projFrames[Projectile.type] = 4;
@@ -46,10 +45,12 @@ namespace GvMod.Content.Projectiles
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 14;
             Projectile.penetrate = -1;
+            Projectile.ArmorPenetration = 15;
 
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.timeLeft = 100;
             Projectile.ownerHitCheck = false;
             Projectile.netImportant = true;
@@ -57,22 +58,20 @@ namespace GvMod.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            // Play sound effect
-            // TODO: Separate the sound effect into a start and begining
+            Main.NewText("Speed: " + Projectile.velocity.Length());
             switch (Behavior)
             {
                 case (int)AstraspheredBehavior.Launch:
                 default:
                     Projectile.Size = new Vector2(268);
-                    Projectile.localNPCHitCooldown = 15;
-                    Projectile.timeLeft = 100;
                     field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
                     bounds = new Rectangle(0, 0, 360, 362);
                     Projectile.netUpdate = true;
 
                     SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AstrasphereUse") with
                     {
-                        PitchVariance = 0.1f
+                        PitchVariance = 0.1f,
+                        Volume = 0.75f
                     }, Projectile.Center, StopSound);
                     break;
             }
@@ -100,17 +99,7 @@ namespace GvMod.Content.Projectiles
 
         private bool StopSound(ActiveSound soundInstance)
         {
-            if (Projectile.active)
-            {
-                return true;
-            } else
-            {
-                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AstrasphereEnd") with
-                {
-                    PitchVariance = 0.1f
-                }, Projectile.Center);
-                return false;
-            }
+            return Projectile.active;
         }
 
         public override void OnKill(int timeLeft)
@@ -118,7 +107,7 @@ namespace GvMod.Content.Projectiles
             SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AstrasphereEnd") with
             {
                 PitchVariance = 0.1f,
-                Volume = 1.5f
+                Volume = 0.75f
             }, Projectile.Center);
             base.OnKill(timeLeft);
         }
@@ -148,7 +137,7 @@ namespace GvMod.Content.Projectiles
                         }
                         bounds = new Rectangle(bounds.Width * frame, 0, bounds.Width, bounds.Height);
                     }
-                    // Add ending frames
+
                     extrasRotation -= MathHelper.TwoPi / 100;
                     break;
             }
@@ -157,7 +146,7 @@ namespace GvMod.Content.Projectiles
 
         public override bool? CanCutTiles()
         {
-            return false;
+            return true;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

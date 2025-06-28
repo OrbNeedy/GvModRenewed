@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -30,9 +26,8 @@ namespace GvMod.Content.Projectiles
             Projectile.height = 1568;
             Projectile.light = 1f;
             Projectile.scale = 1f;
-            // Main.projFrames[Projectile.type] = 4;
 
-            Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
+            Projectile.DamageType = ModContent.GetInstance<SecondaryAttackDamage>();
             Projectile.damage = 1;
             Projectile.knockBack = 0;
             Projectile.usesLocalNPCImmunity = true;
@@ -57,8 +52,18 @@ namespace GvMod.Content.Projectiles
             independentSkipDraw = false;
             if (Delay)
             {
+                // Find a sound for a delayed thunder
                 Projectile.timeLeft += 60;
+            } else
+            {
+                // Find a sound for a constant thunder 
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/Crashvolt") with
+                {
+                    PitchVariance = 0.1f,
+                    Volume = 0.75f
+                }, Projectile.Center);
             }
+
             if (additionalDuration > 0)
             {
                 Projectile.timeLeft += additionalDuration;

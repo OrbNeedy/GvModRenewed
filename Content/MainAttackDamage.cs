@@ -17,12 +17,9 @@ namespace GvMod.Content
 
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)
         {
-            if (damageClass == Generic)
-            {
+            if (damageClass == ModContent.GetInstance<SeptimaDamage>() || damageClass == DamageClass.Generic)
                 return StatInheritanceData.Full;
-            }
-            if (damageClass == ModContent.GetInstance<SeptimaDamage>())
-                return StatInheritanceData.Full;
+
             return StatInheritanceData.None;
         }
     }

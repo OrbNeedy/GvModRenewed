@@ -10,6 +10,7 @@ using GvMod.Common.Utils;
 using GvMod.Common.Players.Skills;
 using Terraria.Localization;
 using GvMod.Content.Buffs;
+using Terraria.Audio;
 
 namespace GvMod.Common.Players
 {
@@ -166,6 +167,14 @@ namespace GvMod.Common.Players
 
                     if (CanUseSpecialSkill(special))
                     {
+                        if (special.InternalName != "Default")
+                        {
+                            SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/GlobalSpecialSkillUse") with
+                            {
+                                PitchVariance = 0.1f,
+                                Volume = 0.75f
+                            }, Player.Center);
+                        }
                         UsingSpecialSkill = special.OnSkillUse(Player, this);
                         CurrentAP -= special.APCost;
                         special.CooldownTime = special.MaxCooldownTime;
@@ -285,6 +294,11 @@ namespace GvMod.Common.Players
         public override void PreUpdateBuffs()
         {
             septima.MiscEffects(Player, this);
+
+            if (UsingSpecialSkill)
+            {
+                septima.AvailableSkills[SelectedSkill].StatUpdate(Player, this);
+            }
             base.PreUpdateBuffs();
         }
 
@@ -432,6 +446,12 @@ namespace GvMod.Common.Players
             if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && !UsingSpecialSkill &&
                 !Overheated && septima.AllowRecharge)
             {
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/Recharge") with
+                {
+                    PitchVariance = 0.1f, 
+                    Volume = 0.75f
+                }, Player.Center);
+
                 RechargeDelay = 50;
                 RechargeTimer = 35;
             }
@@ -555,7 +575,6 @@ namespace GvMod.Common.Players
 
         public override void ResetEffects()
         {
-            perfectionCheck = false;
 
             ModifiedMaxEP = 0;
             ModifiedMaxAP = 0;
@@ -565,7 +584,7 @@ namespace GvMod.Common.Players
             EPCooldownModifier = 1;
             APRecoveryModifier = 1;
 
-            septima.UpdateTimers();
+            septima.UpdateTimers(perfectionCheck);
             if (SecondarySkillCooldown > 0) SecondarySkillCooldown--;
 
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[0] < 15)
@@ -576,6 +595,8 @@ namespace GvMod.Common.Players
             {
                 DoubleTap = false;
             }
+
+            perfectionCheck = false;
         }
 
         /// <summary>

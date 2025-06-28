@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -29,12 +28,14 @@ namespace GvMod.Content.Projectiles
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 8;
             Projectile.penetrate = -1;
+            Projectile.ArmorPenetration = 15;
 
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
             Projectile.timeLeft = 100;
-            Projectile.ownerHitCheck = true;
+            Projectile.ownerHitCheck = false;
             Projectile.netImportant = true;
         }
 

@@ -2,6 +2,7 @@
 using GvMod.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
@@ -77,6 +78,11 @@ namespace GvMod.Common.Players
                 genDust = false;
                 Player.AddBuff(ModContent.BuffType<Anthem>(), 3600 + (int)(1200 * (resurrectionPower - 1)));
                 resurrected = true;
+
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AnthemActive") with
+                {
+                    PitchVariance = 0.1f
+                }, Player.Center);
                 return false;
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genDust, ref damageSource);

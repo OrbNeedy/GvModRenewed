@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace GvMod.Common.Players.Sevenths
         public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
         public override float SecondaryAttackDamage { get; protected set; } = 20;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
-            new Astrasphere(), new GalvanicPatch() };
+            new Astrasphere(), new GalvanicPatch(), new Luxcalibur() };
         public override float EPUseBase { get; protected set; } = 0.7f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
@@ -184,8 +185,14 @@ namespace GvMod.Common.Players.Sevenths
         {
             if (adept.SecondarySkillUseTime == 0 && Main.myPlayer == player.whoAmI)
             {
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/GlobalSpecialSkillUse") with
+                {
+                    PitchVariance = 0.1f,
+                    Volume = 0.75f
+                }, player.Center);
+
                 int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
-                    ApplyTo(40);
+                    ApplyTo(38 + adept.Stage * 2);
                 Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero,
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }

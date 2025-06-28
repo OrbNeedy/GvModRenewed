@@ -19,6 +19,17 @@ namespace GvMod.Common.Players.Skills
         public virtual bool AllowsMovement { get; set; } = true;
 
         /// <summary>
+        /// Runs whenever the skill is being set up, useful to make small differences between septimas with the same 
+        /// skills, <br/>such as changing it's name or cost.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        public virtual void OnSetup(Player player, SeptimaPlayer adept)
+        {
+
+        }
+
+        /// <summary>
         /// Determines if the special can be used at any moment.
         /// </summary>
         /// <param name="player"></param>
@@ -41,7 +52,19 @@ namespace GvMod.Common.Players.Skills
         }
 
         /// <summary>
-        /// Runs for as long as the skill needs to.
+        /// Allows the special skill to modify player stats.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        public virtual void StatUpdate(Player player, SeptimaPlayer adept)
+        {
+
+        }
+
+        /// <summary>
+        /// Runs for as long as the skill needs to, useful to determine the duration of the skill based on something 
+        /// <br/>other than time.<br/>Use <see cref="MiscUpdate(Player, SeptimaPlayer)"/> instead to modify player 
+        /// stats.
         /// </summary>
         /// <param name="player"></param>
         /// <param name="adept"></param>

@@ -30,9 +30,9 @@ namespace GvMod.Common.Players.Skills
         {
             player.oldPosition = player.position;
             int finalFieldDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
-                    ApplyTo(73);
+                    ApplyTo(71.4f + (1.6f * adept.Stage));
             int finalSphereDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
-                    ApplyTo(39);
+                    ApplyTo(37.4f + (1.6f * adept.Stage));
             fieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero, 
                 ModContent.ProjectileType<AstrasphereProjectile>(), finalFieldDamage, 3, player.whoAmI);
             for (int i = 0; i < 3; i++)
@@ -46,20 +46,6 @@ namespace GvMod.Common.Players.Skills
 
         public override bool MiscUpdate(Player player, SeptimaPlayer adept)
         {
-            /*field.timeLeft = 3;
-            field.friendly = true;
-            field.hostile = false;
-            field.netUpdate = true;*/
-            /*Main.NewText($"Field index: {fieldIndex}");
-            if (fieldIndex >= 0)
-            {
-                Projectile field = Main.projectile[fieldIndex];
-                Main.NewText($"Field active: {field.active}");
-                Main.NewText($"Field valid: {field.ModProjectile is Flashfield}");
-                Main.NewText($"Field owner: {field.owner}");
-                Main.NewText($"Player index: {player.whoAmI}");
-            }*/
-
             return adept.SpecialSkillUseTime < 130;
         }
 

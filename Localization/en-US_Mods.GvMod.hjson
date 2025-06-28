@@ -15,6 +15,7 @@ Projectiles: {
 	AstrasphereOrbits.DisplayName: Orbits
 	OrochiDrone.DisplayName: Drone
 	AstrasphereProjectile.DisplayName: Astrasphere Projectile
+	LuxcaliburProjectile.DisplayName: Luxcalibur Projectile
 }
 
 DamageClasses: {

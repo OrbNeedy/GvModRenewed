@@ -62,6 +62,11 @@ namespace GvMod.Common.Players.Sevenths
                 return skill.LevelRequirement <= adept.Level && skill.StageRequirement <= adept.Stage && 
                     !AvailableSkills.Contains(skill);
             }));
+            
+            foreach (SpecialSkill skill in AvailableSkills)
+            {
+                skill.OnSetup(player, adept);
+            }
         }
 
         public virtual void InitializeSeptima(Player player, SeptimaPlayer adept)
@@ -114,14 +119,20 @@ namespace GvMod.Common.Players.Sevenths
 
         }
 
-        public void UpdateTimers()
+        public void UpdateTimers(bool perfectionFlag)
         {
             // For balance purposes, cooldown time reduction will not be modified regardless of septima or items
             foreach (SpecialSkill skill in AvailableSkills)
             {
                 if (skill.CooldownTime > 0)
                 {
-                    skill.CooldownTime--;
+                    if (perfectionFlag)
+                    {
+                        skill.CooldownTime -= 10;
+                    } else
+                    {
+                        skill.CooldownTime--;
+                    }
                 }
             }
         }
