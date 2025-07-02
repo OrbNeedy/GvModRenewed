@@ -11,6 +11,7 @@ using GvMod.Common.Players.Skills;
 using Terraria.Localization;
 using GvMod.Content.Buffs;
 using Terraria.Audio;
+using Terraria.WorldBuilding;
 
 namespace GvMod.Common.Players
 {
@@ -546,6 +547,10 @@ namespace GvMod.Common.Players
 
         public override void OnHurt(Player.HurtInfo info)
         {
+            if (UsingSpecialSkill)
+            {
+                septima.AvailableSkills[SelectedSkill].HurtUpdate(Player, this, info);
+            }
             base.OnHurt(info);
         }
 

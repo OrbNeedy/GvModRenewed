@@ -16,6 +16,7 @@ Projectiles: {
 	// OrochiDrone.DisplayName: Drone
 	// AstrasphereProjectile.DisplayName: Astrasphere Projectile
 	// LuxcaliburProjectile.DisplayName: Luxcalibur Projectile
+	// VoltaicChainProjectile.DisplayName: Voltaic Chain Projectile
 }
 
 DamageClasses: {

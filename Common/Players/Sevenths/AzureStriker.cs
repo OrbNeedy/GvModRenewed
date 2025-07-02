@@ -29,7 +29,7 @@ namespace GvMod.Common.Players.Sevenths
         public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
         public override float SecondaryAttackDamage { get; protected set; } = 20;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
-            new Astrasphere(), new GalvanicPatch(), new Luxcalibur() };
+            new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains() };
         public override float EPUseBase { get; protected set; } = 0.7f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
@@ -140,7 +140,8 @@ namespace GvMod.Common.Players.Sevenths
 
             // Give player fall immunity
             player.noFallDmg = true;
-            player.maxFallSpeed *= 0.2f;
+            player.maxFallSpeed *= 0.25f;
+            player.fallStart = (int)player.Center.Y;
 
             float knockback = 0;
             if (adept.MainSkillUseTime <= 0)
@@ -172,8 +173,9 @@ namespace GvMod.Common.Players.Sevenths
                     direction = -1;
                 }
 
-                player.ApplyDamageToNPC(target, finalDamage, knockback, direction,
-                    damageType: ModContent.GetInstance<MainAttackDamage>(), damageVariation: true);
+                bool crit = player.GetTotalCritChance<SpecialAttackDamage>() < Main.rand.NextFloat();
+                player.ApplyDamageToNPC(target, finalDamage, knockback, direction, crit, 
+                    ModContent.GetInstance<MainAttackDamage>(), true);
 
                 adept.TaggedNPCs.damageTimer[i] = 10;
             }

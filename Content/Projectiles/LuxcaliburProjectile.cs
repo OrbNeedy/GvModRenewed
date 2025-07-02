@@ -220,26 +220,6 @@ namespace GvMod.Content.Projectiles
                 visualScale, SpriteEffects.None
             );
 
-            if (false)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    float rotationOffset = (MathHelper.TwoPi * i / 3);
-                    Vector2 positionOffset = new Vector2(0, 120 * Projectile.scale).
-                        RotatedBy(rotationOffset + extrasRotation);
-
-                    Main.EntitySpriteDraw(
-                        extras.Value,
-                        Projectile.Center - Main.screenPosition + positionOffset,
-                        new Rectangle(218 * extrasFrame, 0, 218, 184),
-                        Color.White * 0.75f,
-                        extrasRotation + rotationOffset - MathHelper.Pi,
-                        new Vector2(109, 92),
-                        1f, SpriteEffects.None
-                    );
-                }
-            }
-
             return false;
         }
     }

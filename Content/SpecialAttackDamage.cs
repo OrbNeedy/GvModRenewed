@@ -13,6 +13,7 @@ namespace GvMod.Content
         public override void SetDefaultStats(Player player)
         {
             player.GetCritChance<SpecialAttackDamage>() += 0.05f;
+            player.GetArmorPenetration<SpecialAttackDamage>() += 100;
         }
 
         public override StatInheritanceData GetModifierInheritance(DamageClass damageClass)

@@ -23,6 +23,7 @@ namespace GvMod.Common.Players.Skills
             player.noFallDmg = true;
             player.velocity = Vector2.Zero;
             player.position = player.oldPosition;
+            player.fallStart = (int)player.Center.Y;
             base.MoveUpdate(player, adept);
         }
 

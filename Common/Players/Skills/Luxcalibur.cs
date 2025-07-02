@@ -26,20 +26,20 @@ namespace GvMod.Common.Players.Skills
             player.noFallDmg = true;
             player.velocity = Vector2.Zero;
             player.position = player.oldPosition;
+            player.fallStart = (int)player.Center.Y;
             base.MoveUpdate(player, adept);
         }
 
         public override bool OnSkillUse(Player player, SeptimaPlayer adept)
         {
-            int baseDamage = 175;
+            int baseDamage = 250;
             player.oldPosition = player.position;
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 
             Vector2 direction = player.Center.DirectionTo(Main.MouseWorld);
-            int projRef = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, direction * 25, 
+            Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, direction * 25, 
                 ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 5, player.whoAmI, 
                 (int)LuxcaliburBehavior.Default);
-            Main.NewText("Projectile: " + Main.projectile[projRef].Name);
 
             return true;
         }
@@ -51,8 +51,9 @@ namespace GvMod.Common.Players.Skills
 
         public override void StatUpdate(Player player, SeptimaPlayer adept)
         {
-            player.statDefense += 10;
-            player.endurance += 0.25f;
+            player.statDefense += 15;
+            player.endurance += 0.15f;
+            player.GetArmorPenetration<SpecialAttackDamage>() += 100f;
         }
     }
 }

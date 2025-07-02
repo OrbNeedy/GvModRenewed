@@ -89,6 +89,11 @@ namespace GvMod.Common.Players.Skills
         {
         }
 
+        public virtual void HurtUpdate(Player player, SeptimaPlayer adept, Player.HurtInfo info)
+        {
+
+        }
+
         /// <summary>
         /// Happens any time the skill is forced to end early, used for special interactions and stopping processes.
         /// </summary>

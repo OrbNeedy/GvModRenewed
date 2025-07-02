@@ -14,7 +14,10 @@ namespace GvMod.Content.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<SeptimaPlayer>().perfectionCheck = true;
-            player.GetDamage(DamageClass.Generic) += 1000;
+            if (!hideVisual)
+            {
+                player.GetDamage(DamageClass.Generic) += 1000;
+            }
             base.UpdateAccessory(player, hideVisual);
         }
     }

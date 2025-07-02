@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GvMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67408329d9a97d16a69f5cf8a56d49150dcbb520")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89da17ac000b4133019c8db3b99bfad1ee7f86c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("GvMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GvMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

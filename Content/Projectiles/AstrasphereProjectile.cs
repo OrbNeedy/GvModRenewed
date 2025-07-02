@@ -58,7 +58,6 @@ namespace GvMod.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            Main.NewText("Speed: " + Projectile.velocity.Length());
             switch (Behavior)
             {
                 case (int)AstraspheredBehavior.Launch:
