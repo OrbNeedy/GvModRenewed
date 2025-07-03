@@ -54,18 +54,28 @@ namespace GvMod.Common.Players.Sevenths
         public virtual Dictionary<int, Resistance> NPCDamageResistances { get; set; } = new();
         public virtual Dictionary<int, Resistance> ProjectileDamageResistances { get; set; } = new();
 
-        public void CalculateSkills(Player player, SeptimaPlayer adept)
+        public void CalculateSkills(Player player, SeptimaPlayer adept, bool queue = false)
         {
-            AvailableSkills.AddRange(SkillList.FindAll((skill) =>
+            List<SpecialSkill> SkillsToAdd = SkillList.FindAll((skill) =>
             {
                 // Add all skills under the level and stage requirements that are also not included already
-                return skill.LevelRequirement <= adept.Level && skill.StageRequirement <= adept.Stage && 
+                return skill.LevelRequirement <= adept.Level && skill.StageRequirement <= adept.Stage &&
                     !AvailableSkills.Contains(skill);
-            }));
-            
+            });
+
+            AvailableSkills.AddRange(SkillsToAdd);
+
             foreach (SpecialSkill skill in AvailableSkills)
             {
                 skill.OnSetup(player, adept);
+            }
+
+            if (queue)
+            {
+                foreach (SpecialSkill skill in SkillsToAdd)
+                {
+                    adept.QueuedSkills.Add(skill.InternalName);
+                }
             }
         }
 

@@ -12,6 +12,7 @@ using Terraria.Localization;
 using GvMod.Content.Buffs;
 using Terraria.Audio;
 using Terraria.WorldBuilding;
+using System.Collections.Generic;
 
 namespace GvMod.Common.Players
 {
@@ -60,6 +61,7 @@ namespace GvMod.Common.Players
         public bool UsingSpecialSkill { get; set; } = false;
         public int SpecialSkillUseTime { get; set; } = 0;
         public NPCTags TaggedNPCs = new();
+        public List<string> QueuedSkills = new();
 
         // Stat modifiers
         // Base modifiers, septima and item modifiers get added to this
@@ -647,7 +649,7 @@ namespace GvMod.Common.Players
             Level++;
 
             StageCheck();
-            septima.CalculateSkills(Player, this);
+            septima.CalculateSkills(Player, this, true);
 
             return true;
         }

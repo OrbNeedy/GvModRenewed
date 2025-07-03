@@ -10,13 +10,20 @@ namespace GvMod.Common.Systems
     public class UISystem : ModSystem
     {
         private GameTime _lastUpdatedGameTime;
+
         private UserInterface EPBarUserInterface;
         private EPBar EPBar;
+
         private UserInterface APBarUserInterface;
         private APBar APBar;
+
         private UserInterface SkillUserInterface;
         private SkillDisplay SkillDisplay;
         private SkillSelect SkillSelect;
+
+        private UserInterface SkillNotificationsUserInterface;
+        private SkillNotice SkillNotifications;
+
         private bool lastSkillUI;
         private bool hidingUI = false;
 
@@ -43,6 +50,12 @@ namespace GvMod.Common.Systems
             SkillSelect = new SkillSelect();
             SkillSelect.Activate();
             SkillUserInterface.SetState(SkillDisplay);
+
+            SkillNotificationsUserInterface = new UserInterface();
+            SkillNotifications = new SkillNotice();
+            SkillNotifications.Activate();
+            SkillNotificationsUserInterface.SetState(SkillNotifications);
+
             lastSkillUI = false;
         }
 
@@ -52,6 +65,7 @@ namespace GvMod.Common.Systems
             APBar = null;
             SkillDisplay = null;
             SkillSelect = null;
+            SkillNotifications = null;
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -71,6 +85,11 @@ namespace GvMod.Common.Systems
             if (SkillUserInterface?.CurrentState != null)
             {
                 SkillUserInterface.Update(gameTime);
+            }
+
+            if (SkillNotificationsUserInterface?.CurrentState != null)
+            {
+                SkillNotificationsUserInterface.Update(gameTime);
             }
         }
 
@@ -106,9 +125,17 @@ namespace GvMod.Common.Systems
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
                     "Gunvolt Mod: Skill UI",
                     delegate {
-                        if (_lastUpdatedGameTime != null && SkillUserInterface?.CurrentState != null)
+                        if (_lastUpdatedGameTime != null)
                         {
-                            SkillUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                            if (SkillUserInterface?.CurrentState != null)
+                            {
+                                SkillUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                            }
+
+                            if (SkillNotificationsUserInterface?.CurrentState != null)
+                            {
+                                SkillNotificationsUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                            }
                         }
                         return true;
                     },
