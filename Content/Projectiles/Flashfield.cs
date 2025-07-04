@@ -41,6 +41,7 @@ namespace GvMod.Content.Projectiles
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
             Projectile.penetrate = -1;
+            Projectile.ContinuouslyUpdateDamageStats = true;
 
             Projectile.friendly = true;
             Projectile.aiStyle = -1;

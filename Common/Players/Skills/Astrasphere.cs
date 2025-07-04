@@ -34,11 +34,11 @@ namespace GvMod.Common.Players.Skills
                     ApplyTo(71.4f + (1.6f * adept.Stage));
             int finalSphereDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
                     ApplyTo(37.4f + (1.6f * adept.Stage));
-            fieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero, 
+            fieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero, 
                 ModContent.ProjectileType<AstrasphereProjectile>(), finalFieldDamage, 3, player.whoAmI);
             for (int i = 0; i < 3; i++)
             {
-                Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero,
+                Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero,
                     ModContent.ProjectileType<AstrasphereOrbits>(), finalSphereDamage, 1, player.whoAmI,
                     fieldIndex, MathHelper.Pi + (MathHelper.TwoPi * i / 3));
             }

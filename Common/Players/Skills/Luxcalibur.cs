@@ -37,7 +37,7 @@ namespace GvMod.Common.Players.Skills
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 
             Vector2 direction = player.Center.DirectionTo(Main.MouseWorld);
-            Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, direction * 25, 
+            Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, direction * 26, 
                 ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 5, player.whoAmI, 
                 (int)LuxcaliburBehavior.Default);
 

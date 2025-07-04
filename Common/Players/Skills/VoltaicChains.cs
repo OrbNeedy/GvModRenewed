@@ -70,9 +70,9 @@ namespace GvMod.Common.Players.Skills
 
                 (Vector2, Vector2) chainInfo = ChainGeneration.GetPositionAndSpeed(player.Center, radius: 1200, 
                     VoltaicChainProjectile.MoveTime);
-                ReleasedChains.Add(Projectile.NewProjectileDirect(player.GetSource_Misc("Septima"), chainInfo.Item1, 
-                    chainInfo.Item2, ModContent.ProjectileType<VoltaicChainProjectile>(), finalDamage, 4.25f, 
-                    player.whoAmI, ElectrocutionTimer, ChainWaitTimer));
+                ReleasedChains.Add(Projectile.NewProjectileDirect(player.GetSource_FromThis("Septima"), 
+                    chainInfo.Item1, chainInfo.Item2, ModContent.ProjectileType<VoltaicChainProjectile>(), finalDamage, 
+                    4.25f, player.whoAmI, ElectrocutionTimer, ChainWaitTimer));
                 ChainReleaseTimer = 0;
                 ChainsLeft--;
             }

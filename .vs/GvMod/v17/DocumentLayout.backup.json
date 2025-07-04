@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\skills\\luxcalibur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\skills\\luxcalibur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\skills\\voltaicchains.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\skills\\voltaicchains.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\content\\items\\upgrades\\universalupgradeitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:content\\items\\upgrades\\universalupgradeitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\septimaplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\septimaplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,16 +23,8 @@
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\sevenths\\septima.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\ui\\skillnotice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\ui\\skillnotice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\skills\\astrasphere.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\skills\\astrasphere.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\skills\\luxcalibur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\skills\\luxcalibur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\sevenths\\azurestriker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,18 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\skills\\specialskill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\skills\\specialskill.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\systems\\uisystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\systems\\uisystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\ui\\apbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\ui\\apbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|c:\\users\\reboot\\documents\\my games\\terraria\\tmodloader\\modsources\\gvmod\\common\\players\\skills\\voltaicchains.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0400A06B-2188-1900-A3C3-A570DAC612EE}|GvMod.csproj|solutionrelative:common\\players\\skills\\voltaicchains.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,50 +42,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UISystem.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\UISystem.cs",
-              "RelativeDocumentMoniker": "Common\\Systems\\UISystem.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Systems\\UISystem.cs",
-              "RelativeToolTip": "Common\\Systems\\UISystem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIIAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-03T03:08:37.561Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "APBar.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\UI\\APBar.cs",
-              "RelativeDocumentMoniker": "Common\\UI\\APBar.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\UI\\APBar.cs",
-              "RelativeToolTip": "Common\\UI\\APBar.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAowGkAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-03T02:58:01.261Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SkillNotice.cs",
-              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\UI\\SkillNotice.cs",
-              "RelativeDocumentMoniker": "Common\\UI\\SkillNotice.cs",
-              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\UI\\SkillNotice.cs",
-              "RelativeToolTip": "Common\\UI\\SkillNotice.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAswEAAAABZAAAAAAAAAA==",
+              "Title": "UniversalUpgradeItem.cs",
+              "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Items\\Upgrades\\UniversalUpgradeItem.cs",
+              "RelativeDocumentMoniker": "Content\\Items\\Upgrades\\UniversalUpgradeItem.cs",
+              "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Content\\Items\\Upgrades\\UniversalUpgradeItem.cs",
+              "RelativeToolTip": "Content\\Items\\Upgrades\\UniversalUpgradeItem.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowCkAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-03T02:38:50.599Z",
+              "WhenOpened": "2025-07-03T03:49:14.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "VoltaicChains.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Skills\\VoltaicChains.cs",
               "RelativeDocumentMoniker": "Common\\Players\\Skills\\VoltaicChains.cs",
@@ -106,20 +72,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Luxcalibur.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Skills\\Luxcalibur.cs",
               "RelativeDocumentMoniker": "Common\\Players\\Skills\\Luxcalibur.cs",
               "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Skills\\Luxcalibur.cs",
               "RelativeToolTip": "Common\\Players\\Skills\\Luxcalibur.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAmwCMAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAwwCIAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-25T02:01:46.845Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Astrasphere.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Skills\\Astrasphere.cs",
               "RelativeDocumentMoniker": "Common\\Players\\Skills\\Astrasphere.cs",
@@ -127,12 +93,11 @@
               "RelativeToolTip": "Common\\Players\\Skills\\Astrasphere.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAuwCUAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T02:56:24.996Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-02T02:56:24.996Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "SpecialSkill.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Skills\\SpecialSkill.cs",
               "RelativeDocumentMoniker": "Common\\Players\\Skills\\SpecialSkill.cs",
@@ -140,12 +105,11 @@
               "RelativeToolTip": "Common\\Players\\Skills\\SpecialSkill.cs",
               "ViewState": "AgIAAFAAAAAAAAAAAAAAwF0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-27T01:10:55.031Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-27T01:10:55.031Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Septima.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\Septima.cs",
               "RelativeDocumentMoniker": "Common\\Players\\Sevenths\\Septima.cs",
@@ -153,25 +117,23 @@
               "RelativeToolTip": "Common\\Players\\Sevenths\\Septima.cs",
               "ViewState": "AgIAADYAAAAAAAAAAAAiwEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-02T03:24:53.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-02T03:24:53.606Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "SeptimaPlayer.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\SeptimaPlayer.cs",
               "RelativeDocumentMoniker": "Common\\Players\\SeptimaPlayer.cs",
               "ToolTip": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\SeptimaPlayer.cs",
               "RelativeToolTip": "Common\\Players\\SeptimaPlayer.cs",
-              "ViewState": "AgIAAHsCAAAAAAAAAAAAAIYCAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAI8CAAAAAAAAAAAQwIsCAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T04:38:31.409Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T04:38:31.409Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "AzureStriker.cs",
               "DocumentMoniker": "C:\\Users\\Reboot\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\GvMod\\Common\\Players\\Sevenths\\AzureStriker.cs",
               "RelativeDocumentMoniker": "Common\\Players\\Sevenths\\AzureStriker.cs",
@@ -179,8 +141,7 @@
               "RelativeToolTip": "Common\\Players\\Sevenths\\AzureStriker.cs",
               "ViewState": "AgIAAIMAAAAAAAAAAAAAAI4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-31T21:13:49.29Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-31T21:13:49.29Z"
             }
           ]
         }

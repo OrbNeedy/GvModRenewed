@@ -121,7 +121,7 @@ namespace GvMod.Common.Players.Sevenths
 
             if ((!activeFlashfield || flashfieldIndex == -1) && Main.myPlayer == player.whoAmI)
             {
-                flashfieldIndex = Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center,
+                flashfieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center,
                     Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0, player.whoAmI);
             }
 
@@ -195,7 +195,7 @@ namespace GvMod.Common.Players.Sevenths
 
                 int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
                     ApplyTo(38 + adept.Stage * 2);
-                Projectile.NewProjectile(player.GetSource_Misc("Septima"), player.Center, Vector2.Zero,
+                Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero, 
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }
             return adept.SecondarySkillUseTime >= 60 ? 600 : 0;

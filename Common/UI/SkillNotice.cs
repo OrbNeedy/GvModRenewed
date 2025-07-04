@@ -28,7 +28,7 @@ namespace GvMod.Common.UI
             area.Width.Set(18, 0f);
             area.Height.Set(32, 0f);
             area.Left.Set(20, 0f);
-            area.Top.Set(-46, 1f);
+            area.Top.Set(-86, 1f);
 
             SkillIcon = new UIImage(ModContent.Request<Texture2D>("GvMod/Assets/Skills/Default"));
             SkillIcon.Width.Set(44, 0f);
@@ -72,7 +72,6 @@ namespace GvMod.Common.UI
 
                 SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/SkillUnlock") with
                 {
-                    PitchVariance = 0.1f,
                     Volume = 0.75f
                 });
             }
