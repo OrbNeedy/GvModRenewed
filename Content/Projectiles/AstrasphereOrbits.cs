@@ -22,7 +22,7 @@ namespace GvMod.Content.Projectiles
             Projectile.scale = 1f;
             // Main.projFrames[Projectile.type] = 4;
 
-            Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
+            Projectile.DamageType = ModContent.GetInstance<SpecialAttackDamage>();
             Projectile.damage = 33;
             Projectile.knockBack = 1;
             Projectile.usesLocalNPCImmunity = true;

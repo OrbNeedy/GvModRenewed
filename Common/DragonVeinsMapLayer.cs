@@ -36,6 +36,9 @@ namespace GvMod.Common
                 if (i > ModContent.GetInstance<DragonVeinsSystem>().veinPoints.Count) break;
                 Point16 vein = ModContent.GetInstance<DragonVeinsSystem>().veinPoints[i];
 
+                //Main.NewText($"Vein placement: {vein}");
+                //Main.NewText($"World boundaries: {Main.}");
+
                 if (context.Draw(icon, new Vector2(vein.X, vein.Y),
                     Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected,
                     Alignment.Center).IsMouseOver)

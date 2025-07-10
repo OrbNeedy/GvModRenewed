@@ -14,6 +14,7 @@ namespace GvMod.Common.Players.Skills
     public class Luxcalibur : SpecialSkill
     {
         public override string InternalName { get; set; } = "Luxcalibur";
+        public override string LocalizationKey { get; set; } = "Luxcalibur";
         public override bool AllowsMovement { get; set; } = false;
         public override bool Invincible { get; set; } = false;
         public override int LevelRequirement { get; set; } = 20;
@@ -32,7 +33,7 @@ namespace GvMod.Common.Players.Skills
 
         public override bool OnSkillUse(Player player, SeptimaPlayer adept)
         {
-            int baseDamage = 250;
+            int baseDamage = 250 + (5 * adept.Stage);
             player.oldPosition = player.position;
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 

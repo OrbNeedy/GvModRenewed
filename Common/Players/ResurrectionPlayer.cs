@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace GvMod.Common.Players
 {
@@ -23,21 +24,38 @@ namespace GvMod.Common.Players
         public bool resurrected = false;
         public bool canResurrect = false;
         public float resurrectionPower = 0;
+        public ulong resurrectionTime = 0;
         public AnthemAuraType type = AnthemAuraType.LumenWeak;
 
         public override void ResetEffects()
         {
             //Main.NewText("Resurrection Player's ResetEffects.");
+            if (resurrected) resurrectionTime++;
             resurrected = false;
             canResurrect = false;
             resurrectionPower = 0;
             base.ResetEffects();
         }
 
+        public override void SaveData(TagCompound tag)
+        {
+            tag["ResurrectionTime"] = resurrectionTime;
+            base.SaveData(tag);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.ContainsKey("ResurrectionTime"))
+            {
+                resurrectionTime = (ulong)tag.GetLong("ResurrectionTime");
+            }
+            base.LoadData(tag);
+        }
+
         public override void PreUpdate()
         {
             //Main.NewText("Resurrection Player's PreUpdate.");
-            if (Player.HasBuff<Anthem>())
+            if (resurrected)
             {
                 SeptimaPlayer adept = Player.GetModPlayer<SeptimaPlayer>();
 
@@ -70,8 +88,7 @@ namespace GvMod.Common.Players
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
         {
             //Main.NewText("Resurrection Player's PreKill.");
-            if (resurrectionPower > 0 && !Player.HasBuff<ResurrectionCooldown>() && canResurrect && 
-                !Player.HasBuff<Anthem>())
+            if (resurrectionPower > 0 && !Player.HasBuff<ResurrectionCooldown>() && canResurrect && !resurrected)
             {
                 Player.Heal(Player.statLifeMax2);
                 playSound = false;

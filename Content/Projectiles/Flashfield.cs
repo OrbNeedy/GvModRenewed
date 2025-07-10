@@ -25,7 +25,6 @@ namespace GvMod.Content.Projectiles
         private int frameTimer = 0;
         private bool hideExtras = false;
 
-        private int soundTimer = 0;
         private SlotId soundID;
 
         public override void SetDefaults()
@@ -35,7 +34,7 @@ namespace GvMod.Content.Projectiles
             Projectile.scale = 1f;
             // Main.projFrames[Projectile.type] = 4;
 
-            Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
+            Projectile.DamageType = ModContent.GetInstance<MainAttackDamage>();
             Projectile.damage = 50;
             Projectile.knockBack = 3;
             Projectile.usesLocalNPCImmunity = true;

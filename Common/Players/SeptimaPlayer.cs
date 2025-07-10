@@ -13,10 +13,10 @@ using GvMod.Content.Buffs;
 using Terraria.Audio;
 using Terraria.WorldBuilding;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GvMod.Common.Players
 {
-    // TODO: Add recharge by double tap down
     public class SeptimaPlayer : ModPlayer
     {
         // Cheating check, for testing purposes
@@ -237,6 +237,11 @@ namespace GvMod.Common.Players
             tag["MaxEP"] = BaseMaxEP;
             tag["MaxAP"] = BaseMaxAP;
 
+            for (int i = 0; i < DragonVeinsVisited.Length; i++)
+            {
+                tag[$"DragonVein{i}"] = DragonVeinsVisited[i];
+            }
+
             tag["SelectedSkill"] = SelectedSkill;
         }
 
@@ -283,7 +288,8 @@ namespace GvMod.Common.Players
 
             if (tag.ContainsKey("SelectedSkill"))
             {
-                SelectedSkill = tag.GetInt("SelectedSkill");
+                SelectedSkill = (int)MathHelper.
+                    Clamp(tag.GetInt("SelectedSkill"), 0, septima.AvailableSkills.Count - 1);
             }
 
             septima.PostLoadSeptima(Player, this);
@@ -308,7 +314,22 @@ namespace GvMod.Common.Players
         public override void PreUpdate()
         {
             TaggedNPCs.Update(this);
+
+            //Main.NewText("Dragon vein state: " + DragonVeinsVisited.Count(true) + " visited");
+
+            /*int count = 0;
+            foreach (SpecialSkill skill in septima.AvailableSkills)
+            {
+                //Main.NewText($"Skill {count}: {skill.InternalName}");
+                count++;
+            }*/
             
+            if (Main.rand.NextBool(1200))
+            {
+                // Main.NewText("Random skill calculation triggered.", Color.Red);
+                septima.CalculateSkills(Player, this);
+            }
+
             // Dead men have no septima
             if (Player.DeadOrGhost) return;
 
@@ -395,6 +416,12 @@ namespace GvMod.Common.Players
                         Player.CancelAllBootRunVisualEffects();
                     }
                     SpecialSkillUseTime++;
+
+                    if (special.Invincible)
+                    {
+                        Player.immune = true;
+                        Player.immuneTime = 2;
+                    }
                 }
             }
             else
@@ -410,7 +437,12 @@ namespace GvMod.Common.Players
                 // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
                 if (septima.MainSkillUse(Player, this))
                 {
-                    CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
+                    // If the player has the infinite surge buff, do not reduce EP from using the main skill, but 
+                    // increase cooldown timer 
+                    if (!Player.GetModPlayer<PlayerBuffs>().InfiniteSurge)
+                    {
+                        CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
+                    }
                     EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
                 }
                 MainSkillUseTime++;

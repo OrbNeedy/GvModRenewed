@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -112,9 +113,11 @@ namespace GvMod.Common.UI
             SeptimaPlayer adept = Main.LocalPlayer.GetModPlayer<SeptimaPlayer>();
 
             // Fail cases
-            if (adept.septima.AvailableSkills.Count <= 0 || adept.septima.AvailableSkills == null ||
+            if (adept.septima.AvailableSkills.Count <= 0 || adept.septima.AvailableSkills == null || 
+                adept.SelectedSkill < 0 || adept.SelectedSkill >= adept.septima.AvailableSkills.Count ||
                 adept.septima.AvailableSkills[adept.SelectedSkill].InternalName == "Default")
             {
+
                 SkillOverheatSeal.Remove();
                 SkillOverheatMeter.Remove();
                 SelectedSkillIcon.SetImage(DefaultSkill);
@@ -130,7 +133,7 @@ namespace GvMod.Common.UI
 
             SpecialSkill skill = adept.septima.AvailableSkills[adept.SelectedSkill];
 
-            SkillName.SetText(skill.InternalName); // Change to use localizations
+            SkillName.SetText(Language.GetTextValue($"Mods.GvMod.Skills.{skill.LocalizationKey}.DisplayName")); 
             SkillCost.SetText($"{skill.APCost} AP"); // Localization unecessary 
 
             // Add the cooldown seal and it's meter if the skill is on cooldown

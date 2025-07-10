@@ -24,6 +24,7 @@ namespace GvMod.Content.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             //Main.NewText("ResurrectionCooldown's Update.");
+            player.GetModPlayer<ResurrectionPlayer>().canResurrect = false;
             if (player.HasBuff<Anthem>())
             {
                 player.ClearBuff(ModContent.BuffType<Anthem>());

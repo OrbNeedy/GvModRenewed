@@ -29,7 +29,10 @@ namespace GvMod.Common.Players.Sevenths
         public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
         public override float SecondaryAttackDamage { get; protected set; } = 20;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
-            new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains() };
+            new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains(), new AlchemicalField(), 
+            new InfiniteSurge(), new GalvanicRenewal(), new SeptimalBurst(), new SeptimalShield(), 
+            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere()
+        };
         public override float EPUseBase { get; protected set; } = 0.7f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
@@ -106,7 +109,6 @@ namespace GvMod.Common.Players.Sevenths
 
         public override bool MainSkillUse(Player player, SeptimaPlayer adept)
         {
-            // Reminder to give wet immunity to high level players
             if (player.wet)
             {
                 if (adept.Stage <= 5)
@@ -146,7 +148,10 @@ namespace GvMod.Common.Players.Sevenths
             float knockback = 0;
             if (adept.MainSkillUseTime <= 0)
             {
-                adept.CurrentEP -= adept.GetTotalMaxEP() * 0.075f;
+                if (adept.GetTotalEPUseModifier() > 0 && !player.GetModPlayer<PlayerBuffs>().InfiniteSurge)
+                {
+                    adept.CurrentEP -= adept.GetTotalMaxEP() * 0.075f;
+                }
                 knockback = 2.5f;
             }
 

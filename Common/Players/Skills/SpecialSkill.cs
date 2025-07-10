@@ -5,6 +5,7 @@ namespace GvMod.Common.Players.Skills
     public class SpecialSkill
     {
         public virtual string InternalName { get; set; } = "Default";
+        public virtual string LocalizationKey { get; set; } = "Default";
         public virtual int LevelRequirement { get; set; } = 0;
         public virtual int StageRequirement { get; set; } = 0;
         public virtual int APCost { get; set; } = 0;
@@ -101,6 +102,32 @@ namespace GvMod.Common.Players.Skills
         /// <param name="adept"></param>
         public virtual void ForcedSkillEnd(Player player, SeptimaPlayer adept)
         {
+        }
+
+        /// <summary>
+        /// A custom check for skills that unlock only if certain conditions are met.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <returns>True to unlock the skill, this will count even if the level and stage requirements are false.
+        /// <br/>Return null to ignore this.</returns>
+        public virtual bool? CustomUnlockCondition(Player player, SeptimaPlayer adept)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Similar to <see cref="CustomUnlockCondition(Player, SeptimaPlayer)"/>, it's a condition checked to 
+        /// unlock a skill.<br/>
+        /// Unlike it, the condition needs to be true in order to unlock the skill, even if stage, level or the 
+        /// other custom <br/>condition are true.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <returns></returns>
+        public virtual bool ForcedUnlockCondition(Player player, SeptimaPlayer adept)
+        {
+            return true;
         }
     }
 }

@@ -31,7 +31,8 @@ namespace GvMod.Common.Systems
             {
                 if (tag.ContainsKey($"VeinPointX{i}") && tag.ContainsKey($"VeinPointY{i}"))
                 {
-                    int Xpoint = tag.GetShort($"VeinPointX{i}"), Ypoint = tag.GetShort($"VeinPointX{i}");
+                    int Xpoint = tag.GetShort($"VeinPointX{i}");
+                    int Ypoint = tag.GetShort($"VeinPointY{i}");
                     veinPoints.Add(new Point16(Xpoint, Ypoint));
                 } else
                 {
@@ -62,6 +63,7 @@ namespace GvMod.Common.Systems
 
                         veinPoints.Add(new Point16(x, y));
                     }
+
                     float dX = tilePosition.X - veinPoints[i].X, dY = tilePosition.Y - veinPoints[i].Y;
                     float distance = (float)Math.Sqrt((dX * dX) + (dY * dY));
 
@@ -72,7 +74,7 @@ namespace GvMod.Common.Systems
                         adept.UpdateInsideDragonVein(i, distance);
                     }
 
-                    if (!adept.DragonVeinsVisited[i] && !NPC.downedAncientCultist)
+                    if (!adept.DragonVeinsVisited[i])
                     {
                         if (distance <= 32)
                         {

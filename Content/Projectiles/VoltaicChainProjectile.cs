@@ -51,7 +51,7 @@ namespace GvMod.Content.Projectiles
             Projectile.scale = 1f;
             // Main.projFrames[Projectile.type] = 4;
 
-            Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
+            Projectile.DamageType = ModContent.GetInstance<SpecialAttackDamage>();
             Projectile.damage = 250;
             Projectile.knockBack = 3;
             Projectile.penetrate = -1;
@@ -234,7 +234,12 @@ namespace GvMod.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            return !PiercedEnemies.Contains(target.whoAmI);
+            if (PiercedEnemies.Contains(target.whoAmI))
+            {
+                return false;
+            }
+
+            return base.CanHitNPC(target);
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

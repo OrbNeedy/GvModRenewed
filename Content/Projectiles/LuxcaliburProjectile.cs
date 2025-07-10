@@ -4,7 +4,6 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Projectiles
@@ -40,11 +39,11 @@ namespace GvMod.Content.Projectiles
             Projectile.scale = 1f;
             // Main.projFrames[Projectile.type] = 4;
 
-            Projectile.DamageType = ModContent.GetInstance<SeptimaDamage>();
+            Projectile.DamageType = ModContent.GetInstance<SpecialAttackDamage>();
             Projectile.damage = 250;
             Projectile.knockBack = 3;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 25;
+            Projectile.localNPCHitCooldown = 20;
             Projectile.penetrate = -1;
             Projectile.ArmorPenetration = 30;
 

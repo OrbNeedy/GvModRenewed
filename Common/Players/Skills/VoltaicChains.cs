@@ -11,6 +11,7 @@ namespace GvMod.Common.Players.Skills
     public class VoltaicChains : SpecialSkill
     {
         public override string InternalName { get; set; } = "VoltaicChains";
+        public override string LocalizationKey { get; set; } = "VoltaicChains";
         public override bool AllowsMovement { get; set; } = false;
         public override bool Invincible { get; set; } = false;
         public override int LevelRequirement { get; set; } = 55;
@@ -41,7 +42,7 @@ namespace GvMod.Common.Players.Skills
             ReleasedChains.Clear();
             player.oldPosition = player.position;
 
-            int baseDamage = 50;
+            int baseDamage = 50 + (2 * adept.Stage);
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
             ChainsLeft = 5 + (int)(adept.Stage / 3);
             // 4 frames per chain so the 12 frame timer will start after all chains have been shot
@@ -128,8 +129,10 @@ namespace GvMod.Common.Players.Skills
         public override void HurtUpdate(Player player, SeptimaPlayer adept, Player.HurtInfo info)
         {
             // Early cancel if the damage is too high
-            if (info.Damage > 100 && !EarlyCancel)
+            if (info.Damage >= (player.statLifeMax2 / 7) && !EarlyCancel)
             {
+                EarlyCancel = true;
+
                 foreach (Projectile projectile in ReleasedChains)
                 {
                     if (projectile.ModProjectile != null)
@@ -138,12 +141,10 @@ namespace GvMod.Common.Players.Skills
                             projectile.owner == player.whoAmI && projectile.active)
                         {
                             // Change if break animation lasts a different amount of frames
-                            projectile.timeLeft = 20;
+                            projectile.timeLeft = VoltaicChainProjectile.BreakTime;
                         }
                     }
                 }
-                Main.NewText("Early cancel active");
-                EarlyCancel = true;
             }
         }
     }

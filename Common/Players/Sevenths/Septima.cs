@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using GvMod.Common.Players.Skills;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -56,14 +57,26 @@ namespace GvMod.Common.Players.Sevenths
 
         public void CalculateSkills(Player player, SeptimaPlayer adept, bool queue = false)
         {
+            // TODO: Return the displacement of the index so the player's selected skill won't change after sorting
             List<SpecialSkill> SkillsToAdd = SkillList.FindAll((skill) =>
             {
+                bool baseRequirements = skill.LevelRequirement <= adept.Level &&
+                    skill.StageRequirement <= adept.Stage;
+                bool forcedRequirement = skill.ForcedUnlockCondition(player, adept);
+                bool? customCondition = skill.CustomUnlockCondition(player, adept);
                 // Add all skills under the level and stage requirements that are also not included already
-                return skill.LevelRequirement <= adept.Level && skill.StageRequirement <= adept.Stage &&
-                    !AvailableSkills.Contains(skill);
+                if (customCondition == null)
+                {
+                    return baseRequirements && !AvailableSkills.Contains(skill) && forcedRequirement;
+                } else
+                {
+                    return (bool)customCondition && !AvailableSkills.Contains(skill) && forcedRequirement;
+                }
             });
 
             AvailableSkills.AddRange(SkillsToAdd);
+
+            AvailableSkills.Sort(new SkillComparer(4));
 
             foreach (SpecialSkill skill in AvailableSkills)
             {
@@ -194,6 +207,26 @@ namespace GvMod.Common.Players.Sevenths
         public virtual void DrawAttack(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)
         {
 
+        }
+    }
+
+    public class SkillComparer : IComparer<SpecialSkill>
+    {
+        float stageRelevance = 1;
+
+        public SkillComparer(float stageRelevance)
+        {
+            this.stageRelevance = stageRelevance;
+        }
+
+        public int Compare(SpecialSkill x, SpecialSkill y)
+        {
+            float result = 0;
+
+            result += (x.StageRequirement - y.StageRequirement) * stageRelevance;
+            result += (x.LevelRequirement - y.StageRequirement);
+
+            return (int)result;
         }
     }
 }

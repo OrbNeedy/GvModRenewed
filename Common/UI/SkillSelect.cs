@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using GvMod.Common.Players.Sevenths;
 using GvMod.Common.Players;
 using GvMod.Common.Players.Skills;
 using GvMod.Common.Systems;
@@ -7,7 +7,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace GvMod.Common.UI
@@ -30,6 +32,8 @@ namespace GvMod.Common.UI
         UIImageButton SelectedSkillButton;
         UIImage SelectedSkillFrame;
         UIText SelectedSkillName;
+        UIPanel SelectedSkillDescriptionPanel;
+        UIText SelectedSkillDescriptionText;
         UIText SelectedSkillCost;
 
         // Adjacent skills elements
@@ -107,6 +111,10 @@ namespace GvMod.Common.UI
             SelectedSkillName.Top.Set(-28, 0.5f);
             SelectedSkillName.HAlign = 0.5f;
 
+            SelectedSkillDescriptionPanel = new UIPanel();
+
+            SelectedSkillDescriptionText = new UIText("");
+
             SelectedSkillCost = new UIText("0 AP", 0.75f);
             SelectedSkillCost.Width.Set(160, 0f);
             SelectedSkillCost.Height.Set(12, 0f);
@@ -168,19 +176,9 @@ namespace GvMod.Common.UI
 
         public override void Update(GameTime gameTime)
         {
-
-
-
-            for (int i = 0; i < 2; i++)
-            {
-
-
-
-            }
-
             Recalculate();
 
-            if (Main.LocalPlayer.GetModPlayer<SeptimaPlayer>().septimaType == Players.Sevenths.SeptimaType.None)
+            if (Main.LocalPlayer.GetModPlayer<SeptimaPlayer>().septimaType == SeptimaType.None)
             {
                 return;
             }
@@ -212,7 +210,8 @@ namespace GvMod.Common.UI
                     evaluatedIcon.SetImage(DefaultSkill);
                     evaluatedFrame.SetImage(DefaultFrame);
 
-                    evaluatedName.SetText("None"); // Change to use localizations
+                    evaluatedName.SetText(Language.
+                        GetTextValue($"Mods.GvMod.Skills.Default.Description"));
                     evaluatedCost.SetText(""); // Localization unecessary 
 
                     base.Update(gameTime);
@@ -223,7 +222,8 @@ namespace GvMod.Common.UI
 
                 SpecialSkill evaluatedSkill = adept.septima.AvailableSkills[evaluatedSkillIndex];
 
-                evaluatedName.SetText(evaluatedSkill.InternalName); // Change to use localizations
+                evaluatedName.SetText(
+                    Language.GetTextValue($"Mods.GvMod.Skills.{evaluatedSkill.LocalizationKey}.DisplayName")); 
                 evaluatedCost.SetText($"{evaluatedSkill.APCost} AP"); // Localization unecessary 
 
                 if (evaluatedSkill.CooldownTime > 0)
@@ -261,7 +261,8 @@ namespace GvMod.Common.UI
 
             SpecialSkill skill = adept.septima.AvailableSkills[adept.SelectedSkill];
 
-            SelectedSkillName.SetText(skill.InternalName); // Change to use localizations
+            SelectedSkillName.SetText(Language.
+                GetTextValue($"Mods.GvMod.Skills.{skill.LocalizationKey}.DisplayName")); 
             SelectedSkillCost.SetText($"{skill.APCost} AP"); // Localization unecessary 
 
             if (skill.CooldownTime > 0)
@@ -285,11 +286,31 @@ namespace GvMod.Common.UI
 
         protected override void DrawChildren(SpriteBatch spriteBatch)
         {
+            SeptimaPlayer adept = Main.LocalPlayer.GetModPlayer<SeptimaPlayer>();
+
+            if (adept.septimaType == SeptimaType.None) return;
+
             base.DrawChildren(spriteBatch);
             if (SelectedSkillButton.ContainsPoint(Main.MouseScreen) || 
                 LeftArrowButton.ContainsPoint(Main.MouseScreen) || RightArrowButton.ContainsPoint(Main.MouseScreen))
             {
                 Main.LocalPlayer.mouseInterface = true;
+
+                if (SelectedSkillButton.ContainsPoint(Main.MouseScreen))
+                {
+                    if (adept.septima.AvailableSkills == null) return;
+
+                    if (adept.SelectedSkill >= 0 && adept.SelectedSkill < adept.septima.AvailableSkills.Count)
+                    {
+                        SpecialSkill evaluatedSkill = adept.septima.AvailableSkills[adept.SelectedSkill];
+
+                        if (evaluatedSkill.InternalName != "Default" && evaluatedSkill.LocalizationKey != "Default")
+                        {
+                            UICommon.TooltipMouseText(Language.
+                                GetTextValue($"Mods.GvMod.Skills.{evaluatedSkill.LocalizationKey}.Description"));
+                        }
+                    }
+                }
             }
         }
     }

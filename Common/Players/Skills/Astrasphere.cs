@@ -9,6 +9,7 @@ namespace GvMod.Common.Players.Skills
     public class Astrasphere : SpecialSkill
     {
         public override string InternalName { get; set; } = "Astrasphere";
+        public override string LocalizationKey { get; set; } = "Astrasphere";
         public override bool AllowsMovement { get; set; } = false;
         public override bool Invincible { get; set; } = false;
         public override int LevelRequirement { get; set; } = 1;
@@ -58,7 +59,7 @@ namespace GvMod.Common.Players.Skills
             }
 
             Projectile field = Main.projectile[fieldIndex];
-            if (field.active && field.ModProjectile is Flashfield &&
+            if (field.active && field.ModProjectile is AstrasphereProjectile &&
                 field.owner == player.whoAmI)
             {
                 modifiers.Cancel();
@@ -73,7 +74,7 @@ namespace GvMod.Common.Players.Skills
             }
 
             Projectile field = Main.projectile[fieldIndex];
-            if (field.active && field.ModProjectile is Flashfield &&
+            if (field.active && field.ModProjectile is AstrasphereProjectile &&
                 field.owner == player.whoAmI)
             {
                 modifiers.Cancel();
