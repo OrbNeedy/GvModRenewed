@@ -1,46 +1,46 @@
 Keybinds: {
-	"Primary ability.DisplayName": Primary ability
-	"Secondary ability.DisplayName": Secondary ability
-	// "Special ability.DisplayName": Special ability
-	// "Select next ability.DisplayName": Select next ability
-	// "Select previous ability.DisplayName": Select previous ability
-	// "Use special ability.DisplayName": Use special ability
-	// "Hide UI.DisplayName": Hide  UI
+	"Primary ability.DisplayName": Habilidad primaria
+	"Secondary ability.DisplayName": Habilidad secundaria
+	"Special ability.DisplayName": Habilidad especial
+	"Select next ability.DisplayName": Seleccionar siguiente habilidad
+	"Select previous ability.DisplayName": Seleccionar siguiente habilidad
+	"Use special ability.DisplayName": Usar habilidad especial
+	"Hide UI.DisplayName": Esconder UI
 }
 
 Projectiles: {
 	Flashfield.DisplayName: Flashfield
 	HairDartProjectile.DisplayName: Dart
-	// Thunder.DisplayName: Thunder
-	// AstrasphereOrbits.DisplayName: Orbits
-	// OrochiDrone.DisplayName: Drone
-	// AstrasphereProjectile.DisplayName: Astrasphere Projectile
-	// LuxcaliburProjectile.DisplayName: Luxcalibur Projectile
-	// VoltaicChainProjectile.DisplayName: Voltaic Chain Projectile
-	// DragonsphereProjectile.DisplayName: Dragonsphere Projectile
-	// GrandStrizerProjectile.DisplayName: Grand Strizer Projectile
+	Thunder.DisplayName: Crashvolt
+	AstrasphereOrbits.DisplayName: Orbitas
+	OrochiDrone.DisplayName: Dron
+	AstrasphereProjectile.DisplayName: Astrasphere
+	LuxcaliburProjectile.DisplayName: Luxcalibur
+	VoltaicChainProjectile.DisplayName: Voltaic Chain
+	DragonsphereProjectile.DisplayName: Dragonsphere
+	GrandStrizerProjectile.DisplayName: Grand Strizer
 }
 
 DamageClasses: {
-	SeptimaDamage.DisplayName: Septima Damage
-	MainAttackDamage.DisplayName: Main Damage
-	SecondaryAttackDamage.DisplayName: Secondary Damage
-	SpecialAttackDamage.DisplayName: Special Damage
+	SeptimaDamage.DisplayName: Daño Septima
+	MainAttackDamage.DisplayName: Daño principal
+	SecondaryAttackDamage.DisplayName: Daño secundario
+	SpecialAttackDamage.DisplayName: Daño especial
 }
 
 Items: {
 	HairDart: {
-		DisplayName: Tag Dart
-		Tooltip: A dart meant to be used with the Dart Leader.
+		DisplayName: Dardo
+		Tooltip: Un dardo hecho para usarse con el Dart Leader.
 	}
 
 	DartLeader: {
 		DisplayName: Dart Leader
 		Tooltip:
 			'''
-				A weapon designed to shoot darts to tag enemies.
-				Tagged enemies will be damaged regardless of distance 
-				from the player.
+			Un arma diseñada para disparar dardos que marcan enemigos.
+			Enemigos marcados serán dañados sin importar la distancia 
+			al jugador.
 			'''
 	}
 
@@ -48,289 +48,291 @@ Items: {
 		DisplayName: Wrathful Eye
 		Tooltip:
 			'''
-				A set of glasses that increase damage dealt by the septima's 
-				main ability by {0}, but increases EP consumption by {1}.
+			Un par de gafas que aumentan el daño causado por la habilidad 
+			principal de la septima por {0}%, pero aumenta el consumo de 
+			EP en {1}.
 			'''
 	}
 
 	CapacityUpgrade: {
-		// DisplayName: Capacity Upgrade
-		// Tooltip: Increases the Dart Leader's upgrade capacity by 1.
+		DisplayName: Mejora de capacidad
+		Tooltip: Aumenta la capacidad del Dart Leader en 1.
 	}
 
 	ClearUpgrade: {
-		// DisplayName: Clear Upgrade
-		// Tooltip: Clears all upgrades from a Dart Leader.
+		DisplayName: Despejar mejoras 
+		Tooltip: Despeja todas las modificaciones al Dart Leader.
 	}
 
 	DullahanUpgrade: {
-		// DisplayName: Dullahan Upgrade
-		/* Tooltip:
+		DisplayName: Dullahan
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Increases the dart's damage by {0}.
-			''' */
+			Aumenta el daño del dardo en {0}.
+			'''
 	}
 
 	MizuchiUpgrade: {
-		// DisplayName: Mizuchi Upgrade
-		/* Tooltip:
+		DisplayName: Mizuchi 
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Makes a reticle in front of the darts that redirects them to 
-			the mouse position.
-			''' */
+			Hace un retículo en frente de los dardos que los redirige a la 
+			posición del mouse.
+			'''
 	}
 
 	NagaUpgrade: {
-		// DisplayName: Naga Upgrade
-		/* Tooltip:
+		DisplayName: Naga 
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Allows darts to penetrate enemies.
-			''' */
+			Permite que los dados atraviesen enemigos.
+			''' 
 	}
 
 	OrochiUpgrade: {
-		// DisplayName: Orochi Upgrade
-		/* Tooltip:
+		DisplayName: Orochi 
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Deploys a drone that shoots darts at different directions
-			''' */
+			Libera un dron que dispara dardos en diferentes direcciones.
+			'''
 	}
 
 	OuroborosUpgrade: {
-		// DisplayName: Ouroboros Upgrade
-		/* Tooltip:
+		DisplayName: Ouroboros 
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Triples the tag time and gives a chance to not use ammo.
-			''' */
+			Triplica el tiempo de marca y da la posibilidad de no usar munición.
+			'''
 	}
 
 	TechnosUpgrade: {
-		// DisplayName: Technos Upgrade
-		/* Tooltip:
+		DisplayName: Technos 
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Shoots two additional darts at an angle.
-			''' */
+			Dispara dos dardos adicionales en un angulo.
+			'''
 	}
 
 	VasukiUpgrade: {
-		// DisplayName: Vasuki Upgrade
-		/* Tooltip:
+		DisplayName: Vasuki 
+		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			After tagging an enemy, it shoots another dart to the mouse position.
-			Allows the darts to penetrate the ground.
-			''' */
+			Después de marcar a un enemigo, dispara otro dardo al enemigo más 
+			cercano.
+			Permite que los dardos atraviecen el suelo.
+			'''
 	}
 
 	UpgradeComponent: {
-		// DisplayName: Upgrade Component
-		// Tooltip: ""
+		DisplayName: Componente de mejora
+		Tooltip: "Usado para hacer mejoras de capacidad para el Dart Leader."
 	}
 
 	MirrorShard: {
-		// DisplayName: Mirror Shard
-		/* Tooltip:
+		DisplayName: Fragmento de espejo
+		Tooltip:
 			'''
-			A shard imbued with the power of the Cyber Diva.
-			Allows the user to resurrect after dying with improved abilities.
-			''' */
+			Un fragmento imbuido con el poder de la Ciber Diva.
+			Permite al usuario revivir con habilidades mejoradas luego de morir.
+			'''
 	}
 
 	RingOfPerfection: {
-		// DisplayName: Ring Of Perfection
-		// Tooltip: The most perfect ring ever created, become perfect.
+		DisplayName: Anillo de la perfección
+		Tooltip: El anillo más perfecto jamás creado, vuelvete perfecto.
 	}
 
 	Stage1Upgrade: {
-		// DisplayName: Contained Empowerment
-		/* Tooltip:
+		DisplayName: Empoderamiento contenido
+		Tooltip:
 			'''
-			A container of strange energy that ressonates with your septima.
-			Can be used to upgrade your septima up to level 10.
-			''' */
+			Un contenedor de energía extraña que resona con tu septima.
+			Puede usarse para mejorar tu septima hasta nivel 10.
+			''' 
 	}
 
 	UniversalUpgradeItem: {
-		// DisplayName: Tonic of septima empowerment
-		/* Tooltip:
+		DisplayName: Tonico de empoderamiento de septima
+		Tooltip:
 			'''
-			A special recipe that is guaranteed to enhance a septima no matter how powerful it 
-			already is.
-			''' */
+			Una receta especial que garantiza mejorar una septima sin importar lo 
+			poderosa que sea.
+			''' 
 	}
 }
 
 UpgradeDescription: {
-	/* Darts:
+	Darts:
 		'''
-		An upgrade for the Dart Leader, only adds the described effect to the 
-		first Dart Leader found on the inventory.
-		Will override the latest upgrade if applied to a Dart leader with no 
-		free upgrade slots.
-		''' */
-	// Capacity: Capacity: {0}
-	// MaxCapacity: Capacity: Max
+		Una mejora para el Dart Leader, solo añade el efecto descrito al primer 
+		Dart Leader encontrado en el inventario.
+		Va a sobreescribir la ultima mejora si se aplica a un Dart Leader sin 
+		espacio libre de mejoras.
+		''' 
+	Capacity: Capacidad: {0}
+	MaxCapacity: Capacidad: Max
 }
 
 Buffs: {
 	Anthem: {
-		// DisplayName: Anthem
-		/* Description:
+		DisplayName: Himno
+		Description:
 			'''
-			Resurrected by the power of the cyber diva.
+			Revivido por el poder de la Ciber Diva.
 			All septimal abilities are increased.
-			''' */
+			''' 
 	}
 
 	ResurrectionCooldown: {
-		// DisplayName: Anthem Cooldown
-		// Description: Your body is unable to be resurrected again.
+		DisplayName: Enfriamiento de himno
+		Description: Tu cuerpo no puede ser revivido otra vez.
 	}
 
 	AlchemicalFieldBuff: {
-		// DisplayName: Alchemical Field Buff
-		// Description: Dobles money dropped by enemies and health recovered from potions.
+		DisplayName: Alchemical Field
+		Description: Duplica el dinero soltado por enemigos y la salud recuperada por pociones.
 	}
 
 	InfiniteSurgeBuff: {
-		// DisplayName: Infinite Surge Buff
-		// Description: EP can't decrease.
+		DisplayName: Infinite Surge
+		Description: El EP no puede ser reducido.
 	}
 
 	SeptimalBurstBuff: {
-		// DisplayName: Septimal Burst Buff
-		// Description: EP recovery rate increased.
+		DisplayName: Septimal Burst
+		Description: Taza de recuperación de EP aumentada.
 	}
 
 	SeptimalShieldBuff: {
-		// DisplayName: Septimal Shield Buff
-		// Description: Decreses damage taken.
+		DisplayName: Septimal Shield 
+		Description: Reduce el daño tomado.
 	}
 
 	SeptimalSurgeBuff: {
-		// DisplayName: Septimal Surge Buff
-		// Description: Damage dealt is doubled.
+		DisplayName: Septimal Surge
+		Description: Duplica el daño causado.
 	}
 }
 
 Configs: {
 	GameplayConfig: {
-		// DisplayName: Gameplay Config
-		// Headers.Resurrection: Resurrection
+		DisplayName: Configuración de juego
+		Headers.Resurrection: Resurección
 
 		BossResurrection: {
-			// Label: Boss Resurrection
-			/* Tooltip:
+			Label: Resurección de jefe
+			Tooltip:
 				'''
-				Turn off to disable bosses having a chance to resurrect after dying if they were 
-				defeated before. 
-				This will not disrupt player resurrection, but make it impossible to accquire 
-				resurrection related items.
-				''' */
+				Apagar para deshabilitar la posibilidad de que los jefes revivan luego de morir 
+				si ya fueron derrotados antes.
+				Esto no va a alterar la resurección del jugador, pero hará imposible la 
+				adquisición de objetos relacionados con resurección.
+				'''
 		}
 	}
 }
 
 Skills: {
 	Default: {
-		// DisplayName: None
-		// Description: Removes
+		DisplayName: Vacío
+		Description: Sin efecto
 	}
 
 	AlchemicalField: {
-		// DisplayName: Alchemical Field
-		// Description: Temporarily increases the amount of money droped and health recovered.
+		DisplayName: Alchemical Field
+		Description: Temporalmente aumenta la cantidad de dinero soltado y salud recuperada.
 	}
 
 	Astrasphere: {
-		// DisplayName: Astrasphere
-		// Description: Deploys a sphere of electrical force around the player.
+		DisplayName: Astrasphere
+		Description: Libera una esfera de fuerza electrica alrededor del jugador.
 	}
 
 	Dragonsphere: {
-		// DisplayName: Dragonsphere
-		// Description: Unleashes a close-range plasma sphere that impacts the enemy.
+		DisplayName: Dragonsphere
+		Description: Libera una esfera de plasma de corto rango que impacta a los enemigos.
 	}
 
 	GalvanicPatch: {
-		// DisplayName: Galvanic Patch
-		// Description: Stimulates bioelectric current to recover a small amount of health.
+		DisplayName: Galvanic Patch
+		Description: Estimula la corriente bioelectrica para recuperar una pequeña cantidad de salud.
 	}
 
 	GalvanicRenewal: {
-		// DisplayName: Galvanic Renewal
-		// Description: Stimulates bioelectric current to completely recover health.
+		DisplayName: Galvanic Renewal
+		Description: Estimula la corriente bioelectrica para recuperar toda la salud
 	}
 
 	GrandStrizer: {
-		// DisplayName: Glorious Strizer
-		// Description: Unleashes an electric blade that scales with remaining health over half the max.
+		DisplayName: Glorious Strizer
+		Description: Libera una espada electrica que escala con la salud sobre la mitad del máximo.
 	}
 
 	InfiniteSurge: {
-		// DisplayName: Infinite Surge
-		// Description: Prevents EP from depleting for a limited time.
+		DisplayName: Infinite Surge
+		Description: Previene el uso de EP por un tiempo limitado.
 	}
 
 	Luxcalibur: {
-		// DisplayName: Luxcalibur
-		// Description: Deploys a large electric blade in the direction to the mouse.
+		DisplayName: Luxcalibur
+		Description: Libera una espada electrica en dirección al mouse.
 	}
 
 	SeptimalBurst: {
-		// DisplayName: Septimal Burst
-		// Description: Channels latent septimal energy to temporarily accelerate EP recovery.
+		DisplayName: Septimal Burst
+		Description: Canaliza energía septima latente para acelerar la recuperación de EP.
 	}
 
 	SeptimalShield: {
-		// DisplayName: Septimal Shield
-		// Description: Greadly reduces damage taken for a brief period of time.
+		DisplayName: Septimal Shield
+		Description: Reduce en gran medida el daño tomado temporalmente.
 	}
 
 	SeptimalSurge: {
-		// DisplayName: Septimal Surge
-		// Description: Channels latent septima energy to temporarily increase attack power.
+		DisplayName: Septimal Surge
+		Description: Canaliza energía septima latente para aumentar el poder de ataque.
 	}
 
 	SplitSecond: {
-		// DisplayName: Split Second
-		// Description: Instantly recharges all EP, even while overheating.
+		DisplayName: Split Second
+		Description: Recarga todo el EP instantaneamente, incluso en sobrecalentamiento.
 	}
 
 	VoltaicChains: {
-		// DisplayName: Voltaic Chains
-		// Description: Deploys electrifying chains, the power increases with the number of targets hit.
+		DisplayName: Voltaic Chains
+		Description: Deploys electrifying chains, the power increases with the number of targets hit.
 	}
 }
 
 Generation: {
-	// Upgrade1: Generating Upgrades
-	// Upgrade9: Draconizing the earth
+	Upgrade1: Generando mejoras
+	Upgrade9: Dragonizando la tierra
 }
 
 LevelUpMessage: {
-	// DragonVein0: A mysterious force powers your septima.
-	// DragonVein1: The earth itself empowers your septima.
-	// DragonVein2: You feel a sudden surge of power.
-	// DragonVein3: The environment nurtures your septima.
-	// DragonVein4: A primal power fills you.
-	// DragonVein5: The planet acknowledges your struggles.
-	// DragonVein6: Septimal power fills your veins.
+	DragonVein0: Una fuerza misteriosa empodera tu septima.
+	DragonVein1: La tierra misma empodera tu septima.
+	DragonVein2: Sientes un surgimiento repentino de poder.
+	DragonVein3: El entorno nutre tu septima.
+	DragonVein4: Un poder primigenio te llena.
+	DragonVein5: El planeta reconoce tu lucha.
+	DragonVein6: Poder semtimo llena tus venas.
 }
 
 DragonVeins: {
-	// Visited: Visited
-	// Unseen: Unseen
-	// Visit0: Your septima reacts to the environment.
-	// Visit1: You feel power surging through the air.
-	// Visit2: This place feels special.
-	// Visit3: The ground beneat rumbles with power.
-	// Visit4: Waves of primal energy spread from this place.
-	// Visit5: An unseen aura permeates the air.
+	Visited: Visitado
+	Unseen: No visto
+	Visit0: Tu septima reacciona al entorno.
+	Visit1: Sientes poder surgiendo por el aire.
+	Visit2: Este lugar se siente especial.
+	Visit3: La tierra tiembla con poder.
+	Visit4: Ondas de energía primigenia se esparcen desde este lugar.
+	Visit5: Un aura invisible impregna el lugar.
 }

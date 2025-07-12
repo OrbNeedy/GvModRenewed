@@ -123,14 +123,14 @@ Items: {
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			After tagging an enemy, it shoots another dart to the mouse position.
+			After tagging an enemy, it shoots another dart to the closest enemy.
 			Allows the darts to penetrate the ground.
 			'''
 	}
 
 	UpgradeComponent: {
 		DisplayName: Upgrade Component
-		Tooltip: ""
+		Tooltip: "Used to make capacity upgrades for the Dart Leader"
 	}
 
 	MirrorShard: {
@@ -138,7 +138,7 @@ Items: {
 		Tooltip:
 			'''
 			A shard imbued with the power of the Cyber Diva.
-			Allows the user to resurrect after dying with improved abilities.
+			Allows the user to resurrect with improved abilities after dying.
 			'''
 	}
 
@@ -160,8 +160,8 @@ Items: {
 		DisplayName: Tonic of septima empowerment
 		Tooltip:
 			'''
-			A special recipe that is guaranteed to enhance a septima no matter how powerful it 
-			already is.
+			A special recipe that is guaranteed to enhance a septima no matter 
+			how powerful it already is.
 			'''
 	}
 }
@@ -183,7 +183,7 @@ Buffs: {
 		DisplayName: Anthem
 		Description:
 			'''
-			Resurrected by the power of the cyber diva.
+			Resurrected by the power of the Cyber Diva.
 			All septimal abilities are increased.
 			'''
 	}
@@ -194,27 +194,27 @@ Buffs: {
 	}
 
 	AlchemicalFieldBuff: {
-		DisplayName: Alchemical Field Buff
+		DisplayName: Alchemical Field
 		Description: Dobles money dropped by enemies and health recovered from potions.
 	}
 
 	InfiniteSurgeBuff: {
-		DisplayName: Infinite Surge Buff
+		DisplayName: Infinite Surge
 		Description: EP can't decrease.
 	}
 
 	SeptimalBurstBuff: {
-		DisplayName: Septimal Burst Buff
+		DisplayName: Septimal Burst
 		Description: EP recovery rate increased.
 	}
 
 	SeptimalShieldBuff: {
-		DisplayName: Septimal Shield Buff
+		DisplayName: Septimal Shield
 		Description: Decreses damage taken.
 	}
 
 	SeptimalSurgeBuff: {
-		DisplayName: Septimal Surge Buff
+		DisplayName: Septimal Surge
 		Description: Damage dealt is doubled.
 	}
 }
@@ -240,7 +240,7 @@ Configs: {
 Skills: {
 	Default: {
 		DisplayName: None
-		Description: Removes
+		Description: No effect.
 	}
 
 	AlchemicalField: {
