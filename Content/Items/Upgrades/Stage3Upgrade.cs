@@ -6,13 +6,14 @@ using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Upgrades
 {
-    public class Stage1Upgrade : ModItem
+    public class Stage3Upgrade : ModItem
     {
         public override void SetDefaults()
         {
+            Item.rare = ItemRarityID.Lime;
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
-            Item.rare = ItemRarityID.Lime;
+
             Item.maxStack = 999;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
@@ -29,8 +30,7 @@ namespace GvMod.Content.Items.Upgrades
             if (player.whoAmI == Main.myPlayer)
             {
                 SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
-
-                return adept.Level < 20;
+                return adept.Level >= 20 && adept.Level < 65;
             }
             return false;
         }
@@ -41,7 +41,7 @@ namespace GvMod.Content.Items.Upgrades
             {
                 SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
 
-                return adept.UpgradeLevel(0, 20);
+                return adept.UpgradeLevel(20, 65);
             }
             return null;
         }

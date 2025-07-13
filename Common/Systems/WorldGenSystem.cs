@@ -43,8 +43,8 @@ namespace GvMod.Common.Systems
             int surfaceSuccesses = 0;
             int attempts = 0;
             int surfaceAttempts = 0;
-            int maxSuccesses = (Main.maxTilesX / 250) + (Main.maxTilesY / 250);
-            int surfaceMaxSuccesses = (Main.maxTilesX / 900) +(Main.maxTilesY / 900);
+            int maxSuccesses = (Main.maxTilesX / 200) + (Main.maxTilesY / 200);
+            int surfaceMaxSuccesses = (Main.maxTilesX / 720) +(Main.maxTilesY / 720);
 
             ModContent.GetInstance<GvMod>().Logger.Debug($"Trying to add upgrade items to the world");
 

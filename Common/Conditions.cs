@@ -34,18 +34,63 @@ namespace GvMod.Common
 
         public bool CanDrop(DropAttemptInfo info)
         {
-            return info.npc.rarity >= minRarity || (NPC.downedMoonlord && info.npc.lifeMax > 10);
+            return info.npc.rarity >= minRarity;
         }
 
         public bool CanShowItemDropInUI()
         {
-            return NPC.downedMoonlord;
+            return false;
         }
 
         public string GetConditionDescription()
         {
             // TODO: Get the translations for this string
-            return "Rarely from anyone.";
+            return "From very rare enemies.";
+        }
+    }
+
+    public class MinLifeDropCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        int minLife = 10;
+
+        public MinLifeDropCondition(int minLife)
+        {
+            this.minLife = minLife;
+        }
+
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            return info.npc.lifeMax >= minLife && NPC.downedMoonlord;
+        }
+
+        public bool CanShowItemDropInUI()
+        {
+            return false;
+        }
+
+        public string GetConditionDescription()
+        {
+            // TODO: Get the translations for this string
+            return "Rarely from anyone after moonlord is defeated.";
+        }
+    }
+
+    public class AfterPlanteraDropCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            return NPC.downedPlantBoss;
+        }
+
+        public bool CanShowItemDropInUI()
+        {
+            return false;
+        }
+
+        public string GetConditionDescription()
+        {
+            // TODO: Get the translations for this string
+            return "After Plantera is defeated.";
         }
     }
 }

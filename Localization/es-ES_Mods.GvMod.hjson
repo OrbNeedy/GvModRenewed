@@ -22,10 +22,10 @@ Projectiles: {
 }
 
 DamageClasses: {
-	SeptimaDamage.DisplayName: Daño Septima
-	MainAttackDamage.DisplayName: Daño principal
-	SecondaryAttackDamage.DisplayName: Daño secundario
-	SpecialAttackDamage.DisplayName: Daño especial
+	SeptimaDamage.DisplayName: Daï¿½o Septima
+	MainAttackDamage.DisplayName: Daï¿½o principal
+	SecondaryAttackDamage.DisplayName: Daï¿½o secundario
+	SpecialAttackDamage.DisplayName: Daï¿½o especial
 }
 
 Items: {
@@ -38,8 +38,8 @@ Items: {
 		DisplayName: Dart Leader
 		Tooltip:
 			'''
-			Un arma diseñada para disparar dardos que marcan enemigos.
-			Enemigos marcados serán dañados sin importar la distancia 
+			Un arma diseï¿½ada para disparar dardos que marcan enemigos.
+			Enemigos marcados serï¿½n daï¿½ados sin importar la distancia 
 			al jugador.
 			'''
 	}
@@ -48,7 +48,7 @@ Items: {
 		DisplayName: Wrathful Eye
 		Tooltip:
 			'''
-			Un par de gafas que aumentan el daño causado por la habilidad 
+			Un par de gafas que aumentan el daï¿½o causado por la habilidad 
 			principal de la septima por {0}%, pero aumenta el consumo de 
 			EP en {1}.
 			'''
@@ -60,7 +60,7 @@ Items: {
 	}
 
 	ClearUpgrade: {
-		DisplayName: Despejar mejoras 
+		DisplayName: Despejar mejoras
 		Tooltip: Despeja todas las modificaciones al Dart Leader.
 	}
 
@@ -69,31 +69,31 @@ Items: {
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Aumenta el daño del dardo en {0}.
+			Aumenta el daï¿½o del dardo en {0}.
 			'''
 	}
 
 	MizuchiUpgrade: {
-		DisplayName: Mizuchi 
+		DisplayName: Mizuchi
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Hace un retículo en frente de los dardos que los redirige a la 
-			posición del mouse.
+			Hace un retï¿½culo en frente de los dardos que los redirige a la 
+			posiciï¿½n del mouse.
 			'''
 	}
 
 	NagaUpgrade: {
-		DisplayName: Naga 
+		DisplayName: Naga
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
 			Permite que los dados atraviesen enemigos.
-			''' 
+			'''
 	}
 
 	OrochiUpgrade: {
-		DisplayName: Orochi 
+		DisplayName: Orochi
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
@@ -102,16 +102,16 @@ Items: {
 	}
 
 	OuroborosUpgrade: {
-		DisplayName: Ouroboros 
+		DisplayName: Ouroboros
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Triplica el tiempo de marca y da la posibilidad de no usar munición.
+			Triplica el tiempo de marca y da la posibilidad de no usar municiï¿½n.
 			'''
 	}
 
 	TechnosUpgrade: {
-		DisplayName: Technos 
+		DisplayName: Technos
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
@@ -120,11 +120,11 @@ Items: {
 	}
 
 	VasukiUpgrade: {
-		DisplayName: Vasuki 
+		DisplayName: Vasuki
 		Tooltip:
 			'''
 			{$UpgradeDescription.Darts}
-			Después de marcar a un enemigo, dispara otro dardo al enemigo más 
+			Despuï¿½s de marcar a un enemigo, dispara otro dardo al enemigo mï¿½s 
 			cercano.
 			Permite que los dardos atraviecen el suelo.
 			'''
@@ -132,7 +132,7 @@ Items: {
 
 	UpgradeComponent: {
 		DisplayName: Componente de mejora
-		Tooltip: "Usado para hacer mejoras de capacidad para el Dart Leader."
+		Tooltip: Usado para hacer mejoras de capacidad para el Dart Leader.
 	}
 
 	MirrorShard: {
@@ -145,17 +145,17 @@ Items: {
 	}
 
 	RingOfPerfection: {
-		DisplayName: Anillo de la perfección
-		Tooltip: El anillo más perfecto jamás creado, vuelvete perfecto.
+		DisplayName: Anillo de la perfecciï¿½n
+		Tooltip: El anillo mï¿½s perfecto jamï¿½s creado, vuelvete perfecto.
 	}
 
 	Stage1Upgrade: {
-		DisplayName: Empoderamiento contenido
+		DisplayName: Energï¿½a septima estabilizada
 		Tooltip:
 			'''
-			Un contenedor de energía extraña que resona con tu septima.
+			Un contenedor de energï¿½a septima que resona con tu septima.
 			Puede usarse para mejorar tu septima hasta nivel 10.
-			''' 
+			'''
 	}
 
 	UniversalUpgradeItem: {
@@ -164,18 +164,38 @@ Items: {
 			'''
 			Una receta especial que garantiza mejorar una septima sin importar lo 
 			poderosa que sea.
-			''' 
+			'''
+	}
+
+	Stage2Upgrade: {
+		// DisplayName: Stage2 Upgrade
+		// Tooltip: ""
+	}
+
+	Stage3Upgrade: {
+		// DisplayName: Stage3 Upgrade
+		// Tooltip: ""
+	}
+
+	Stage4Upgrade: {
+		// DisplayName: Stage4 Upgrade
+		// Tooltip: ""
+	}
+
+	Stage5Upgrade: {
+		// DisplayName: Stage5 Upgrade
+		// Tooltip: ""
 	}
 }
 
 UpgradeDescription: {
 	Darts:
 		'''
-		Una mejora para el Dart Leader, solo añade el efecto descrito al primer 
+		Una mejora para el Dart Leader, solo aï¿½ade el efecto descrito al primer 
 		Dart Leader encontrado en el inventario.
 		Va a sobreescribir la ultima mejora si se aplica a un Dart Leader sin 
 		espacio libre de mejoras.
-		''' 
+		'''
 	Capacity: Capacidad: {0}
 	MaxCapacity: Capacidad: Max
 }
@@ -187,7 +207,7 @@ Buffs: {
 			'''
 			Revivido por el poder de la Ciber Diva.
 			All septimal abilities are increased.
-			''' 
+			'''
 	}
 
 	ResurrectionCooldown: {
@@ -207,33 +227,33 @@ Buffs: {
 
 	SeptimalBurstBuff: {
 		DisplayName: Septimal Burst
-		Description: Taza de recuperación de EP aumentada.
+		Description: Taza de recuperaciï¿½n de EP aumentada.
 	}
 
 	SeptimalShieldBuff: {
-		DisplayName: Septimal Shield 
-		Description: Reduce el daño tomado.
+		DisplayName: Septimal Shield
+		Description: Reduce el daï¿½o tomado.
 	}
 
 	SeptimalSurgeBuff: {
 		DisplayName: Septimal Surge
-		Description: Duplica el daño causado.
+		Description: Duplica el daï¿½o causado.
 	}
 }
 
 Configs: {
 	GameplayConfig: {
-		DisplayName: Configuración de juego
-		Headers.Resurrection: Resurección
+		DisplayName: Configuraciï¿½n de juego
+		Headers.Resurrection: Resurecciï¿½n
 
 		BossResurrection: {
-			Label: Resurección de jefe
+			Label: Resurecciï¿½n de jefe
 			Tooltip:
 				'''
 				Apagar para deshabilitar la posibilidad de que los jefes revivan luego de morir 
 				si ya fueron derrotados antes.
-				Esto no va a alterar la resurección del jugador, pero hará imposible la 
-				adquisición de objetos relacionados con resurección.
+				Esto no va a alterar la resurecciï¿½n del jugador, pero harï¿½ imposible la 
+				adquisiciï¿½n de objetos relacionados con resurecciï¿½n.
 				'''
 		}
 	}
@@ -241,7 +261,7 @@ Configs: {
 
 Skills: {
 	Default: {
-		DisplayName: Vacío
+		DisplayName: Vacï¿½o
 		Description: Sin efecto
 	}
 
@@ -262,7 +282,7 @@ Skills: {
 
 	GalvanicPatch: {
 		DisplayName: Galvanic Patch
-		Description: Estimula la corriente bioelectrica para recuperar una pequeña cantidad de salud.
+		Description: Estimula la corriente bioelectrica para recuperar una pequeï¿½a cantidad de salud.
 	}
 
 	GalvanicRenewal: {
@@ -272,7 +292,7 @@ Skills: {
 
 	GrandStrizer: {
 		DisplayName: Glorious Strizer
-		Description: Libera una espada electrica que escala con la salud sobre la mitad del máximo.
+		Description: Libera una espada electrica que escala con la salud sobre la mitad del mï¿½ximo.
 	}
 
 	InfiniteSurge: {
@@ -282,22 +302,22 @@ Skills: {
 
 	Luxcalibur: {
 		DisplayName: Luxcalibur
-		Description: Libera una espada electrica en dirección al mouse.
+		Description: Libera una espada electrica en direcciï¿½n al mouse.
 	}
 
 	SeptimalBurst: {
 		DisplayName: Septimal Burst
-		Description: Canaliza energía septima latente para acelerar la recuperación de EP.
+		Description: Canaliza energï¿½a septima latente para acelerar la recuperaciï¿½n de EP.
 	}
 
 	SeptimalShield: {
 		DisplayName: Septimal Shield
-		Description: Reduce en gran medida el daño tomado temporalmente.
+		Description: Reduce en gran medida el daï¿½o tomado temporalmente.
 	}
 
 	SeptimalSurge: {
 		DisplayName: Septimal Surge
-		Description: Canaliza energía septima latente para aumentar el poder de ataque.
+		Description: Canaliza energï¿½a septima latente para aumentar el poder de ataque.
 	}
 
 	SplitSecond: {
@@ -333,6 +353,6 @@ DragonVeins: {
 	Visit1: Sientes poder surgiendo por el aire.
 	Visit2: Este lugar se siente especial.
 	Visit3: La tierra tiembla con poder.
-	Visit4: Ondas de energía primigenia se esparcen desde este lugar.
+	Visit4: Ondas de energï¿½a primigenia se esparcen desde este lugar.
 	Visit5: Un aura invisible impregna el lugar.
 }

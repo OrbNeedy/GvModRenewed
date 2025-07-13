@@ -130,7 +130,7 @@ Items: {
 
 	UpgradeComponent: {
 		DisplayName: Upgrade Component
-		Tooltip: "Used to make capacity upgrades for the Dart Leader"
+		Tooltip: Used to make capacity upgrades for the Dart Leader
 	}
 
 	MirrorShard: {
@@ -148,10 +148,10 @@ Items: {
 	}
 
 	Stage1Upgrade: {
-		DisplayName: Contained Empowerment
+		DisplayName: Stabilized septimal energy
 		Tooltip:
 			'''
-			A container of strange energy that ressonates with your septima.
+			A container of septimal energy that ressonates with your septima.
 			Can be used to upgrade your septima up to level 10.
 			'''
 	}
@@ -163,6 +163,26 @@ Items: {
 			A special recipe that is guaranteed to enhance a septima no matter 
 			how powerful it already is.
 			'''
+	}
+
+	Stage2Upgrade: {
+		DisplayName: Stage2 Upgrade
+		Tooltip: ""
+	}
+
+	Stage3Upgrade: {
+		DisplayName: Stage3 Upgrade
+		Tooltip: ""
+	}
+
+	Stage4Upgrade: {
+		DisplayName: Stage4 Upgrade
+		Tooltip: ""
+	}
+
+	Stage5Upgrade: {
+		DisplayName: Stage5 Upgrade
+		Tooltip: ""
 	}
 }
 
