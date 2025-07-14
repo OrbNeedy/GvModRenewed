@@ -88,7 +88,13 @@ namespace GvMod.Content.Projectiles
                         target = Main.MouseWorld;
                     }
                     break;
+                case (int)AstraspheredBehavior.Default:
                 default:
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        Projectile.Center = Main.LocalPlayer.Center;
+                        Projectile.netUpdate = true;
+                    }
                     break;
             }
 
