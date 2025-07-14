@@ -2,12 +2,15 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Upgrades
 {
     public class Stage1Upgrade : ModItem
     {
+        private int maxLevel = 20;
+
         public override void SetDefaults()
         {
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 5));
@@ -24,13 +27,15 @@ namespace GvMod.Content.Items.Upgrades
             Item.consumable = true;
         }
 
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(maxLevel);
+
         public override bool CanUseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
                 SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
 
-                return adept.Level < 20;
+                return adept.Level < maxLevel;
             }
             return false;
         }
@@ -41,7 +46,7 @@ namespace GvMod.Content.Items.Upgrades
             {
                 SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
 
-                return adept.UpgradeLevel(0, 20);
+                return adept.UpgradeLevel(0, maxLevel);
             }
             return null;
         }

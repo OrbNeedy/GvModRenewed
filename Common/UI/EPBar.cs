@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -57,7 +58,7 @@ namespace GvMod.Common.UI
             percentText.Height.Set(28, 0f);
             percentText.HAlign = 0.5f;
 
-            levelText = new UIText("Lvl 1");
+            levelText = new UIText("Lvl 1\nStage 1");
             levelText.Left.Set(0, 0f);
             levelText.Top.Set(28, 0f);
             levelText.Width.Set(16, 0f);
@@ -93,7 +94,8 @@ namespace GvMod.Common.UI
             barEffect.SetFrame(new Rectangle(0, 0, (int)(112 * percent), 18));
 
             percentText.SetText($"{(int)(percent * 100)}%");
-            levelText.SetText($"Lvl {adept.Level}\nStage {adept.Stage}");
+            levelText.SetText(Language.GetTextValue($"Mods.GvMod.UI.LevelDescriptor", adept.Level, 
+                adept.Stage));
             if (area.IsMouseHovering)
             {
                 area.Append(percentText);
@@ -108,7 +110,8 @@ namespace GvMod.Common.UI
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Don't draw anything when the player has no septima
-            if (Main.LocalPlayer.GetModPlayer<SeptimaPlayer>().septimaType == SeptimaType.None || Main.dedServ)
+            if (Main.LocalPlayer.GetModPlayer<SeptimaPlayer>().septimaType == SeptimaType.None || 
+                Main.dedServ)
             {
                 return;
             }

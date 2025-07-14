@@ -1,5 +1,6 @@
 ﻿using GvMod.Content;
 using GvMod.Content.Buffs;
+using GvMod.Content.Items.Upgrades;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -103,6 +104,39 @@ namespace GvMod.Common.Players
                 return false;
             }
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genDust, ref damageSource);
+        }
+
+        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+        {
+            if (Player.GetModPlayer<SeptimaPlayer>().Stage >= 7)
+            {
+                if (Main.rand.NextBool(10))
+                {
+                    int max = Main.rand.Next(0, 6);
+                    for (int i = 0; i < max; i++)
+                    {
+                        Item.NewItem(Player.GetSource_Death(), new Rectangle((int)Player.position.X,
+                            (int)Player.position.Y, Player.width, Player.height),
+                            ModContent.ItemType<Stage4Upgrade>());
+                    }
+                }
+            }
+
+            if (Player.GetModPlayer<SeptimaPlayer>().Stage >= 9)
+            {
+                if (Main.rand.NextBool(10))
+                {
+                    int max = Main.rand.Next(0, 6);
+                    for (int i = 0; i < max; i++)
+                    {
+                        Item.NewItem(Player.GetSource_Death(), new Rectangle((int)Player.position.X,
+                            (int)Player.position.Y, Player.width, Player.height),
+                            ModContent.ItemType<Stage5Upgrade>());
+                    }
+                }
+            }
+
+            base.Kill(damage, hitDirection, pvp, damageSource);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace GvMod.Common.GlobalNPCs
             if (NPCID.Sets.Skeletons[npc.type])
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new AfterPlanteraDropCondition(), 
-                    ModContent.ItemType<Stage4Upgrade>(), 25, 2, 12));
+                    ModContent.ItemType<Stage4Upgrade>(), 38, 2, 12));
             }
 
             switch (npc.type)
@@ -53,8 +53,8 @@ namespace GvMod.Common.GlobalNPCs
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage2Upgrade>(), 12, 1, 10));
                     break;
                 case NPCID.WallofFlesh:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CapacityUpgrade>(), 500, 3, 10));
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage3Upgrade>(), 14, 1, 5));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CapacityUpgrade>(), 250, 3, 10));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage3Upgrade>(), 18, 1, 10));
                     break;
                 case NPCID.SkeletronPrime:
                 case NPCID.TheDestroyer:
@@ -66,6 +66,9 @@ namespace GvMod.Common.GlobalNPCs
                 case NPCID.Plantera:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OrochiUpgrade>(), 2));
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage4Upgrade>(), 40, 5, 15));
+                    break;
+                case NPCID.Golem:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage4Upgrade>(), 12, 1, 10));
                     break;
                 case NPCID.CultistBoss:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MizuchiUpgrade>(), 2));

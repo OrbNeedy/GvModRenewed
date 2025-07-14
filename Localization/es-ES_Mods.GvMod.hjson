@@ -153,8 +153,8 @@ Items: {
 		DisplayName: Energ�a septima estabilizada
 		Tooltip:
 			'''
-			Un contenedor de energ�a septima que resona con tu septima.
-			Puede usarse para mejorar tu septima hasta nivel 10.
+			Un contenedor de energía septima que resona con tu septima.
+			Puede usarse para mejorar tu septima hasta el nivel {0}.
 			'''
 	}
 
@@ -168,23 +168,44 @@ Items: {
 	}
 
 	Stage2Upgrade: {
-		// DisplayName: Stage2 Upgrade
-		// Tooltip: ""
+		DisplayName: Mejorador de septima seguro
+		Tooltip:
+			'''
+			Una concocción quimica inyectada en el cuerpo del adepto que mejora su 
+			septima.
+			Puede usarse para mejorar tu septima hasta el nivel {0}.
+			La enfermera dice que no tiene efectos adversos.
+			'''
 	}
 
 	Stage3Upgrade: {
-		// DisplayName: Stage3 Upgrade
-		// Tooltip: ""
+		DisplayName: Energía septima experimental
+		Tooltip:
+			'''
+			Un contenedor de energía septima que resona con tu septima.
+			Puede usarse para mejorar tu septima hasta el nivel {0}, pero solo 
+			puede usarse desde el nivel {1}.
+			'''
 	}
 
 	Stage4Upgrade: {
-		// DisplayName: Stage4 Upgrade
-		// Tooltip: ""
+		DisplayName: Espiritu adepto
+		Tooltip:
+			'''
+			Restos del espiritu de un poderoso adepto ya muerto.
+			Puede usarse para mejorar tu septima hasta el nivel {0}, pero solo 
+			puede usarse desde el nivel {1}.
+			'''
 	}
 
 	Stage5Upgrade: {
-		// DisplayName: Stage5 Upgrade
-		// Tooltip: ""
+		DisplayName: Espiritus octimos
+		Tooltip:
+			'''
+			Restos de una septima que trascendió sus limites y se volvió una octima.
+			Puede usarse para mejorar tu septima hasta el nivel {0}, pero solo 
+			puede usarse desde el nivel {1}.
+			'''
 	}
 }
 

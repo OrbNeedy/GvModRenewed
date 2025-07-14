@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Terraria.DataStructures;
 using GvMod.Content.Tiles;
-using Terraria.ID;
 
 namespace GvMod.Common.Systems
 {
@@ -43,15 +42,15 @@ namespace GvMod.Common.Systems
             int surfaceSuccesses = 0;
             int attempts = 0;
             int surfaceAttempts = 0;
-            int maxSuccesses = (Main.maxTilesX / 200) + (Main.maxTilesY / 200);
-            int surfaceMaxSuccesses = (Main.maxTilesX / 720) +(Main.maxTilesY / 720);
+            int maxSuccesses = (Main.maxTilesX / 80) + (Main.maxTilesY / 80);
+            int surfaceMaxSuccesses = (Main.maxTilesX / 280) +(Main.maxTilesY / 280);
 
             ModContent.GetInstance<GvMod>().Logger.Debug($"Trying to add upgrade items to the world");
 
             while (successes < maxSuccesses)
             {
                 attempts++;
-                if (attempts > 1200)
+                if (attempts > 3600)
                 {
                     break;
                 }
@@ -72,7 +71,7 @@ namespace GvMod.Common.Systems
             while (surfaceSuccesses < surfaceMaxSuccesses)
             {
                 surfaceAttempts++;
-                if (surfaceAttempts > 800)
+                if (surfaceAttempts > 2400)
                 {
                     break;
                 }

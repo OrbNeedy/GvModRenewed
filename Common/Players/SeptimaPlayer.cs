@@ -661,7 +661,8 @@ namespace GvMod.Common.Players
                     if (UpgradeLevel(0, 1000))
                     {
                         int randomMessage = Main.rand.Next(0, 7);
-                        Main.NewText(Language.GetTextValue($"Mods.GvMod.LevelUpMessage.DragonVein{randomMessage}"), 
+                        Main.NewText(Language.
+                            GetTextValue($"Mods.GvMod.LevelUpMessage.DragonVein{randomMessage.ToString()}"), 
                             septima.MainColor);
                     }
                 }
@@ -794,7 +795,7 @@ namespace GvMod.Common.Players
             if (stageChanged || checks > 1)
             {
                 // TODO: Add localization
-                Main.NewText("Your septima feels stronger.", septima.MainColor);
+                Main.NewText(Language.GetTextValue($"Mods.GvMod.LevelUpMessage.Regular"), septima.MainColor);
             }
             //Main.NewText($"Final checks: {checks}");
         }

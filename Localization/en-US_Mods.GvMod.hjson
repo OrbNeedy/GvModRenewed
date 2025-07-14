@@ -148,11 +148,11 @@ Items: {
 	}
 
 	Stage1Upgrade: {
-		DisplayName: Stabilized septimal energy
+		DisplayName: Stabilized Septimal Energy
 		Tooltip:
 			'''
 			A container of septimal energy that ressonates with your septima.
-			Can be used to upgrade your septima up to level 10.
+			Can be used to upgrade your septima up to level {0}.
 			'''
 	}
 
@@ -166,23 +166,44 @@ Items: {
 	}
 
 	Stage2Upgrade: {
-		DisplayName: Stage2 Upgrade
-		Tooltip: ""
+		DisplayName: Safe Septima Enhancer
+		Tooltip: 
+			'''
+			A chemical concoction injected in the adept's body that enhances their 
+			septima.
+			Can be used to upgrade your septima up to level {0}.
+			The nurse said it has no adverse effects.
+			'''
 	}
 
 	Stage3Upgrade: {
-		DisplayName: Stage3 Upgrade
-		Tooltip: ""
+		DisplayName: Experimental Septimal Energy 
+		Tooltip:
+			'''
+			A container of septimal energy that ressonates with your septima.
+			Can be used to upgrade your septima up to level {0}, but can only be 
+			used from level {1}.
+			'''
 	}
 
 	Stage4Upgrade: {
-		DisplayName: Stage4 Upgrade
-		Tooltip: ""
+		DisplayName: Adept Spirit
+		Tooltip:
+			'''
+			Remnants of the spirit of a powerful adept long gone.
+			Can be used to upgrade your septima up to level {0}, but can only be 
+			used from level {1}.
+			'''
 	}
 
 	Stage5Upgrade: {
-		DisplayName: Stage5 Upgrade
-		Tooltip: ""
+		DisplayName: Octimal Spirits
+		Tooltip:
+			'''
+			Leftovers from a septima that transcended it's limits and became an octima.
+			Can be used to upgrade your septima up to level {0}, but can only be 
+			used from level {1}.
+			'''
 	}
 }
 
@@ -237,6 +258,14 @@ Buffs: {
 		DisplayName: Septimal Surge
 		Description: Damage dealt is doubled.
 	}
+}
+
+UI: {
+	LevelDescriptor: 
+		'''
+		Lvl {0}
+		Stage {1}
+		'''
 }
 
 Configs: {
@@ -335,6 +364,7 @@ Generation: {
 }
 
 LevelUpMessage: {
+	Regular: Your septima feels stronger.
 	DragonVein0: A mysterious force powers your septima.
 	DragonVein1: The earth itself empowers your septima.
 	DragonVein2: You feel a sudden surge of power.
