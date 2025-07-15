@@ -207,6 +207,17 @@ Items: {
 			puede usarse desde el nivel {1}.
 			'''
 	}
+
+	ProtectiveBody: {
+		// SetBonus: Increases septimal damage by {0}%.
+		// DisplayName: Protective Armor
+		// Tooltip: Increases septimal damage by {0}%.
+	}
+
+	ProtectiveLegs: {
+		// DisplayName: Protective Boots
+		// Tooltip: ""
+	}
 }
 
 UpgradeDescription: {
@@ -261,6 +272,12 @@ Buffs: {
 		Description: Duplica el da�o causado.
 	}
 }
+
+/* UI.LevelDescriptor:
+	'''
+	Lvl {0}
+	Stage {1}
+	''' */
 
 Configs: {
 	GameplayConfig: {
@@ -358,6 +375,7 @@ Generation: {
 }
 
 LevelUpMessage: {
+	// Regular: Your septima feels stronger.
 	DragonVein0: Una fuerza misteriosa empodera tu septima.
 	DragonVein1: La tierra misma empodera tu septima.
 	DragonVein2: Sientes un surgimiento repentino de poder.

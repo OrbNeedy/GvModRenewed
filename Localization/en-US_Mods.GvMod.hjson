@@ -167,7 +167,7 @@ Items: {
 
 	Stage2Upgrade: {
 		DisplayName: Safe Septima Enhancer
-		Tooltip: 
+		Tooltip:
 			'''
 			A chemical concoction injected in the adept's body that enhances their 
 			septima.
@@ -177,7 +177,7 @@ Items: {
 	}
 
 	Stage3Upgrade: {
-		DisplayName: Experimental Septimal Energy 
+		DisplayName: Experimental Septimal Energy
 		Tooltip:
 			'''
 			A container of septimal energy that ressonates with your septima.
@@ -204,6 +204,17 @@ Items: {
 			Can be used to upgrade your septima up to level {0}, but can only be 
 			used from level {1}.
 			'''
+	}
+
+	ProtectiveBody: {
+		SetBonus: Increases septimal damage by {0}%.
+		DisplayName: Protective Armor
+		Tooltip: Increases septimal damage by {0}%.
+	}
+
+	ProtectiveLegs: {
+		DisplayName: Protective Boots
+		Tooltip: ""
 	}
 }
 
@@ -260,13 +271,11 @@ Buffs: {
 	}
 }
 
-UI: {
-	LevelDescriptor: 
-		'''
-		Lvl {0}
-		Stage {1}
-		'''
-}
+UI.LevelDescriptor:
+	'''
+	Lvl {0}
+	Stage {1}
+	'''
 
 Configs: {
 	GameplayConfig: {
