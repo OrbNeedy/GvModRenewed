@@ -43,7 +43,7 @@ namespace GvMod.Content.Items.Armor.Protective
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup("IronBar", 7)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 7)
                 .AddRecipeGroup("GoldBar", 5)
                 .AddIngredient(ItemID.Silk, 4)
                 .AddTile(TileID.Anvils)

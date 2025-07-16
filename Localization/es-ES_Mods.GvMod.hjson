@@ -218,6 +218,11 @@ Items: {
 		// DisplayName: Protective Boots
 		// Tooltip: ""
 	}
+
+	RuinedDartGun: {
+		// DisplayName: Ruined Dart Gun
+		// Tooltip: ""
+	}
 }
 
 UpgradeDescription: {

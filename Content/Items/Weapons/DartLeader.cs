@@ -65,6 +65,7 @@ namespace GvMod.Content.Items.Weapons
             Item.useAnimation = 12;
             Item.UseSound = new SoundStyle("GvMod/Assets/Sfx/GunShot_G") with
             {
+                Volume = 0.5f,
                 PitchVariance = 0.1f
             };
             Item.noMelee = true;
@@ -269,6 +270,12 @@ namespace GvMod.Content.Items.Weapons
                 .AddRecipeGroup(RecipeGroupID.IronBar, 10)
                 .AddIngredient(ItemID.Revolver)
                 .AddIngredient(ItemID.IllegalGunParts)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddRecipeGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredient<RuinedDartGun>()
                 .AddTile(TileID.Anvils)
                 .Register();
         }

@@ -148,6 +148,7 @@ namespace GvMod.Content.Projectiles
         {
             SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/DartHit") with
             {
+                Volume = 0.5f,
                 PitchVariance = 0.1f
             }, Projectile.Center);
 
@@ -180,6 +181,7 @@ namespace GvMod.Content.Projectiles
         {
             SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/DartMiss") with
             {
+                Volume = 0.5f,
                 PitchVariance = 0.1f
             }, Projectile.Center);
             return base.OnTileCollide(oldVelocity);

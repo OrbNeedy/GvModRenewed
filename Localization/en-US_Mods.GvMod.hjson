@@ -216,6 +216,16 @@ Items: {
 		DisplayName: Protective Boots
 		Tooltip: ""
 	}
+
+	RuinedDartGun: {
+		DisplayName: Damaged Dart Leader
+		Tooltip:
+			'''
+			Barely works, but can be used to shoot darts that tag enemies.
+			Tagged enemies will be damaged regardless of distance from the 
+			player.
+			'''
+	}
 }
 
 UpgradeDescription: {
