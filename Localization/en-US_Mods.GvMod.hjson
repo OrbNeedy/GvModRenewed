@@ -226,6 +226,29 @@ Items: {
 			player.
 			'''
 	}
+
+	QuillBody: {
+		SetBonus: Increases EP recovery by {0}% and by {1}% on overheat.
+		DisplayName: Quill Uniform
+		Tooltip: 
+			'''
+			Specially made to suit an adept's needs.
+			Increases septima damage by {0}%.
+			'''
+	}
+
+	QuillLegs: {
+		DisplayName: Quill Boots
+		Tooltip: 
+			'''
+			Increases movement speed by {0}%.
+			'''
+	}
+
+	SpiritualStone: {
+		DisplayName: Spiritual Stone
+		Tooltip: A stone with special properties.
+	}
 }
 
 UpgradeDescription: {

@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace GvMod.Content.Items
+namespace GvMod.Content.Items.Materials
 {
     public class UpgradeComponent : ModItem
     {

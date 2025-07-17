@@ -220,7 +220,28 @@ Items: {
 	}
 
 	RuinedDartGun: {
-		// DisplayName: Ruined Dart Gun
+		// DisplayName: Damaged Dart Leader
+		/* Tooltip:
+			'''
+			Barely works, but can be used to shoot darts that tag enemies.
+			Tagged enemies will be damaged regardless of distance from the 
+			player.
+			''' */
+	}
+
+	QuillBody: {
+		// SetBonus: Mods.GvMod.Items.QuillBody.SetBonus
+		// DisplayName: Quill Body
+		// Tooltip: ""
+	}
+
+	QuillLegs: {
+		// DisplayName: Quill Legs
+		// Tooltip: ""
+	}
+
+	SpiritualStone: {
+		// DisplayName: Spiritual Stone
 		// Tooltip: ""
 	}
 }
