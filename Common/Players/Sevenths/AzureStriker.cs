@@ -33,7 +33,7 @@ namespace GvMod.Common.Players.Sevenths
             new InfiniteSurge(), new GalvanicRenewal(), new SeptimalBurst(), new SeptimalShield(), 
             new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere()
         };
-        public override float EPUseBase { get; protected set; } = 0.7f;
+        public override float EPUseBase { get; protected set; } = 0.75f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
         public override float OverheatRecoveryBaseRate { get; protected set; } = 0.003333f;

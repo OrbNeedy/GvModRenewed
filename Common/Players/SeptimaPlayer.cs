@@ -710,7 +710,7 @@ namespace GvMod.Common.Players
                         if (Level >= 10 && (NPC.downedBoss1 || NPC.downedSlimeKing))
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 125
+                            if (BaseMaxEP < 200) BaseMaxEP += 10; // Expected: 110
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -719,7 +719,7 @@ namespace GvMod.Common.Players
                         if (Level >= 25 && NPC.downedBoss3)
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 150
+                            if (BaseMaxEP < 200) BaseMaxEP += 10; // Expected: 120
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -729,7 +729,7 @@ namespace GvMod.Common.Players
                         {
                             stageChanged = true;
                             if (BaseMaxAP == 2) BaseMaxAP += 1;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 175
+                            if (BaseMaxEP < 200) BaseMaxEP += 20; // Expected: 140
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -738,7 +738,7 @@ namespace GvMod.Common.Players
                         if (Level >= 40 && (NPC.downedMechBossAny || NPC.downedQueenSlime))
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 200
+                            if (BaseMaxEP < 200) BaseMaxEP += 10; // Expected: 150
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -747,7 +747,7 @@ namespace GvMod.Common.Players
                         if (Level >= 50 && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 225
+                            if (BaseMaxEP < 200) BaseMaxEP += 10; // Expected: 160
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -756,7 +756,7 @@ namespace GvMod.Common.Players
                         if (Level >= 60 && NPC.downedGolemBoss)
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 250
+                            if (BaseMaxEP < 200) BaseMaxEP += 10; // Expected: 170
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -765,7 +765,7 @@ namespace GvMod.Common.Players
                         if (Level >= 65 && NPC.downedAncientCultist)
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 275
+                            if (BaseMaxEP < 200) BaseMaxEP += 10; // Expected: 180
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -774,7 +774,7 @@ namespace GvMod.Common.Players
                         if (Level >= 75 && DragonVeinsVisited.Count(true) >= DragonVeinsVisited.Length)
                         {
                             stageChanged = true;
-                            if (BaseMaxEP < 300) BaseMaxEP += 25; // Expected: 300
+                            if (BaseMaxEP < 200) BaseMaxEP += 20; // Expected: 200
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -784,7 +784,7 @@ namespace GvMod.Common.Players
                         {
                             stageChanged = true;
                             if (BaseMaxAP == 3) BaseMaxAP += 1;
-                            if (BaseMaxEP < 400) BaseMaxEP += 100; // Expected: 400
+                            if (BaseMaxEP < 300) BaseMaxEP += 100; // Expected: 300
                             Stage++;
                             septima.OnStageChange(Player, this);
                         }
@@ -794,7 +794,6 @@ namespace GvMod.Common.Players
 
             if (stageChanged || checks > 1)
             {
-                // TODO: Add localization
                 Main.NewText(Language.GetTextValue($"Mods.GvMod.LevelUpMessage.Regular"), septima.MainColor);
             }
             //Main.NewText($"Final checks: {checks}");
