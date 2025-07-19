@@ -1,15 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace GvMod
 {
-	// Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
 	public class GvMod : Mod
 	{
+        public override void Load()
+        {
+            Asset<Effect> prevasionShader = this.Assets.Request<Effect>("Effects/PrevasionEffect");
 
+            GameShaders.Misc["Prevasion"] = new MiscShaderData(prevasionShader, "Prevasion");
+            base.Load();
+        }
 	}
 }

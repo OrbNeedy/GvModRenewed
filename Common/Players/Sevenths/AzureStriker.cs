@@ -38,6 +38,7 @@ namespace GvMod.Common.Players.Sevenths
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
         public override float OverheatRecoveryBaseRate { get; protected set; } = 0.003333f;
         public override float APRecoveryBaseRate { get; protected set; } = 0.000185f;
+        public override int PrevasionEPCooldownBaseTimer { get; protected set; } = 90;
 
         public override SeptimaType Type { get; protected set; } = SeptimaType.AzureStriker;
         public override string InternalName => "AzureStriker";
@@ -113,8 +114,7 @@ namespace GvMod.Common.Players.Sevenths
             {
                 if (adept.Stage <= 5)
                 {
-                    adept.ForceOverheat();
-                    return true;
+                    if (adept.ForceOverheat()) return true;
                 } else if (adept.Stage <= 7)
                 {
                     adept.EPUseModifier *= 2;

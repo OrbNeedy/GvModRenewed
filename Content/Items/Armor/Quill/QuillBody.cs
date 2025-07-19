@@ -42,8 +42,11 @@ namespace GvMod.Content.Items.Armor.Quill
         public override void UpdateArmorSet(Player player)
         {
             float increase = bonusOverheatRecovery / 100f;
+            float increase2 = bonusEPRecovery / 100f;
             player.setBonus = SetBonusText.Value;
-            player.GetModPlayer<SeptimaPlayer>().OverheatRecoveryModifier += increase;
+            SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
+            adept.OverheatRecoveryModifier += increase;
+            adept.EPRecoveryModifier += increase2;
         }
 
         public override void AddRecipes()

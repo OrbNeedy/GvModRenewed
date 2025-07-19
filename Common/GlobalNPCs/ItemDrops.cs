@@ -1,5 +1,5 @@
-﻿using GvMod.Content.Items;
-using GvMod.Content.Items.Accessories;
+﻿using GvMod.Content.Items.Accessories;
+using GvMod.Content.Items.Materials;
 using GvMod.Content.Items.Upgrades;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -86,6 +86,9 @@ namespace GvMod.Common.GlobalNPCs
                 case NPCID.Poltergeist:
                     npcLoot.Add(ItemDropRule.ByCondition(new AfterPlanteraDropCondition(), 
                         ModContent.ItemType<Stage4Upgrade>(), 25, 5, 20));
+                    break;
+                case NPCID.GoblinWarrior:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SeptimaStabilizer>(), 50));
                     break;
             }
             base.ModifyNPCLoot(npc, npcLoot);

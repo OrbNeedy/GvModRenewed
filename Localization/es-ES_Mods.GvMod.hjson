@@ -230,18 +230,38 @@ Items: {
 	}
 
 	QuillBody: {
-		// SetBonus: Mods.GvMod.Items.QuillBody.SetBonus
-		// DisplayName: Quill Body
-		// Tooltip: ""
+		// SetBonus: Increases EP recovery by {0}% and by {1}% on overheat.
+		// DisplayName: Quill Agent Uniform
+		/* Tooltip:
+			'''
+			Specially made to suit an adept's needs.
+			Increases septima damage by {0}%.
+			''' */
 	}
 
 	QuillLegs: {
-		// DisplayName: Quill Legs
-		// Tooltip: ""
+		// DisplayName: Quill Agent Boots
+		// Tooltip: Increases movement speed by {0}%.
 	}
 
 	SpiritualStone: {
 		// DisplayName: Spiritual Stone
+		// Tooltip: A stone with special properties.
+	}
+
+	QuillOfficerBody: {
+		// SetBonus: Mods.GvMod.Items.QuillOfficerBody.SetBonus
+		// DisplayName: Quill Officer Body
+		// Tooltip: ""
+	}
+
+	SeptimaStabilizer: {
+		// DisplayName: Septima Stabilizer
+		// Tooltip: ""
+	}
+
+	QuillOfficerLegs: {
+		// DisplayName: Quill Officer Legs
 		// Tooltip: ""
 	}
 }

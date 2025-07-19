@@ -1,0 +1,65 @@
+﻿using GvMod.Common.Players;
+using GvMod.Common.Systems;
+using GvMod.Content.Buffs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
+using Terraria.ModLoader;
+
+namespace GvMod.Common.GlobalPlayers
+{
+    public class PrevasionDrawLayer : PlayerDrawLayer
+    {
+        public override Position GetDefaultPosition()
+        {
+            return new Between(PlayerDrawLayers.BeetleBuff, PlayerDrawLayers.EyebrellaCloud);
+        }
+
+        protected override void Draw(ref PlayerDrawSet drawInfo)
+        {
+            if (drawInfo.shadow != 0) return;
+
+            Player player = drawInfo.drawPlayer;
+            if (player.DeadOrGhost) return;
+
+            PlayerPrevasion prevasion = player.GetModPlayer<PlayerPrevasion>();
+
+            if (prevasion.PrevasionIframes > 0)
+            {
+                SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
+                SpriteBatchState tempState = SpriteBatchExt.GetState(Main.spriteBatch);
+
+                int time = prevasion.BasePrevasionIframes - prevasion.PrevasionIframes;
+                float displacement = (float)Math.Cos(time / 8) * prevasion.PrevasionIframes;
+
+                SpriteBatchExt.Restart(Main.spriteBatch, tempState, SpriteSortMode.Immediate);
+
+                Rectangle playerRect = PlayerRenderTarget.
+                    getPlayerTargetSourceRectangle(player.whoAmI);
+                Rectangle sourceRectangle = new Rectangle(player.whoAmI * playerRect.Width, 0,
+                    playerRect.Width, playerRect.Height);
+
+                // GameShaders.Misc["Prevasion"].UseColor(adept.septima.MainColor).UseOpacity(1).Apply();
+                Vector2 position = player.position - Main.screenPosition - playerRect.Size() / 2;
+                Main.spriteBatch.Draw(
+                    PlayerRenderTarget.Target, 
+                    position + new Vector2(displacement, 0), 
+                    sourceRectangle, 
+                    adept.septima.MainColor * 0.5f);
+
+                Main.spriteBatch.Draw(
+                    PlayerRenderTarget.Target,
+                    position + new Vector2(-displacement, 0),
+                    sourceRectangle,
+                    adept.septima.MainColor * 0.5f);
+                //Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+
+                SpriteBatchExt.Restart(Main.spriteBatch, tempState);
+            }
+        }
+    }
+}

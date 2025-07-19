@@ -229,8 +229,8 @@ Items: {
 
 	QuillBody: {
 		SetBonus: Increases EP recovery by {0}% and by {1}% on overheat.
-		DisplayName: Quill Uniform
-		Tooltip: 
+		DisplayName: Quill Agent Uniform
+		Tooltip:
 			'''
 			Specially made to suit an adept's needs.
 			Increases septima damage by {0}%.
@@ -238,18 +238,53 @@ Items: {
 	}
 
 	QuillLegs: {
-		DisplayName: Quill Boots
-		Tooltip: 
-			'''
-			Increases movement speed by {0}%.
-			'''
+		DisplayName: Quill Agent Boots
+		Tooltip: Increases movement speed by {0}%.
 	}
 
 	SpiritualStone: {
 		DisplayName: Spiritual Stone
 		Tooltip: A stone with special properties.
 	}
+
+	QuillOfficerBody: {
+		SetBonus: 
+			'''
+			Increases overheat recovery by {3}% and allows the use of prevasion.
+			{$PrevasionDescription}
+			'''
+		DisplayName: Quill Officer Body
+		Tooltip: 
+			'''
+			The uniform wore by Quill's commanding officers.
+			Increases septima damage by {0}% and decreases EP use by {1}%.
+			'''
+	}
+
+	SeptimaStabilizer: {
+		DisplayName: Septima Stabilizer
+		Tooltip: 
+			'''
+			A device commonly used by adepts with little control over their 
+			septima.
+			Reduces EP use by {0}% and increases EP recovery rate by {1}%.
+			'''
+	}
+
+	QuillOfficerLegs: {
+		DisplayName: Quill Officer Legs
+		Tooltip:
+			'''
+			Increases movement speed by {0}%.
+			'''
+	}
 }
+
+PrevasionDescription: 
+	'''
+	Prevasion will ignore attacks with less than {0}% of the player's 
+	max life plus {1} damage at the cost of {2} EP.
+	'''
 
 UpgradeDescription: {
 	Darts:

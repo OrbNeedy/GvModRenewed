@@ -135,6 +135,7 @@ namespace GvMod.Common.Players
                     Player.controlUseItem = false;
                     Player.controlUseTile = false;
                     Player.controlThrow = false;
+                    Player.controlHook = false;
                     Player.gravDir = 1f;
                 }
             }
@@ -359,6 +360,9 @@ namespace GvMod.Common.Players
             {
                 // When overheat, increase with OverheatRecovery stats and check EP after
                 CurrentEP += GetTotalMaxEP() * septima.OverheatRecoveryBaseRate * GetTotalOverheatRecoveryModifier();
+                //Main.NewText("Recovery rate: " + GetTotalOverheatRecoveryModifier());
+                //Main.NewText("Max EP: " + GetTotalMaxEP());
+                //Main.NewText("Base recovery: " + septima.OverheatRecoveryBaseRate);
                 if (CurrentEP >= GetTotalMaxEP())
                 {
                     Overheated = false;
@@ -478,13 +482,14 @@ namespace GvMod.Common.Players
 
         private void RechargeLogic()
         {
-            if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && !UsingSpecialSkill &&
-                !Overheated && septima.AllowRecharge)
+            if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && 
+                !UsingSpecialSkill && !Overheated && septima.AllowRecharge && 
+                Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
             {
                 SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/Recharge") with
                 {
                     PitchVariance = 0.1f, 
-                    Volume = 0.75f
+                    Volume = 0.65f
                 }, Player.Center);
 
                 RechargeDelay = 50;
@@ -499,9 +504,19 @@ namespace GvMod.Common.Players
                 {
                     Dust.NewDust(Player.position, Player.width, Player.height, DustID.MartianSaucerSpark);
                 }
-                EPCooldownTimer = 1;
-                CurrentEP += (float)GetTotalMaxEP()/35f;
+
+                if (Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
+                {
+                    CurrentEP += (float)GetTotalMaxEP() / 35f;
+                    EPCooldownTimer = septima.PrevasionEPCooldownBaseTimer;
+                }
+
                 RechargeTimer--;
+
+                if (RechargeTimer <= 0 && Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
+                {
+                    EPCooldownTimer = 1;
+                }
             }
         }
 
@@ -515,14 +530,6 @@ namespace GvMod.Common.Players
             }
         }
 
-        public override bool FreeDodge(Player.HurtInfo info)
-        {
-            // Note: Activating prevasion also causes tags on the enemy to disappear
-            // CCed will bypass all forms of prevasion, for balance with other mods 
-            if (Player.CCed) return false;
-            return base.FreeDodge(info);
-        }
-
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
             //Main.NewText($"Player hit");
@@ -533,7 +540,7 @@ namespace GvMod.Common.Players
                     case Resistance.Penetrate:
                         break;
                     case Resistance.Overheat:
-                        ForceOverheat();
+                        ForceOverheat(ignoreBuffs: true);
                         break;
                     case Resistance.Ignore:
                         modifiers.Cancel();
@@ -561,7 +568,7 @@ namespace GvMod.Common.Players
                     case Resistance.Penetrate:
                         break;
                     case Resistance.Overheat:
-                        ForceOverheat();
+                        ForceOverheat(ignoreBuffs: true);
                         break;
                     case Resistance.Ignore:
                         modifiers.Cancel();
@@ -622,6 +629,7 @@ namespace GvMod.Common.Players
             EPRecoveryModifier = 1;
             EPCooldownModifier = 1;
             APRecoveryModifier = 1;
+            OverheatRecoveryModifier = 1;
 
             septima.UpdateTimers(perfectionCheck);
             if (SecondarySkillCooldown > 0) SecondarySkillCooldown--;
@@ -807,6 +815,26 @@ namespace GvMod.Common.Players
         /// <returns>False if a buff prevented the forced overheat.</returns>
         public bool ForceOverheat(bool resetBuffs = false, bool ignoreBuffs = false)
         {
+            //Main.NewText("Forcing overheat");
+            bool returnValue = true;
+            if (Player.HasBuff<InfiniteSurgeBuff>())
+            {
+                //Main.NewText("Player has buffs");
+                if (resetBuffs)
+                {
+                    //Main.NewText("Clearing buffs");
+                    Player.ClearBuff(ModContent.BuffType<InfiniteSurgeBuff>());
+                }
+                if (ignoreBuffs)
+                {
+                    //Main.NewText("Buffs ignored");
+                } else
+                {
+                    //Main.NewText("Buffs not ignored");
+                    return false;
+                }
+            }
+
             Overheated = true;
             CurrentEP = 0;
 
@@ -817,7 +845,11 @@ namespace GvMod.Common.Players
                 Dust.NewDustPerfect(Player.Center, DustID.MartianSaucerSpark);
             }
 
-            return true;
+            //Main.NewText("Successfully overheated");
+            //Main.NewText("Overheated: " + Overheated);
+            //Main.NewText("CurrentEP: " + CurrentEP);
+
+            return returnValue;
         }
 
         public int GetTotalMaxEP()
