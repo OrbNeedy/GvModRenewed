@@ -13,7 +13,7 @@ namespace GvMod.Content.Items.Armor.QuillOfficer
         public override void SetDefaults()
         {
             Item.value = Item.sellPrice(0, 0, 10, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.LightRed;
             Item.defense = 9;
         }
 

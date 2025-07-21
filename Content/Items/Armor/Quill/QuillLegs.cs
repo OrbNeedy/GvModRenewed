@@ -1,5 +1,5 @@
 ﻿using GvMod.Content.Items.Armor.Protective;
-using GvMod.Content.Items.Upgrades;
+using GvMod.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -37,9 +37,9 @@ namespace GvMod.Content.Items.Armor.Quill
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.HellstoneBar, 5)
+                .AddIngredient(ItemID.HellstoneBar, 2)
                 .AddIngredient<ProtectiveLegs>()
-                .AddIngredient<Stage1Upgrade>()
+                .AddIngredient<KrippAlloy>(4)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

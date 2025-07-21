@@ -250,21 +250,77 @@ Items: {
 	}
 
 	QuillOfficerBody: {
-		// SetBonus: Mods.GvMod.Items.QuillOfficerBody.SetBonus
+		/* SetBonus:
+			'''
+			Increases overheat recovery by {3}% and allows the use of prevasion.
+			{$PrevasionDescription}
+			''' */
 		// DisplayName: Quill Officer Body
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			The uniform wore by Quill's commanding officers.
+			Increases septima damage by {0}% and decreases EP use by {1}%.
+			''' */
 	}
 
 	SeptimaStabilizer: {
 		// DisplayName: Septima Stabilizer
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A device commonly used by adepts with little control over their 
+			septima.
+			Reduces EP use by {0}% and increases EP recovery rate by {1}%.
+			''' */
 	}
 
 	QuillOfficerLegs: {
 		// DisplayName: Quill Officer Legs
+		// Tooltip: Increases movement speed by {0}%.
+	}
+
+	ModernQuillBody: {
+		// SetBonus: Mods.GvMod.Items.ModernQuillBody.SetBonus
+		// DisplayName: Modern Quill Body
+		// Tooltip: ""
+	}
+
+	AltQuillOfficerBody: {
+		// SetBonus: Mods.GvMod.Items.AltQuillOfficerBody.SetBonus
+		// DisplayName: Alt Quill Officer Body
+		// Tooltip: ""
+	}
+
+	PrevasionChain: {
+		// DisplayName: Prevasion Chain
+		// Tooltip: ""
+	}
+
+	ModernQuillLegs: {
+		// DisplayName: Modern Quill Legs
+		// Tooltip: ""
+	}
+
+	Electromagnet: {
+		// DisplayName: Electromagnet
+		// Tooltip: ""
+	}
+
+	Kripp: {
+		// DisplayName: Kripp
+		// Tooltip: ""
+	}
+
+	KrippAlloy: {
+		// DisplayName: Kripp Alloy
 		// Tooltip: ""
 	}
 }
+
+/* PrevasionDescription:
+	'''
+	Prevasion will ignore attacks with less than {0}% of the player's 
+	max life plus {1} damage at the cost of {2} EP.
+	''' */
 
 UpgradeDescription: {
 	Darts:

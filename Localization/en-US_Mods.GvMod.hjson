@@ -248,22 +248,22 @@ Items: {
 	}
 
 	QuillOfficerBody: {
-		SetBonus: 
+		SetBonus:
 			'''
 			Increases overheat recovery by {3}% and allows the use of prevasion.
 			{$PrevasionDescription}
 			'''
-		DisplayName: Quill Officer Body
-		Tooltip: 
+		DisplayName: Quill Officer Uniform
+		Tooltip:
 			'''
-			The uniform wore by Quill's commanding officers.
+			The uniform worn by Quill's commanding officers.
 			Increases septima damage by {0}% and decreases EP use by {1}%.
 			'''
 	}
 
 	SeptimaStabilizer: {
 		DisplayName: Septima Stabilizer
-		Tooltip: 
+		Tooltip:
 			'''
 			A device commonly used by adepts with little control over their 
 			septima.
@@ -272,18 +272,83 @@ Items: {
 	}
 
 	QuillOfficerLegs: {
-		DisplayName: Quill Officer Legs
+		DisplayName: Quill Officer Boots
+		Tooltip: Increases movement speed by {0}%.
+	}
+
+	ModernQuillBody: {
+		SetBonus: Reduces EP recovery cooldown by {0}% and makes resurrection stronger.
+		DisplayName: Quill Combat Uniform
+		Tooltip: 
+			'''
+			An improvement over the agent uniform.
+			Increased septimal damage by {0}% and decreased EP use by {1}%.
+			'''
+	}
+
+	AltQuillOfficerBody: {
+		SetBonus: 
+			'''
+			Increases overheat recovery by {3}% and allows the use of prevasion.
+			{$PrevasionDescription}
+			'''
+		DisplayName: Quill Officer Uniform
 		Tooltip:
 			'''
+			An alternative to the uniform worn by Quill's commanding officers.
+			Increases septima damage by {0}% and decreases EP use by {1}%.
+			'''
+	}
+
+	PrevasionChain: {
+		DisplayName: Prevasion Chain
+		Tooltip: 
+			'''
+			Allows the use of prevasion.
+			{$PrevasionDescription}
+			'''
+	}
+
+	ModernQuillLegs: {
+		DisplayName: Quill Combat Boots
+		Tooltip: 
+			'''
 			Increases movement speed by {0}%.
+			Increases septimal crit chance by {1}% and EP recovery by {2}%.
+			'''
+	}
+
+	Electromagnet: {
+		DisplayName: Strong Electromagnet
+		Tooltip: 
+			'''
+			An electromagnet with great strength.
+			'''
+	}
+
+	Kripp: {
+		DisplayName: Kripp
+		Tooltip: 
+			'''
+			A relatively soft metal found alongside other minerals in 
+			trace ammounts.
+			'''
+	}
+
+	KrippAlloy: {
+		DisplayName: Kripp Alloy
+		Tooltip: 
+			'''
+			An alloy that can improve resistance of other metals.
 			'''
 	}
 }
 
-PrevasionDescription: 
+PrevasionDescription:
 	'''
 	Prevasion will ignore attacks with less than {0}% of the player's 
 	max life plus {1} damage at the cost of {2} EP.
+	Does not stack with other prevasion items.
 	'''
 
 UpgradeDescription: {

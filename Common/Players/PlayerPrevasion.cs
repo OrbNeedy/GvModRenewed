@@ -18,19 +18,21 @@ namespace GvMod.Common.Players
         public float PrevasionLifeLimit { get; set; } = 0;
         public int PrevasionDamageLimit { get; set; } = 0;
         public int PrevasionIframes { get; set; } = 0;
-        public int BasePrevasionIframes = 60;
+        public int BasePrevasionIframes = 45;
 
         public override bool FreeDodge(Player.HurtInfo info)
         {
-            BasePrevasionIframes = 45;
+            //BasePrevasionIframes = 45;
             // Note: Activating prevasion also causes tags on the enemy to disappear
             // CCed will bypass all forms of prevasion, for balance with other mods 
             // Overheat will also prevent prevasion from happening
             SeptimaPlayer adept = Player.GetModPlayer<SeptimaPlayer>();
-            if (Player.CCed || adept.Overheated) return false;
+            if (Player.CCed || adept.Overheated || !info.Dodgeable ||
+                info.CooldownCounter == ImmunityCooldownID.DD2OgreKnockback) return false;
 
             Resistance resistance = Resistance.None;
             Entity source;
+            
             bool hasInfo = info.DamageSource.TryGetCausingEntity(out source);
 
             if (hasInfo)
@@ -76,9 +78,11 @@ namespace GvMod.Common.Players
 
                 Player.immune = true;
                 Player.AddImmuneTime(ImmunityCooldownID.General, BasePrevasionIframes);
+                Player.AddImmuneTime(ImmunityCooldownID.Bosses, BasePrevasionIframes);
                 Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, BasePrevasionIframes);
                 Player.AddImmuneTime(ImmunityCooldownID.Lava, BasePrevasionIframes);
                 Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, BasePrevasionIframes);
+                
                 //Main.NewText("Iframes: " + BasePrevasionIframes);
 
                 adept.EPCooldownTimer = adept.septima.PrevasionEPCooldownBaseTimer;

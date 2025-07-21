@@ -5,6 +5,20 @@ using Terraria.Localization;
 
 namespace GvMod.Common.Systems
 {
+    public enum RecipeGroups
+    {
+        CopperBar, 
+        IronBar, 
+        SilverBar, 
+        GoldBar, 
+        CrimtaneBar, 
+        BloodButcherer, 
+        CobaltBar, 
+        MythrilBar, 
+        TitaniumBar,
+        EvilBiomeHardmodeMaterial
+    }
+
     public class ItemGroups : ModSystem
     {
         // Copied from the Len'en mod (I am the author (Check that one out too))
