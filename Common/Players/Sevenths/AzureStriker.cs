@@ -97,6 +97,18 @@ namespace GvMod.Common.Players.Sevenths
             }
 
             attackRotation -= 0.001745329252f;
+
+            if (flashfieldIndex > -1)
+            {
+                Projectile flashfield = Main.projectile[flashfieldIndex];
+                activeFlashfield = flashfield.active && flashfield.ModProjectile is Flashfield &&
+                    flashfield.owner == player.whoAmI;
+            } else
+            {
+                activeFlashfield = false;
+            }
+
+            AllowPrevasion = !activeFlashfield;
             //player.GetDamage<SecondaryAttackDamage>() += 2;
             //player.GetArmorPenetration<SecondaryAttackDamage>() += 1000;
             //Main.NewText("Modifying defense");

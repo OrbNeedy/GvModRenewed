@@ -28,7 +28,8 @@ namespace GvMod.Common.Players
             // Overheat will also prevent prevasion from happening
             SeptimaPlayer adept = Player.GetModPlayer<SeptimaPlayer>();
             if (Player.CCed || adept.Overheated || !info.Dodgeable ||
-                info.CooldownCounter == ImmunityCooldownID.DD2OgreKnockback) return false;
+                info.CooldownCounter == ImmunityCooldownID.DD2OgreKnockback || 
+                !adept.septima.AllowPrevasion) return false;
 
             Resistance resistance = Resistance.None;
             Entity source;
