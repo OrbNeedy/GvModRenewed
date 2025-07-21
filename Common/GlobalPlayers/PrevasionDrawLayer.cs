@@ -1,13 +1,10 @@
 ﻿using GvMod.Common.Players;
 using GvMod.Common.Systems;
-using GvMod.Content.Buffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace GvMod.Common.GlobalPlayers
@@ -34,7 +31,7 @@ namespace GvMod.Common.GlobalPlayers
                 SpriteBatchState tempState = SpriteBatchExt.GetState(Main.spriteBatch);
 
                 int time = prevasion.BasePrevasionIframes - prevasion.PrevasionIframes;
-                float displacement = (float)Math.Cos(time / 8) * prevasion.PrevasionIframes;
+                float displacement = (float)Math.Sin(time / 8) * prevasion.PrevasionIframes;
 
                 SpriteBatchExt.Restart(Main.spriteBatch, tempState, SpriteSortMode.Immediate);
 
