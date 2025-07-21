@@ -27,13 +27,13 @@ namespace GvMod.Common.GlobalPlayers
             if (player.DeadOrGhost) return;
 
             ResurrectionPlayer resurrection = player.GetModPlayer<ResurrectionPlayer>();
-            if (!player.HasBuff<Anthem>()) return;
+            if (!resurrection.resurrected || resurrection.type == AnthemAuraType.Invisible) return;
 
             Asset<Texture2D> aura = ModContent.
                     Request<Texture2D>($"GvMod/Assets/Effects/{resurrection.type.ToString()}");
             Vector2 boundSize = new Vector2(82, 82);
             Vector2 offset = new Vector2(0, -10);
-            int maxFrames = 4;
+            int maxFrames = 5;
 
             switch (resurrection.type)
             {
