@@ -1,6 +1,7 @@
 ﻿using GvMod.Content.Items.Accessories;
 using GvMod.Content.Items.Materials;
 using GvMod.Content.Items.Upgrades;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -55,6 +56,18 @@ namespace GvMod.Common.GlobalNPCs
                 case NPCID.WallofFlesh:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CapacityUpgrade>(), 250, 3, 10));
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage3Upgrade>(), 18, 1, 10));
+                    foreach (var rule in npcLoot.Get())
+                    {
+                        if (rule is DropBasedOnExpertMode dropBasedOnExpertMode &&
+                            dropBasedOnExpertMode.ruleForNormalMode is
+                            OneFromOptionsNotScaledWithLuckDropRule oneFromOptionsDrop &&
+                            oneFromOptionsDrop.dropIds.Contains(ItemID.WarriorEmblem))
+                        {
+                            var original = oneFromOptionsDrop.dropIds.ToList();
+                            original.Add(ModContent.ItemType<SeptimaEmblem>());
+                            oneFromOptionsDrop.dropIds = original.ToArray();
+                        }
+                    }
                     break;
                 case NPCID.SkeletronPrime:
                 case NPCID.TheDestroyer:

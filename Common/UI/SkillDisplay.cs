@@ -88,7 +88,7 @@ namespace GvMod.Common.UI
             SkillName.Top.Set(-2, 0f);
             SkillName.HAlign = 0.5f;
 
-            SkillCost = new UIText("0 AP");
+            SkillCost = new UIText("0 SP");
             SkillCost.Width.Set(72, 0f);
             SkillCost.Height.Set(12, 0f);
             SkillCost.Left.Set(0, 0f);
@@ -134,15 +134,15 @@ namespace GvMod.Common.UI
             SpecialSkill skill = adept.septima.AvailableSkills[adept.SelectedSkill];
 
             SkillName.SetText(Language.GetTextValue($"Mods.GvMod.Skills.{skill.LocalizationKey}.DisplayName")); 
-            SkillCost.SetText($"{skill.APCost} AP"); // Localization unecessary 
+            SkillCost.SetText($"{skill.SPCost} SP"); // Localization unecessary 
 
             // Add the cooldown seal and it's meter if the skill is on cooldown
             if (skill.CooldownTime > 0)
             {
-                float apPercent = skill.CooldownTime / (skill.MaxCooldownTime + 0.00001f);
+                float spPercent = skill.CooldownTime / (skill.MaxCooldownTime + 0.00001f);
 
                 SelectedSkillFrame.SetImage(CooldownFrame);
-                SkillOverheatMeter.SetFrame(new Rectangle(0, 0, (int)(54 * apPercent), 6));
+                SkillOverheatMeter.SetFrame(new Rectangle(0, 0, (int)(54 * spPercent), 6));
                 area.Append(SkillOverheatSeal);
                 area.Append(SkillOverheatMeter);
                 SelectedSkillIcon.Remove();
@@ -157,8 +157,8 @@ namespace GvMod.Common.UI
                 SkillOverheatMeter.Remove();
             }
 
-            // Change the frame depending on the player's AP and skill cost
-            if (skill.APCost > adept.CurrentAP)
+            // Change the frame depending on the player's SP and skill cost
+            if (skill.SPCost > adept.CurrentSP)
             {
                 SelectedSkillFrame.SetImage(CooldownFrame);
             } else

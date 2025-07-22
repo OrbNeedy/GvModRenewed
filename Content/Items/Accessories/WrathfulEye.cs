@@ -1,20 +1,22 @@
 ﻿using GvMod.Common.Players;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Accessories
 {
+    [AutoloadEquip(EquipType.Face)]
     public class WrathfulEye : ModItem
     {
-        private float epUseModifier = 0.15f;
-        private float mainDamageModifier = 0.2f;
+        private float epUseModifier = 0.2f;
+        private float mainDamageModifier = 0.3f;
 
         public override void SetDefaults()
         {
-            Item.width = 42;
-            Item.height = 14;
             Item.accessory = true;
+
+            Item.rare = ItemRarityID.LightPurple;
         }
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(mainDamageModifier, epUseModifier);
@@ -23,7 +25,24 @@ namespace GvMod.Content.Items.Accessories
         {
             player.GetModPlayer<SeptimaPlayer>().EPUseModifier += epUseModifier;
             player.GetDamage<MainAttackDamage>() += mainDamageModifier;
-            base.UpdateAccessory(player, hideVisual);
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = CreateRecipe()
+                .AddIngredient<OverflashPendant>()
+                .AddIngredient(ItemID.BlackLens, 2)
+                .AddIngredient(ItemID.SoulofSight, 5)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            recipe
+                .AddIngredient<OverflashPendant>()
+                .AddIngredient(ItemID.Lens, 2)
+                .AddIngredient(ItemID.SoulofNight, 12)
+                .AddIngredient(ItemID.SoulofSight, 5)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
         }
     }
 }

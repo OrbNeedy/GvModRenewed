@@ -32,8 +32,6 @@ namespace GvMod.Common.UI
         UIImageButton SelectedSkillButton;
         UIImage SelectedSkillFrame;
         UIText SelectedSkillName;
-        UIPanel SelectedSkillDescriptionPanel;
-        UIText SelectedSkillDescriptionText;
         UIText SelectedSkillCost;
 
         // Adjacent skills elements
@@ -110,10 +108,6 @@ namespace GvMod.Common.UI
             SelectedSkillName.Left.Set(0, 0f);
             SelectedSkillName.Top.Set(-28, 0.5f);
             SelectedSkillName.HAlign = 0.5f;
-
-            SelectedSkillDescriptionPanel = new UIPanel();
-
-            SelectedSkillDescriptionText = new UIText("");
 
             SelectedSkillCost = new UIText("0 AP", 0.75f);
             SelectedSkillCost.Width.Set(160, 0f);
@@ -224,7 +218,7 @@ namespace GvMod.Common.UI
 
                 evaluatedName.SetText(
                     Language.GetTextValue($"Mods.GvMod.Skills.{evaluatedSkill.LocalizationKey}.DisplayName")); 
-                evaluatedCost.SetText($"{evaluatedSkill.APCost} AP"); // Localization unecessary 
+                evaluatedCost.SetText($"{evaluatedSkill.SPCost} SP"); // Localization unecessary 
 
                 if (evaluatedSkill.CooldownTime > 0)
                 {
@@ -263,11 +257,11 @@ namespace GvMod.Common.UI
 
             SelectedSkillName.SetText(Language.
                 GetTextValue($"Mods.GvMod.Skills.{skill.LocalizationKey}.DisplayName")); 
-            SelectedSkillCost.SetText($"{skill.APCost} AP"); // Localization unecessary 
+            SelectedSkillCost.SetText($"{skill.SPCost} SP"); // Localization unecessary 
 
             if (skill.CooldownTime > 0)
             {
-                float apPercent = skill.CooldownTime / (skill.MaxCooldownTime + 0.00001f);
+                float cooldownPercent = skill.CooldownTime / (skill.MaxCooldownTime + 0.00001f);
 
                 SelectedSkillFrame.SetImage(CooldownFrame);
 

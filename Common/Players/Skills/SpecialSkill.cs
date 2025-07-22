@@ -8,7 +8,7 @@ namespace GvMod.Common.Players.Skills
         public virtual string LocalizationKey { get; set; } = "Default";
         public virtual int LevelRequirement { get; set; } = 0;
         public virtual int StageRequirement { get; set; } = 0;
-        public virtual int APCost { get; set; } = 0;
+        public virtual int SPCost { get; set; } = 0;
         public virtual bool Invincible { get; set; } = false;
         public virtual int MaxCooldownTime { get; set; } = 0;
         public int CooldownTime { get; set; } = 0;

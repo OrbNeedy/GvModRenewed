@@ -12,6 +12,7 @@ namespace GvMod.Common.Systems
         SilverBar, 
         GoldBar, 
         CrimtaneBar, 
+        EvilMaterial,
         BloodButcherer, 
         CobaltBar, 
         MythrilBar, 
@@ -50,29 +51,34 @@ namespace GvMod.Common.Systems
             RecipeGroup.RegisterGroup("CrimtaneBar", group4);
 
             RecipeGroup group5 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
-                $"{Lang.GetItemNameValue(ItemID.BloodButcherer)}", ItemID.BloodButcherer, ItemID.LightsBane);
+                $"{Lang.GetItemNameValue(ItemID.TissueSample)}", ItemID.TissueSample, ItemID.ShadowScale);
 
-            RecipeGroup.RegisterGroup("BloodButcherer", group5);
+            RecipeGroup.RegisterGroup("EvilMaterial", group5);
 
             RecipeGroup group6 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
-                $"{Lang.GetItemNameValue(ItemID.CobaltBar)}", ItemID.CobaltBar, ItemID.PalladiumBar);
+                $"{Lang.GetItemNameValue(ItemID.BloodButcherer)}", ItemID.BloodButcherer, ItemID.LightsBane);
 
-            RecipeGroup.RegisterGroup("CobaltBar", group6);
+            RecipeGroup.RegisterGroup("BloodButcherer", group6);
 
             RecipeGroup group7 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
-                $"{Lang.GetItemNameValue(ItemID.MythrilBar)}", ItemID.MythrilBar, ItemID.OrichalcumBar);
+                $"{Lang.GetItemNameValue(ItemID.CobaltBar)}", ItemID.CobaltBar, ItemID.PalladiumBar);
 
-            RecipeGroup.RegisterGroup("MythrilBar", group7);
+            RecipeGroup.RegisterGroup("CobaltBar", group7);
 
             RecipeGroup group8 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
-                $"{Lang.GetItemNameValue(ItemID.TitaniumBar)}", ItemID.TitaniumBar, ItemID.AdamantiteBar);
+                $"{Lang.GetItemNameValue(ItemID.MythrilBar)}", ItemID.MythrilBar, ItemID.OrichalcumBar);
 
-            RecipeGroup.RegisterGroup("TitaniumBar", group8);
+            RecipeGroup.RegisterGroup("MythrilBar", group8);
 
             RecipeGroup group9 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
+                $"{Lang.GetItemNameValue(ItemID.TitaniumBar)}", ItemID.TitaniumBar, ItemID.AdamantiteBar);
+
+            RecipeGroup.RegisterGroup("TitaniumBar", group9);
+
+            RecipeGroup group10 = new RecipeGroup(() => $"{Language.GetTextValue("LegacyMisc.37")} " +
                 $"{Lang.GetItemNameValue(ItemID.Ichor)}", ItemID.Ichor, ItemID.CursedFlame);
 
-            RecipeGroup.RegisterGroup("EvilBiomeHardmodeMaterial", group9);
+            RecipeGroup.RegisterGroup("EvilBiomeHardmodeMaterial", group10);
         }
     }
 }

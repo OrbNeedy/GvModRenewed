@@ -73,7 +73,7 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void PostLoadSeptima(Player player, SeptimaPlayer adept)
         {
-            // Increase by 0.5 every level
+            // Increase by 0.1 every level
             // Sounds like little, but it's a lot with flashfield
             BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
             base.PostLoadSeptima(player, adept);

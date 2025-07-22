@@ -1,4 +1,6 @@
 ﻿using GvMod.Common.Players;
+using GvMod.Common.Systems;
+using GvMod.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -35,9 +37,15 @@ namespace GvMod.Content.Items.Accessories
             prevasion.PrevasionLifeLimit = prevasionLifeLimit; // Even if the accessory gives no life limit, set this so there is no cheesing with other similar accessories
         }
 
-        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        public override void AddRecipes()
         {
-            return base.CanAccessoryBeEquippedWith(equippedItem, incomingItem, player);
+            CreateRecipe()
+                .AddIngredient(ItemID.Chain, 2)
+                .AddIngredient<SpiritualStone>(10)
+                .AddRecipeGroup(RecipeGroups.CrimtaneBar.ToString(), 5)
+                .AddTile(TileID.Anvils)
+                .AddCondition(Condition.DownedSkeletron)
+                .Register();
         }
     }
 }

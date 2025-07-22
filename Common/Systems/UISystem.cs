@@ -14,8 +14,8 @@ namespace GvMod.Common.Systems
         private UserInterface EPBarUserInterface;
         private EPBar EPBar;
 
-        private UserInterface APBarUserInterface;
-        private APBar APBar;
+        private UserInterface SPBarUserInterface;
+        private SPBar SPBar;
 
         private UserInterface SkillUserInterface;
         private SkillDisplay SkillDisplay;
@@ -37,11 +37,11 @@ namespace GvMod.Common.Systems
             EPBar.Activate();
             EPBarUserInterface.SetState(EPBar);
 
-            APBarUserInterface = new UserInterface();
+            SPBarUserInterface = new UserInterface();
 
-            APBar = new APBar();
-            APBar.Activate();
-            APBarUserInterface.SetState(APBar);
+            SPBar = new SPBar();
+            SPBar.Activate();
+            SPBarUserInterface.SetState(SPBar);
 
             SkillUserInterface = new UserInterface();
 
@@ -62,7 +62,7 @@ namespace GvMod.Common.Systems
         public override void Unload()
         {
             EPBar = null;
-            APBar = null;
+            SPBar = null;
             SkillDisplay = null;
             SkillSelect = null;
             SkillNotifications = null;
@@ -77,9 +77,9 @@ namespace GvMod.Common.Systems
                 EPBarUserInterface.Update(gameTime);
             }
 
-            if (APBarUserInterface?.CurrentState != null)
+            if (SPBarUserInterface?.CurrentState != null)
             {
-                APBarUserInterface.Update(gameTime);
+                SPBarUserInterface.Update(gameTime);
             }
 
             if (SkillUserInterface?.CurrentState != null)
@@ -111,11 +111,11 @@ namespace GvMod.Common.Systems
                 );
 
                 layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
-                    "Gunvolt Mod: AP Bar",
+                    "Gunvolt Mod: SP Bar",
                     delegate {
-                        if (_lastUpdatedGameTime != null && APBarUserInterface?.CurrentState != null)
+                        if (_lastUpdatedGameTime != null && SPBarUserInterface?.CurrentState != null)
                         {
-                            APBarUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                            SPBarUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
                         }
                         return true;
                     },
@@ -162,13 +162,13 @@ namespace GvMod.Common.Systems
             if (hidingUI)
             {
                 EPBarUserInterface?.SetState(EPBar);
-                APBarUserInterface?.SetState(APBar);
+                SPBarUserInterface?.SetState(SPBar);
                 SwitchSkillScreenState(lastSkillUI);
                 hidingUI = false;
             } else
             {
                 EPBarUserInterface?.SetState(null);
-                APBarUserInterface?.SetState(null);
+                SPBarUserInterface?.SetState(null);
                 SkillUserInterface?.SetState(null);
                 hidingUI = true;
             }
@@ -176,14 +176,14 @@ namespace GvMod.Common.Systems
         public void ShowUI()
         {
             EPBarUserInterface?.SetState(EPBar);
-            APBarUserInterface?.SetState(APBar);
+            SPBarUserInterface?.SetState(SPBar);
             SwitchSkillScreenState(lastSkillUI);
         }
 
         public void HideUI()
         {
             EPBarUserInterface?.SetState(null);
-            APBarUserInterface?.SetState(null);
+            SPBarUserInterface?.SetState(null);
             SkillUserInterface?.SetState(null);
         }
     }

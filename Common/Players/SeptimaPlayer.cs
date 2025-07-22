@@ -42,13 +42,14 @@ namespace GvMod.Common.Players
         public int EPCooldownTimer { get; set; } = 0;
         // This is permanent max, it's affected by permanent upgrades and limited by SeptimaUpgrades.
         // Up to two upgrades are planned
-        public int BaseMaxAP { get; set; } = 2;
+        public int BaseMaxSP { get; set; } = 2;
         // This one is affected by equipment and other modifiers, it's reset later
-        public int ModifiedMaxAP { get; set; } = 0;
-        public float CurrentAP { get; set; } = 2;
+        public int ModifiedMaxSP { get; set; } = 0;
+        public float CurrentSP { get; set; } = 2;
 
 
         // State related
+        public int ChargeguardLevel { get; set; } = 0;
         public int RechargeDelay { get; set; } = 0;
         public int RechargeTimer { get; set; } = 0;
         public bool DoubleTap { get; set; } = false;
@@ -82,7 +83,7 @@ namespace GvMod.Common.Players
         /// </summary>
         public float OverheatRecoveryModifier { get; set; } = 1;
         /// <summary>
-        /// Multiplicative modifier to the recovery rate of AP.
+        /// Multiplicative modifier to the recovery rate of SP.
         /// </summary>
         public float APRecoveryModifier { get; set; } = 1;
         // Skills will only have one key to activate it, and another key to select it quickly 
@@ -180,7 +181,7 @@ namespace GvMod.Common.Players
                             }, Player.Center);
                         }
                         UsingSpecialSkill = special.OnSkillUse(Player, this);
-                        CurrentAP -= special.APCost;
+                        CurrentSP -= special.SPCost;
                         special.CooldownTime = special.MaxCooldownTime;
                     }
                 }
@@ -222,7 +223,7 @@ namespace GvMod.Common.Players
         public override void OnEnterWorld()
         {
             CurrentEP = GetTotalMaxEP();
-            CurrentAP = GetTotalMaxAP();
+            CurrentSP = GetTotalMaxSP();
             EPCooldownTimer = 0;
             SecondarySkillCooldown = 0;
             StageCheck();
@@ -236,7 +237,7 @@ namespace GvMod.Common.Players
             tag["Level"] = Level;
             tag["Stage"] = Stage;
             tag["MaxEP"] = BaseMaxEP;
-            tag["MaxAP"] = BaseMaxAP;
+            tag["MaxAP"] = BaseMaxSP;
 
             for (int i = 0; i < DragonVeinsVisited.Length; i++)
             {
@@ -275,7 +276,7 @@ namespace GvMod.Common.Players
             }
             if (tag.ContainsKey("MaxAP"))
             {
-                BaseMaxAP = tag.GetInt("MaxAP");
+                BaseMaxSP = tag.GetInt("MaxAP");
             }
             for (int i = 0; i < DragonVeinsVisited.Length; i++)
             {
@@ -377,21 +378,21 @@ namespace GvMod.Common.Players
                 }
             }
 
-            // AP recovers the same always, unless the player is using a special Skill
+            // SP recovers the same always, unless the player is using a special Skill
             if (!UsingSpecialSkill)
             {
-                CurrentAP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier();
+                CurrentSP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier();
             }
 
             RechargeLogic();
 
-            // Clamp EP and AP
+            // Clamp EP and SP
             CurrentEP = MathHelper.Clamp(CurrentEP, 0, GetTotalMaxEP());
-            CurrentAP = MathHelper.Clamp(CurrentAP, 0, GetTotalMaxAP());
+            CurrentSP = MathHelper.Clamp(CurrentSP, 0, GetTotalMaxSP());
             if (perfectionCheck)
             {
                 CurrentEP = GetTotalMaxEP();
-                CurrentAP = GetTotalMaxAP();
+                CurrentSP = GetTotalMaxSP();
                 Overheated = false;
             }
         }
@@ -482,6 +483,9 @@ namespace GvMod.Common.Players
 
         private void RechargeLogic()
         {
+            int maxRechargeTimer = 35;
+            int maxRechargeDelay = 50;
+
             if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && 
                 !UsingSpecialSkill && !Overheated && septima.AllowRecharge && 
                 Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
@@ -492,13 +496,23 @@ namespace GvMod.Common.Players
                     Volume = 0.65f
                 }, Player.Center);
 
-                RechargeDelay = 50;
-                RechargeTimer = 35;
+                RechargeDelay = maxRechargeDelay;
+                RechargeTimer = maxRechargeTimer;
             }
 
             if (RechargeDelay > 0) RechargeDelay--;
             if (RechargeTimer > 0)
             {
+                if (RechargeTimer > maxRechargeTimer - (maxRechargeTimer * ChargeguardLevel * 0.5f))
+                {
+                    Player.immune = true;
+                    Player.AddImmuneTime(ImmunityCooldownID.General, 1);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 1);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 1);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 1);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 1);
+                }
+
                 int limit = Main.rand.Next(5, 10);
                 for (int i = 0; i < limit; i++)
                 {
@@ -598,7 +612,7 @@ namespace GvMod.Common.Players
         public override void OnRespawn()
         {
             CurrentEP = GetTotalMaxEP();
-            CurrentAP = GetTotalMaxAP();
+            CurrentSP = GetTotalMaxSP();
             SecondarySkillCooldown = 0;
 
             septima.ForceCooldownEnd();
@@ -621,9 +635,8 @@ namespace GvMod.Common.Players
 
         public override void ResetEffects()
         {
-
             ModifiedMaxEP = 0;
-            ModifiedMaxAP = 0;
+            ModifiedMaxSP = 0;
 
             EPUseModifier = 1;
             EPRecoveryModifier = 1;
@@ -642,6 +655,8 @@ namespace GvMod.Common.Players
             {
                 DoubleTap = false;
             }
+
+            ChargeguardLevel = 0;
 
             perfectionCheck = false;
         }
@@ -736,7 +751,7 @@ namespace GvMod.Common.Players
                         if (Level >= 30 && Main.hardMode)
                         {
                             stageChanged = true;
-                            if (BaseMaxAP == 2) BaseMaxAP += 1;
+                            if (BaseMaxSP == 2) BaseMaxSP += 1;
                             if (BaseMaxEP < 200) BaseMaxEP += 20; // Expected: 140
                             Stage++;
                             septima.OnStageChange(Player, this);
@@ -791,7 +806,7 @@ namespace GvMod.Common.Players
                         if (Level >= 90 && NPC.downedMoonlord)
                         {
                             stageChanged = true;
-                            if (BaseMaxAP == 3) BaseMaxAP += 1;
+                            if (BaseMaxSP == 3) BaseMaxSP += 1;
                             if (BaseMaxEP < 300) BaseMaxEP += 100; // Expected: 300
                             Stage++;
                             septima.OnStageChange(Player, this);
@@ -857,9 +872,9 @@ namespace GvMod.Common.Players
             return BaseMaxEP + ModifiedMaxEP + septima.MaxEPModifier;
         }
 
-        public int GetTotalMaxAP()
+        public int GetTotalMaxSP()
         {
-            return BaseMaxAP + ModifiedMaxAP;
+            return BaseMaxSP + ModifiedMaxSP;
         }
 
         public float GetTotalEPUseModifier()
@@ -906,7 +921,7 @@ namespace GvMod.Common.Players
 
         public bool CanUseSpecialSkill(SpecialSkill special)
         {
-            return special.CanUse(Player, this) && CurrentAP >= special.APCost && !UsingSpecialSkill &&
+            return special.CanUse(Player, this) && CurrentSP >= special.SPCost && !UsingSpecialSkill &&
                         !UsingSecondarySkill && !Player.CCed && special.CooldownTime <= 0 && RechargeTimer <= 0;
         }
 

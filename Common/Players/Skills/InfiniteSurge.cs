@@ -17,7 +17,7 @@ namespace GvMod.Common.Players.Skills
         public override bool Invincible { get; set; } = false;
         public override int LevelRequirement { get; set; } = 60;
         public override int StageRequirement { get; set; } = 4;
-        public override int APCost { get; set; } = 2;
+        public override int SPCost { get; set; } = 2;
         public override int MaxCooldownTime { get; set; } = 600;
 
         public override void MoveUpdate(Player player, SeptimaPlayer adept)

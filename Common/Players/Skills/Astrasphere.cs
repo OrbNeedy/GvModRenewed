@@ -14,7 +14,7 @@ namespace GvMod.Common.Players.Skills
         public override bool Invincible { get; set; } = false;
         public override int LevelRequirement { get; set; } = 1;
         public override int StageRequirement { get; set; } = 1;
-        public override int APCost { get; set; } = 1;
+        public override int SPCost { get; set; } = 1;
         public override int MaxCooldownTime { get; set; } = 900;
 
         private int fieldIndex = -1;
