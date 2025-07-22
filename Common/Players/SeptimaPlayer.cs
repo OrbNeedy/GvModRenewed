@@ -50,6 +50,7 @@ namespace GvMod.Common.Players
 
         // State related
         public int ChargeguardLevel { get; set; } = 0;
+        public int ChargeguardCooldown { get; set; } = 0;
         public int RechargeDelay { get; set; } = 0;
         public int RechargeTimer { get; set; } = 0;
         public bool DoubleTap { get; set; } = false;
@@ -483,7 +484,7 @@ namespace GvMod.Common.Players
 
         private void RechargeLogic()
         {
-            int maxRechargeTimer = 35;
+            int maxRechargeTimer = 30;
             int maxRechargeDelay = 50;
 
             if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && 
@@ -503,14 +504,18 @@ namespace GvMod.Common.Players
             if (RechargeDelay > 0) RechargeDelay--;
             if (RechargeTimer > 0)
             {
-                if (RechargeTimer > maxRechargeTimer - (maxRechargeTimer * ChargeguardLevel * 0.5f))
+                if (ChargeguardCooldown <= 0 && RechargeTimer == maxRechargeTimer)
                 {
                     Player.immune = true;
-                    Player.AddImmuneTime(ImmunityCooldownID.General, 1);
-                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, 1);
-                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, 1);
-                    Player.AddImmuneTime(ImmunityCooldownID.Lava, 1);
-                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, 1);
+                    int iframes = (int)(maxRechargeTimer * ChargeguardLevel * 0.5f);
+                    //Main.NewText("[Title Card] of " + iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.General, iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.Bosses, iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.Lava, iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, iframes);
+                    ChargeguardCooldown = 300;
                 }
 
                 int limit = Main.rand.Next(5, 10);
@@ -521,7 +526,7 @@ namespace GvMod.Common.Players
 
                 if (Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
                 {
-                    CurrentEP += (float)GetTotalMaxEP() / 35f;
+                    CurrentEP += (float)GetTotalMaxEP() / maxRechargeTimer;
                     EPCooldownTimer = septima.PrevasionEPCooldownBaseTimer;
                 }
 
@@ -532,6 +537,8 @@ namespace GvMod.Common.Players
                     EPCooldownTimer = 1;
                 }
             }
+
+            if (ChargeguardCooldown > 0) ChargeguardCooldown--;
         }
 
         public override void PostUpdateRunSpeeds()

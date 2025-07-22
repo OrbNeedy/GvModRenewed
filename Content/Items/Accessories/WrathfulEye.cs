@@ -29,14 +29,14 @@ namespace GvMod.Content.Items.Accessories
 
         public override void AddRecipes()
         {
-            Recipe recipe = CreateRecipe()
+            CreateRecipe()
                 .AddIngredient<OverflashPendant>()
                 .AddIngredient(ItemID.BlackLens, 2)
                 .AddIngredient(ItemID.SoulofSight, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
-            recipe
+            CreateRecipe()
                 .AddIngredient<OverflashPendant>()
                 .AddIngredient(ItemID.Lens, 2)
                 .AddIngredient(ItemID.SoulofNight, 12)

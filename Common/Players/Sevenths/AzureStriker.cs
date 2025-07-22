@@ -122,6 +122,7 @@ namespace GvMod.Common.Players.Sevenths
 
         public override bool MainSkillUse(Player player, SeptimaPlayer adept)
         {
+            // Main.NewText("Frames: " + adept.MainSkillUseTime);
             if (player.wet)
             {
                 if (adept.Stage <= 5)

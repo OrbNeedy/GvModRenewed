@@ -279,7 +279,7 @@ Items: {
 	ModernQuillBody: {
 		SetBonus: Reduces EP recovery cooldown by {0}% and makes resurrection stronger.
 		DisplayName: Quill Combat Uniform
-		Tooltip: 
+		Tooltip:
 			'''
 			An improvement over the agent uniform.
 			Increased septimal damage by {0}% and decreased EP use by {1}%.
@@ -287,7 +287,7 @@ Items: {
 	}
 
 	AltQuillOfficerBody: {
-		SetBonus: 
+		SetBonus:
 			'''
 			Increases overheat recovery by {3}% and allows the use of prevasion.
 			{$PrevasionDescription}
@@ -302,7 +302,7 @@ Items: {
 
 	PrevasionChain: {
 		DisplayName: Prevasion Chain
-		Tooltip: 
+		Tooltip:
 			'''
 			Allows the use of prevasion.
 			{$PrevasionDescription}
@@ -311,7 +311,7 @@ Items: {
 
 	ModernQuillLegs: {
 		DisplayName: Quill Combat Boots
-		Tooltip: 
+		Tooltip:
 			'''
 			Increases movement speed by {0}%.
 			Increases septimal crit chance by {1}% and EP recovery by {2}%.
@@ -320,15 +320,12 @@ Items: {
 
 	Electromagnet: {
 		DisplayName: Strong Electromagnet
-		Tooltip: 
-			'''
-			An electromagnet with great strength.
-			'''
+		Tooltip: An electromagnet with great strength.
 	}
 
 	Kripp: {
 		DisplayName: Kripp
-		Tooltip: 
+		Tooltip:
 			'''
 			A relatively soft metal found alongside other minerals in 
 			trace ammounts.
@@ -337,10 +334,36 @@ Items: {
 
 	KrippAlloy: {
 		DisplayName: Kripp Alloy
-		Tooltip: 
+		Tooltip: An alloy that can improve resistance of other metals.
+	}
+
+	ChargeguardPendant: {
+		DisplayName: Chargeguard Pendant
+		Tooltip: "Gives some invincibility frames while recharging, with a cooldown."
+	}
+
+	DynamoEye: {
+		DisplayName: Dynamo Eye
+		Tooltip: "Increases max EP by {0}."
+	}
+
+	OverflashPendant: {
+		DisplayName: Overflash Pendant
+		Tooltip:
 			'''
-			An alloy that can improve resistance of other metals.
+			A pendant that increase damage dealt by the septima's 
+			main ability by {0}, but increases EP consumption by {1}.
 			'''
+	}
+
+	SeptimaEmblem: {
+		DisplayName: Septima Emblem
+		Tooltip: "{0}% increased septima damage"
+	}
+
+	StalwartMedal: {
+		DisplayName: Stalwart Medal
+		Tooltip: "Increases damage reduction by {0}% and defense by {1} when overheated"
 	}
 }
 
