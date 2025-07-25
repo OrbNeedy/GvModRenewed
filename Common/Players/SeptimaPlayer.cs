@@ -942,5 +942,16 @@ namespace GvMod.Common.Players
                     return new Septima();
             }
         }
+
+        public static Septima GetSeptima(int type)
+        {
+            switch (type)
+            {
+                case (int)SeptimaType.AzureStriker:
+                    return new AzureStriker();
+                default:
+                    return new Septima();
+            }
+        }
     }
 }
