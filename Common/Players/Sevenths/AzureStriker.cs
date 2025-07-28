@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace GvMod.Common.Players.Sevenths
@@ -24,6 +25,8 @@ namespace GvMod.Common.Players.Sevenths
         public int attackTimer = 0;
         public float attackRotation = 0;
 
+        public int ArmedPhenomenonClawCooldown = 0;
+
         public override float BaseBasicAttackDamage { get; protected set; } = 5;
         public override float BasicAttackDamage { get; protected set; } = 5;
         public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
@@ -37,14 +40,14 @@ namespace GvMod.Common.Players.Sevenths
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
         public override float OverheatRecoveryBaseRate { get; protected set; } = 0.003333f;
-        public override float APRecoveryBaseRate { get; protected set; } = 0.000185f;
+        public override float SPRecoveryBaseRate { get; protected set; } = 0.000185f;
         public override int PrevasionEPCooldownBaseTimer { get; protected set; } = 90;
 
         public override SeptimaType Type { get; protected set; } = SeptimaType.AzureStriker;
         public override string InternalName => "AzureStriker";
         public override Color MainColor => new Color(77, 242, 229);
 
-        public override void InitializeSeptima(Player player, SeptimaPlayer adept)
+        public override void InitializeSeptima(Player player, SeptimaPlayer adept, Mod mod)
         {
             NPCDamageResistances = new() {
                 [NPCID.WaterSphere] = Resistance.Penetrate,
@@ -66,16 +69,43 @@ namespace GvMod.Common.Players.Sevenths
                 [ProjectileID.ThunderSpearShot] = Resistance.Absorb,
                 [ProjectileID.ThunderStaffShot] = Resistance.Ignore,
                 [ProjectileID.MartianTurretBolt] = Resistance.Absorb,
-                [ProjectileID.CultistBossLightningOrbArc] = Resistance.Absorb,
-                [ModContent.ProjectileType<Flashfield>()] = Resistance.Penetrate
+                [ProjectileID.CultistBossLightningOrbArc] = Resistance.Ignore,
+                [ProjectileID.CultistBossLightningOrb] = Resistance.Penetrate,
+                [ModContent.ProjectileType<Flashfield>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<AstrasphereProjectile>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<AstrasphereOrbits>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<LuxcaliburProjectile>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<VoltaicChainProjectile>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<GrandStrizerProjectile>()] = Resistance.Penetrate
             };
+
+            int headID = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Head);
+            ArmorIDs.Head.Sets.DrawFullHair[headID] = true;
+        }
+
+        public override void LoadSeptima(Mod mod)
+        {
+            int headID = EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/" +
+                $"Glaive_Head_AzureStriker", EquipType.Head, name: "AzureStrikerArmedPhenomenon");
+            EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/Glaive_Body_AzureStriker",
+                EquipType.Body, name: "AzureStrikerArmedPhenomenon");
+            EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/Glaive_Legs_AzureStriker",
+                EquipType.Legs, name: "AzureStrikerArmedPhenomenon");
+            EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/Glaive_Wings_AzureStriker",
+                EquipType.Wings, name: "AzureStrikerArmedPhenomenon");
+            EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/Glaive_Waist_AzureStriker",
+                EquipType.Waist, name: "AzureStrikerArmedPhenomenon");
+            EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/Glaive_HandsOff_AzureStriker",
+                EquipType.HandsOff, name: "AzureStrikerArmedPhenomenon");
+            EquipLoader.AddEquipTexture(mod, $"GvMod/Assets/ArmedPhenomena/Glaive_HandsOn_AzureStriker",
+                EquipType.HandsOn, name: "AzureStrikerArmedPhenomenon");
         }
 
         public override void PostLoadSeptima(Player player, SeptimaPlayer adept)
         {
             // Increase by 0.1 every level
             // Sounds like little, but it's a lot with flashfield
-            BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
+            // BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
             base.PostLoadSeptima(player, adept);
         }
 
@@ -109,9 +139,19 @@ namespace GvMod.Common.Players.Sevenths
             }
 
             AllowPrevasion = !activeFlashfield;
-            //player.GetDamage<SecondaryAttackDamage>() += 2;
-            //player.GetArmorPenetration<SecondaryAttackDamage>() += 1000;
-            //Main.NewText("Modifying defense");
+
+            if (player.GetModPlayer<PlayerBuffs>().ArmedPhenomenonStats > 0)
+            {
+                player.wingTimeMax += 60;
+            }
+
+            BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
+
+            if (ArmedPhenomenonClawCooldown > 0)
+            {
+                ArmedPhenomenonClawCooldown--;
+            }
+            // Main.NewText("Y pos: " + player.Center.Y);
         }
 
         public override void MovementEffects(Player player, SeptimaPlayer adept)
@@ -161,10 +201,7 @@ namespace GvMod.Common.Players.Sevenths
             float knockback = 0;
             if (adept.MainSkillUseTime <= 0)
             {
-                if (adept.GetTotalEPUseModifier() > 0 && !player.GetModPlayer<PlayerBuffs>().InfiniteSurge)
-                {
-                    adept.CurrentEP -= adept.GetTotalMaxEP() * 0.075f;
-                }
+                adept.CurrentEP -= adept.GetTotalMaxEP() * 0.08f * adept.GetTotalEPUseModifier();
                 knockback = 2.5f;
             }
 
@@ -194,6 +231,7 @@ namespace GvMod.Common.Players.Sevenths
                 bool crit = player.GetTotalCritChance<SpecialAttackDamage>() < Main.rand.NextFloat();
                 player.ApplyDamageToNPC(target, finalDamage, knockback, direction, crit, 
                     ModContent.GetInstance<MainAttackDamage>(), true);
+                // player.Hurt(new PlayerDeathReason(), finalDamage, direction, true, dodgeable: false);
 
                 adept.TaggedNPCs.damageTimer[i] = 10;
             }
@@ -292,6 +330,76 @@ namespace GvMod.Common.Players.Sevenths
                 }
             }
             base.DrawAttack(ref drawInfo, player, adept);
+        }
+
+        public override void SetArmedPhenomenonEquip(Player player, SeptimaPlayer adept, Mod mod)
+        {
+            player.head = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Head);
+            player.body = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Body);
+            player.legs = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Legs);
+            player.handon = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.HandsOn);
+            player.handoff = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", 
+                EquipType.HandsOff);
+            player.waist = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Waist);
+            player.wings = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Wings);
+        }
+
+        public override void ItemUse(Player player, SeptimaPlayer adept, Item item)
+        {
+        }
+
+        public override void ArmedPhenomenonPreUpdate(Player player, SeptimaPlayer adept, int potency)
+        {
+            if (player.ItemAnimationActive)
+            {
+                Item item = player.HeldItem;
+                if (item.axe <= 0 && item.pick <= 0 && item.hammer <= 0 && item.createTile == -1 &&
+                    item.createWall == -1 && item.damage > 0 && !item.accessory && item.defense <= 0 &&
+                    !item.vanity)
+                {
+                    if (ArmedPhenomenonClawCooldown <= 0)
+                    {
+                        Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, 
+                            player.Center.DirectionTo(Main.MouseWorld), 
+                            ModContent.ProjectileType<AzureStrikerClaw>(), 20 + (potency * 5), 3, 
+                            player.whoAmI);
+                        ArmedPhenomenonClawCooldown = 70;
+                    }
+                }
+            }
+            /*if (player.GetModPlayer<PlayerBuffs>().ArmedPhenomenonStats > 0)
+            {
+                if (item.axe > 0 || item.pick > 0 || item.hammer > 0 || item.createTile != -1 ||
+                    item.createWall != -1 || item.damage <= 0 || item.accessory || item.defense > 0 ||
+                    item.vanity) return;
+
+                if (ArmedPhenomenonClawCooldown <= 0)
+                {
+                    ArmedPhenomenonClawCooldown = 75;
+                }
+            }*/
+        }
+
+        public override void ArmedPhenomenonPostEquipUpdate(Player player, SeptimaPlayer adept, int potency)
+        {
+            player.noFallDmg = true;
+            if (!adept.Overheated)
+            {
+                player.wingTimeMax += 45 + (45 * potency);
+                player.statDefense += 5 * potency;
+                player.endurance += 0.06f * (potency - 1);
+            }
+
+            adept.EPUseModifier *= 1.25f + (0.25f * potency);
+            adept.EPRecoveryModifier *= 1f + (0.2f * potency);
+            adept.OverheatRecoveryModifier *= 1f + (0.2f * potency);
+            player.GetDamage<MainAttackDamage>() += 0.1f + (0.1f * potency);
+            player.GetDamage<SecondaryAttackDamage>() += 0.1f + (0.1f * potency);
+
+            if (potency >= 3)
+            {
+                adept.SPRecoveryModifier += 0.1f;
+            }
         }
     }
 }

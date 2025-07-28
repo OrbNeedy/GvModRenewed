@@ -13,7 +13,7 @@ namespace GvMod.Content.Items.Accessories
             Item.CloneDefaults(ItemID.SorcererEmblem);
         }
 
-        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(15);
 
         public override void UpdateEquip(Player player)
         {

@@ -4,6 +4,7 @@ using GvMod.Common.Players.Skills;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader;
 
 namespace GvMod.Common.Players.Sevenths
 {
@@ -34,7 +35,7 @@ namespace GvMod.Common.Players.Sevenths
         public virtual float EPRecoveryBaseRate { get; protected set; } = 0; 
         public virtual int EPCooldownBaseTimer { get; protected set; } = 0;
         public virtual float OverheatRecoveryBaseRate { get; protected set; } = 0;
-        public virtual float APRecoveryBaseRate { get; protected set; } = 0f;
+        public virtual float SPRecoveryBaseRate { get; protected set; } = 0f;
         public virtual bool AllowRecharge { get; protected set; } = true;
         public virtual bool AllowPrevasion { get; protected set; } = true;
         public virtual int PrevasionEPCooldownBaseTimer { get; protected set; } = 0;
@@ -51,7 +52,7 @@ namespace GvMod.Common.Players.Sevenths
         public virtual int MaxEPModifier { get; set; } = 0;
         public virtual float EPRecoveryModifier { get; set; } = 0;
         public virtual float EPCooldownModifier { get; set; } = 0;
-        public virtual float APRecoveryModifier { get; set; } = 0;
+        public virtual float SPRecoveryModifier { get; set; } = 0;
         public virtual float APCooldownModifier { get; set; } = 0;
 
         public virtual Dictionary<int, Resistance> NPCDamageResistances { get; set; } = new();
@@ -94,7 +95,12 @@ namespace GvMod.Common.Players.Sevenths
             }
         }
 
-        public virtual void InitializeSeptima(Player player, SeptimaPlayer adept)
+        public virtual void LoadSeptima(Mod mod)
+        {
+
+        }
+
+        public virtual void InitializeSeptima(Player player, SeptimaPlayer adept, Mod mod)
         {
         }
 
@@ -207,6 +213,26 @@ namespace GvMod.Common.Players.Sevenths
         }
 
         public virtual void DrawAttack(ref PlayerDrawSet drawInfo, Player player, SeptimaPlayer adept)
+        {
+
+        }
+
+        public virtual void SetArmedPhenomenonEquip(Player player, SeptimaPlayer adept, Mod mod)
+        {
+
+        }
+
+        public virtual void ArmedPhenomenonPreUpdate(Player player, SeptimaPlayer adept, int potency)
+        {
+
+        }
+
+        public virtual void ArmedPhenomenonPostEquipUpdate(Player player, SeptimaPlayer adept, int potency)
+        {
+
+        }
+
+        public virtual void ItemUse(Player player, SeptimaPlayer adept, Item item)
         {
 
         }

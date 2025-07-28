@@ -71,7 +71,8 @@ namespace GvMod.Common.Players
             {
                 //Main.NewText("Prevasion activated");
 
-                adept.CurrentEP -= MathHelper.Clamp(PrevasionCost, 0, adept.CurrentEP * 2);
+                adept.CurrentEP -= MathHelper.Clamp(PrevasionCost * adept.GetTotalEPUseModifier(), 0, 
+                    adept.CurrentEP * 10);
                 if (adept.CurrentEP <= 0)
                 {
                     adept.ForceOverheat(ignoreBuffs: true);

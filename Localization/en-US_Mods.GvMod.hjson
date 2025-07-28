@@ -19,6 +19,7 @@ Projectiles: {
 	VoltaicChainProjectile.DisplayName: Voltaic Chain Projectile
 	DragonsphereProjectile.DisplayName: Dragonsphere Projectile
 	GrandStrizerProjectile.DisplayName: Grand Strizer Projectile
+	AzureStrikerClaw.DisplayName: Dragon Claw
 }
 
 DamageClasses: {
@@ -339,12 +340,12 @@ Items: {
 
 	ChargeguardPendant: {
 		DisplayName: Chargeguard Pendant
-		Tooltip: "Gives some invincibility frames while recharging, with a cooldown."
+		Tooltip: Gives some invincibility frames while recharging, with a cooldown.
 	}
 
 	DynamoEye: {
 		DisplayName: Dynamo Eye
-		Tooltip: "Increases max EP by {0}."
+		Tooltip: Increases max EP by {0}.
 	}
 
 	OverflashPendant: {
@@ -363,7 +364,18 @@ Items: {
 
 	StalwartMedal: {
 		DisplayName: Stalwart Medal
-		Tooltip: "Increases damage reduction by {0}% and defense by {1} when overheated"
+		Tooltip: Increases damage reduction by {0}% and defense by {1} when overheated
+	}
+
+	Glaive: {
+		DisplayName: Glaive
+		Tooltip:
+			'''
+			A device based on a sumeragi device designed to force an Armed 
+			Phenomenon in an adept.
+			Unlike the sumeragi version, the adept keeps their ability to use 
+			their septima even without the glaive.
+			'''
 	}
 }
 
@@ -424,6 +436,15 @@ Buffs: {
 	SeptimalSurgeBuff: {
 		DisplayName: Septimal Surge
 		Description: Damage dealt is doubled.
+	}
+
+	ArmedPhenomenonBuff: {
+		DisplayName: Armed Phenomenon
+		Description: 
+			'''
+			Entered a state of Armored Phenomenon, septimal abilities 
+			increased.
+			'''
 	}
 }
 
@@ -548,4 +569,20 @@ DragonVeins: {
 	Visit3: The ground beneat rumbles with power.
 	Visit4: Waves of primal energy spread from this place.
 	Visit5: An unseen aura permeates the air.
+}
+
+ArmedPhenomenon: {
+	AzureStriker: {
+		Name: "[c/{0}:Azure Striker]"
+		Description:
+			'''
+			Increased flight time and immunity to fall damage using the earth's 
+			magnetic fields.
+			Increased defense and damage reduction unless overheated.
+			Increased main and secondary damage, as well as EP use and recovery.
+			When attacking, shoots a dragon claw at the enemy with immense 
+			electromagnetic force, which then returns to the user.
+			A glimpse into the terrifying power of a primal dragon.
+			'''
+	}
 }

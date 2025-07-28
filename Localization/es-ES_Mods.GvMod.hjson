@@ -19,6 +19,7 @@ Projectiles: {
 	VoltaicChainProjectile.DisplayName: Voltaic Chain
 	DragonsphereProjectile.DisplayName: Dragonsphere
 	GrandStrizerProjectile.DisplayName: Grand Strizer
+	// AzureStrikerClaw.DisplayName: Azure Striker Claw
 }
 
 DamageClasses: {
@@ -341,27 +342,42 @@ Items: {
 
 	ChargeguardPendant: {
 		// DisplayName: Chargeguard Pendant
-		// Tooltip: ""
+		// Tooltip: Gives some invincibility frames while recharging, with a cooldown.
 	}
 
 	DynamoEye: {
 		// DisplayName: Dynamo Eye
-		// Tooltip: ""
+		// Tooltip: Increases max EP by {0}.
 	}
 
 	OverflashPendant: {
 		// DisplayName: Overflash Pendant
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			A pendant that increase damage dealt by the septima's 
+			main ability by {0}, but increases EP consumption by {1}.
+			''' */
 	}
 
 	SeptimaEmblem: {
 		// DisplayName: Septima Emblem
-		// Tooltip: ""
+		// Tooltip: "{0}% increased septima damage"
 	}
 
 	StalwartMedal: {
 		// DisplayName: Stalwart Medal
-		// Tooltip: ""
+		// Tooltip: Increases damage reduction by {0}% and defense by {1} when overheated
+	}
+
+	Glaive: {
+		// DisplayName: Glaive
+		/* Tooltip:
+			'''
+			A device based on a sumeragi device designed to force an Armed 
+			Phenomenon in an adept.
+			Unlike the sumeragi version, the adept keeps their ability to use 
+			their septima even without the glaive.
+			''' */
 	}
 }
 
@@ -422,6 +438,11 @@ Buffs: {
 	SeptimalSurgeBuff: {
 		DisplayName: Septimal Surge
 		Description: Duplica el da�o causado.
+	}
+
+	ArmedPhenomenonBuff: {
+		// DisplayName: Armed Phenomenon Buff
+		// Description: Mods.GvMod.Buffs.ArmedPhenomenonBuff.Description
 	}
 }
 
@@ -546,4 +567,20 @@ DragonVeins: {
 	Visit3: La tierra tiembla con poder.
 	Visit4: Ondas de energ�a primigenia se esparcen desde este lugar.
 	Visit5: Un aura invisible impregna el lugar.
+}
+
+ArmedPhenomenon: {
+	AzureStriker: {
+		// Name: "[c/{0}:Azure Striker]"
+		/* Description:
+			'''
+			Increased flight time and immunity to fall damage using the earth's 
+			magnetic fields.
+			Increased defense and damage reduction unless overheated.
+			Increased main and secondary damage, as well as EP use and recovery.
+			When attacking, shoots a dragon claw at the enemy with immense 
+			electromagnetic force, which then returns to the user.
+			A glimpse into the terrifying power of a primal dragon.
+			''' */
+	}
 }

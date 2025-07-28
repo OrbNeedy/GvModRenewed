@@ -86,7 +86,7 @@ namespace GvMod.Common.Players
         /// <summary>
         /// Multiplicative modifier to the recovery rate of SP.
         /// </summary>
-        public float APRecoveryModifier { get; set; } = 1;
+        public float SPRecoveryModifier { get; set; } = 1;
         // Skills will only have one key to activate it, and another key to select it quickly 
         public int SelectedSkill { get; set; } = 0;
         public int SecondarySkillCooldown { get; set; } = 0;
@@ -95,12 +95,15 @@ namespace GvMod.Common.Players
             false };
 
         static SeptimaType[] _selectableSeptimas = { SeptimaType.AzureStriker };
+        public static Septima _templateSeptimaClass = new Septima();
+        public static Septima[] _templateSeptimas = { new AzureStriker() };
 
         public override void Initialize()
         {
             if (septima == null)
             {
-                septimaType = _selectableSeptimas[Main.rand.Next(0, _selectableSeptimas.Length)];
+                // septimaType = _selectableSeptimas[Main.rand.Next(0, _selectableSeptimas.Length)];
+                septimaType = _templateSeptimas[Main.rand.Next(0, _templateSeptimas.Length)].Type;
                 switch (septimaType)
                 {
                     case SeptimaType.AzureStriker:
@@ -110,7 +113,7 @@ namespace GvMod.Common.Players
                 }
             }
 
-            septima.InitializeSeptima(Player, this);
+            septima.InitializeSeptima(Player, this, Mod);
         }
 
         public override void Load()
@@ -238,7 +241,7 @@ namespace GvMod.Common.Players
             tag["Level"] = Level;
             tag["Stage"] = Stage;
             tag["MaxEP"] = BaseMaxEP;
-            tag["MaxAP"] = BaseMaxSP;
+            tag["MaxSP"] = BaseMaxSP;
 
             for (int i = 0; i < DragonVeinsVisited.Length; i++)
             {
@@ -382,7 +385,7 @@ namespace GvMod.Common.Players
             // SP recovers the same always, unless the player is using a special Skill
             if (!UsingSpecialSkill)
             {
-                CurrentSP += septima.APRecoveryBaseRate * GetTotalAPRecoveryModifier();
+                CurrentSP += septima.SPRecoveryBaseRate * GetTotalSPRecoveryModifier();
             }
 
             RechargeLogic();
@@ -443,12 +446,7 @@ namespace GvMod.Common.Players
                 // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
                 if (septima.MainSkillUse(Player, this))
                 {
-                    // If the player has the infinite surge buff, do not reduce EP from using the main skill, but 
-                    // increase cooldown timer 
-                    if (!Player.GetModPlayer<PlayerBuffs>().InfiniteSurge)
-                    {
-                        CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
-                    }
+                    CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
                     EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
                 }
                 MainSkillUseTime++;
@@ -636,7 +634,7 @@ namespace GvMod.Common.Players
             EPUseModifier = 0;
             EPRecoveryModifier = 0;
             EPCooldownModifier = 0;
-            APRecoveryModifier = 0;
+            SPRecoveryModifier = 0;
             base.UpdateDead();
         }
 
@@ -648,7 +646,7 @@ namespace GvMod.Common.Players
             EPUseModifier = 1;
             EPRecoveryModifier = 1;
             EPCooldownModifier = 1;
-            APRecoveryModifier = 1;
+            SPRecoveryModifier = 1;
             OverheatRecoveryModifier = 1;
 
             septima.UpdateTimers(perfectionCheck);
@@ -894,9 +892,9 @@ namespace GvMod.Common.Players
             return EPRecoveryModifier + septima.EPRecoveryModifier;
         }
 
-        public float GetTotalAPRecoveryModifier()
+        public float GetTotalSPRecoveryModifier()
         {
-            return APRecoveryModifier + septima.APRecoveryModifier;
+            return SPRecoveryModifier + septima.SPRecoveryModifier;
         }
 
         public float GetTotalEPCooldownModifier()
@@ -951,6 +949,28 @@ namespace GvMod.Common.Players
                     return new AzureStriker();
                 default:
                     return new Septima();
+            }
+        }
+
+        public static Septima GetStaticSeptima(SeptimaType type)
+        {
+            switch (type)
+            {
+                case SeptimaType.AzureStriker:
+                    return _templateSeptimas[0];
+                default:
+                    return _templateSeptimaClass;
+            }
+        }
+
+        public static Septima GetStaticSeptima(int type)
+        {
+            switch (type)
+            {
+                case (int)SeptimaType.AzureStriker:
+                    return _templateSeptimas[0];
+                default:
+                    return _templateSeptimaClass;
             }
         }
     }

@@ -63,7 +63,7 @@ namespace GvMod.Common.Players
 
                 Player.GetDamage<SeptimaDamage>() += resurrectionPower / 25;
                 adept.EPUseModifier -= MathHelper.Clamp((resurrectionPower - 1) * 0.2f, 0, 1);
-                adept.APRecoveryModifier += resurrectionPower > 3 ? 0.25f : 0;
+                adept.SPRecoveryModifier += resurrectionPower > 3 ? 0.25f : 0;
                 adept.EPRecoveryModifier += 0.1f;
                 Player.GetDamage<SeptimaDamage>() += 0.15f * resurrectionPower;
 

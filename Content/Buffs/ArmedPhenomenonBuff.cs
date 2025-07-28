@@ -1,33 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GvMod.Common.Players;
+﻿using GvMod.Common.Players;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Buffs
 {
-    public class InfiniteSurgeBuff : ModBuff
+    public class ArmedPhenomenonBuff : ModBuff
     {
         public override void SetStaticDefaults()
         {
             Main.debuff[Type] = false;
             Main.pvpBuff[Type] = false;
             Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = false;
+            Main.buffNoTimeDisplay[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<PlayerBuffs>().InfiniteSurge = true;
-            player.GetModPlayer<SeptimaPlayer>().EPUseModifier = 0;
         }
 
         public override bool RightClick(int buffIndex)
         {
-            return true;
+            return false;
         }
     }
 }

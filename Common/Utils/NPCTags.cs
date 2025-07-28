@@ -81,7 +81,7 @@ namespace GvMod.Common.Utils
             targetCount--;
         }
 
-        public void AddTag(int index, int timer = 600)
+        public void AddTag(int index, int timer = 600, int level = 1)
         {
             for (int i = 0; i < targetCount; i++)
             {
@@ -90,7 +90,8 @@ namespace GvMod.Common.Utils
                 {
                     if (tagLevel[i] < 3)
                     {
-                        tagLevel[i]++;
+                        tagLevel[i] += level;
+                        tagLevel[i] = Math.Clamp(tagLevel[i], 0, 3);
                     }
                     tagTimer[i] = timer;
                     return;
@@ -99,7 +100,7 @@ namespace GvMod.Common.Utils
 
             // Else, add a new tag
             taggedTargets.Add(index);
-            tagLevel.Add(1);
+            tagLevel.Add(level);
             tagTimer.Add(timer);
             damageTimer.Add(0);
             targetCount++;
