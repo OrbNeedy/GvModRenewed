@@ -278,9 +278,9 @@ namespace GvMod.Common.Players
             {
                 Stage = tag.GetInt("Stage");
             }
-            if (tag.ContainsKey("MaxAP"))
+            if (tag.ContainsKey("MaxSP"))
             {
-                BaseMaxSP = tag.GetInt("MaxAP");
+                BaseMaxSP = tag.GetInt("MaxSP");
             }
             for (int i = 0; i < DragonVeinsVisited.Length; i++)
             {

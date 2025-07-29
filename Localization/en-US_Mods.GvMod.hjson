@@ -379,13 +379,13 @@ Items: {
 	}
 
 	SumeragiSupervisorBody: {
-		SetBonus: 
+		SetBonus:
 			'''
 			Increases special skill damage by {3}% and allows the use of prevasion.
 			{$PrevasionDescription}
 			'''
 		DisplayName: Sumeragi Supervisor Uniform
-		Tooltip: 
+		Tooltip:
 			'''
 			The uniform worn by Sumeragi Supervisor units, refitted for combat.
 			Increases septima damage by {0}%, decreases EP recovery by {1}%, and 
@@ -395,7 +395,7 @@ Items: {
 
 	SumeragiSupervisorLegs: {
 		DisplayName: Sumeragi Supervisor Boots
-		Tooltip: 
+		Tooltip:
 			'''
 			Increases movement speed by {0}%.
 			Increased septima crit chance by {1}%, and increased SP recovery by {2}%.
@@ -404,7 +404,7 @@ Items: {
 
 	PulsarFragment: {
 		DisplayName: Pulsar Fragment
-		Tooltip: "This fragment pulses with immense power."
+		Tooltip: This fragment pulses with immense power.
 	}
 
 	ScarletGoldFragment: {
@@ -412,8 +412,13 @@ Items: {
 		Tooltip:
 			'''
 			A fragment from a lost metal, refined with ancient lihzahrd techniques.
-			It’s very hard and shines like the Sun.
+			Itï¿½s very hard and shines like the Sun.
 			'''
+	}
+
+	SeptimaLump: {
+		DisplayName: Septima Lump
+		Tooltip: ""
 	}
 }
 

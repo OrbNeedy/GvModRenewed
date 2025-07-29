@@ -381,23 +381,45 @@ Items: {
 	}
 
 	SumeragiSupervisorBody: {
-		// SetBonus: Mods.GvMod.Items.SumeragiSupervisorBody.SetBonus
-		// DisplayName: Sumeragi Supervisor Body
-		// Tooltip: ""
+		/* SetBonus:
+			'''
+			Increases special skill damage by {3}% and allows the use of prevasion.
+			{$PrevasionDescription}
+			''' */
+		// DisplayName: Sumeragi Supervisor Uniform
+		/* Tooltip:
+			'''
+			The uniform worn by Sumeragi Supervisor units, refitted for combat.
+			Increases septima damage by {0}%, decreases EP recovery by {1}%, and 
+			increases EP recovery by {2}%.
+			''' */
 	}
 
 	SumeragiSupervisorLegs: {
-		// DisplayName: Sumeragi Supervisor Legs
-		// Tooltip: ""
+		// DisplayName: Sumeragi Supervisor Boots
+		/* Tooltip:
+			'''
+			Increases movement speed by {0}%.
+			Increased septima crit chance by {1}%, and increased SP recovery by {2}%.
+			''' */
 	}
 
 	PulsarFragment: {
 		// DisplayName: Pulsar Fragment
-		// Tooltip: ""
+		// Tooltip: This fragment pulses with immense power.
 	}
 
 	ScarletGoldFragment: {
 		// DisplayName: Scarlet Gold Fragment
+		/* Tooltip:
+			'''
+			A fragment from a lost metal, refined with ancient lihzahrd techniques.
+			It�s very hard and shines like the Sun.
+			''' */
+	}
+
+	SeptimaLump: {
+		// DisplayName: Septima Lump
 		// Tooltip: ""
 	}
 }

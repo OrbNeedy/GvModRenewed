@@ -1,9 +1,7 @@
-﻿using GvMod.Common.Players.Sevenths;
-using GvMod.Content.Buffs;
+﻿using GvMod.Content.Buffs;
 using Microsoft.Xna.Framework;
 using MonoMod.Cil;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

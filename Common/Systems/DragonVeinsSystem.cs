@@ -81,8 +81,8 @@ namespace GvMod.Common.Systems
                             adept.DragonVeinsVisited[i] = true;
                             int randomMessage = Main.rand.Next(0, 6);
                             adept.septima.OnVeinVisit(player, adept, i);
-                            Main.NewText(Language.GetTextValue($"GvMod.DragonVeins.Visit{randomMessage}"), 
-                                adept.septima.MainColor);
+                            Main.NewText(Language.GetTextValue($"Mods.GvMod.DragonVeins.Visit{randomMessage.
+                                ToString()}"), adept.septima.MainColor);
                         }
                     }
                 }

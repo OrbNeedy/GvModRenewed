@@ -1,4 +1,5 @@
 ﻿using GvMod.Common.GlobalNPCs;
+using GvMod.Common.Players;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 
@@ -91,6 +92,26 @@ namespace GvMod.Common
         {
             // TODO: Get the translations for this string
             return "After Plantera is defeated.";
+        }
+    }
+
+    public class SeptimaLumpCondition : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            SeptimaPlayer adept = info.player.GetModPlayer<SeptimaPlayer>();
+            return adept.CurrentEP < adept.GetTotalMaxEP();
+        }
+
+        public bool CanShowItemDropInUI()
+        {
+            return false;
+        }
+
+        public string GetConditionDescription()
+        {
+            // TODO: Get the translations for this string
+            return "Anyone if the player lacks EP.";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GvMod.Content.Items.Accessories;
 using GvMod.Content.Items.Materials;
+using GvMod.Content.Items.Pickups;
 using GvMod.Content.Items.Upgrades;
 using System.Linq;
 using Terraria;
@@ -27,6 +28,12 @@ namespace GvMod.Common.GlobalNPCs
                 npcLoot.Add(ItemDropRule.ByCondition(new MirrorShardDropCondition(), 
                     ModContent.ItemType<MirrorShard>(), 4));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UniversalUpgradeItem>(), 250, 1, 5));
+                npcLoot.Add(ItemDropRule.ByCondition(new SeptimaLumpCondition(),
+                    ModContent.ItemType<SeptimaLump>(), 1, 10, 20));
+            } else
+            {
+                npcLoot.Add(ItemDropRule.ByCondition(new SeptimaLumpCondition(),
+                    ModContent.ItemType<SeptimaLump>(), 10));
             }
 
             if (npc.boss || npc.rarity >= 4)
