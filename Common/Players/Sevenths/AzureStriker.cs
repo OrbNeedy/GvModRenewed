@@ -140,11 +140,6 @@ namespace GvMod.Common.Players.Sevenths
 
             AllowPrevasion = !activeFlashfield;
 
-            if (player.GetModPlayer<PlayerBuffs>().ArmedPhenomenonStats > 0)
-            {
-                player.wingTimeMax += 60;
-            }
-
             BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
 
             if (ArmedPhenomenonClawCooldown > 0)
@@ -359,11 +354,14 @@ namespace GvMod.Common.Players.Sevenths
                 {
                     if (ArmedPhenomenonClawCooldown <= 0)
                     {
+                        float baseClawDamage = 20 + (potency * 5) + (adept.Stage * 5);
+                        int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
+                            ApplyTo(baseClawDamage);
                         Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, 
                             player.Center.DirectionTo(Main.MouseWorld), 
-                            ModContent.ProjectileType<AzureStrikerClaw>(), 20 + (potency * 5), 3, 
+                            ModContent.ProjectileType<AzureStrikerClaw>(), finalDamage, 3, 
                             player.whoAmI);
-                        ArmedPhenomenonClawCooldown = 70;
+                        ArmedPhenomenonClawCooldown = 85 - (5 * potency);
                     }
                 }
             }
@@ -382,10 +380,14 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void ArmedPhenomenonPostEquipUpdate(Player player, SeptimaPlayer adept, int potency)
         {
+            if (!adept.Overheated)
+            {
+                player.wingTimeMax += (45 * potency);
+            }
+
             player.noFallDmg = true;
             if (!adept.Overheated)
             {
-                player.wingTimeMax += 45 + (45 * potency);
                 player.statDefense += 5 * potency;
                 player.endurance += 0.06f * (potency - 1);
             }

@@ -1,16 +1,16 @@
 ﻿using GvMod.Common.Players;
 using GvMod.Common.Players.Sevenths;
 using GvMod.Content.Items.Materials;
-using Humanizer;
+using GvMod.Content.Items.Upgrades;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace GvMod.Content.Items.Accessories
 {
@@ -21,6 +21,7 @@ namespace GvMod.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.accessory = true;
+
 
             Item.rare = ItemRarityID.Lime;
         }
@@ -52,11 +53,13 @@ namespace GvMod.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (player.GetModPlayer<SeptimaPlayer>().septimaType != SeptimaType.None)
+            SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
+            if (adept.septimaType != SeptimaType.None)
             {
                 player.GetModPlayer<PlayerBuffs>().ArmedPhenomenonStats = 1;
                 player.GetModPlayer<PlayerBuffs>().ArmedPhenomenonVisuals = !hideVisual;
-                lastSeptima = player.GetModPlayer<SeptimaPlayer>().septima.Type;
+
+                lastSeptima = adept.septima.Type;
             }
         }
 
@@ -126,10 +129,21 @@ namespace GvMod.Content.Items.Accessories
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Chain, 2)
-                .AddIngredient<SpiritualStone>(8)
-                .AddIngredient(ItemID.SoulofMight, 5)
-                .AddTile(TileID.Mythril)
+                .AddIngredient(ItemID.HellstoneBar, 7)
+                .AddIngredient(ItemID.IronBroadsword)
+                .AddIngredient<SpiritualStone>(15)
+                .AddIngredient<Stage1Upgrade>()
+                .AddTile(TileID.Anvils)
+                .AddTile(TileID.Hellforge)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.HellstoneBar, 7)
+                .AddIngredient(ItemID.LeadBroadsword)
+                .AddIngredient<SpiritualStone>(15)
+                .AddIngredient<Stage1Upgrade>()
+                .AddTile(TileID.Anvils)
+                .AddTile(TileID.Hellforge)
                 .Register();
         }
     }

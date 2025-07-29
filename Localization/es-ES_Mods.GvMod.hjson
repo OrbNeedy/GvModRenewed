@@ -19,7 +19,7 @@ Projectiles: {
 	VoltaicChainProjectile.DisplayName: Voltaic Chain
 	DragonsphereProjectile.DisplayName: Dragonsphere
 	GrandStrizerProjectile.DisplayName: Grand Strizer
-	// AzureStrikerClaw.DisplayName: Azure Striker Claw
+	// AzureStrikerClaw.DisplayName: Dragon Claw
 }
 
 DamageClasses: {
@@ -379,6 +379,27 @@ Items: {
 			their septima even without the glaive.
 			''' */
 	}
+
+	SumeragiSupervisorBody: {
+		// SetBonus: Mods.GvMod.Items.SumeragiSupervisorBody.SetBonus
+		// DisplayName: Sumeragi Supervisor Body
+		// Tooltip: ""
+	}
+
+	SumeragiSupervisorLegs: {
+		// DisplayName: Sumeragi Supervisor Legs
+		// Tooltip: ""
+	}
+
+	PulsarFragment: {
+		// DisplayName: Pulsar Fragment
+		// Tooltip: ""
+	}
+
+	ScarletGoldFragment: {
+		// DisplayName: Scarlet Gold Fragment
+		// Tooltip: ""
+	}
 }
 
 /* PrevasionDescription:
@@ -441,8 +462,12 @@ Buffs: {
 	}
 
 	ArmedPhenomenonBuff: {
-		// DisplayName: Armed Phenomenon Buff
-		// Description: Mods.GvMod.Buffs.ArmedPhenomenonBuff.Description
+		// DisplayName: Armed Phenomenon
+		/* Description:
+			'''
+			Entered a state of Armored Phenomenon, septimal abilities 
+			increased.
+			''' */
 	}
 }
 

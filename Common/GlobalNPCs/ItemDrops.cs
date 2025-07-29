@@ -90,6 +90,12 @@ namespace GvMod.Common.GlobalNPCs
                 case NPCID.DukeFishron:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OuroborosUpgrade>(), 2));
                     break;
+                case NPCID.LunarTowerNebula:
+                case NPCID.LunarTowerSolar:
+                case NPCID.LunarTowerStardust:
+                case NPCID.LunarTowerVortex:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PulsarFragment>(), 1, 3, 15));
+                    break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DullahanUpgrade>(), 2));
                     break;
@@ -101,7 +107,13 @@ namespace GvMod.Common.GlobalNPCs
                         ModContent.ItemType<Stage4Upgrade>(), 25, 5, 20));
                     break;
                 case NPCID.GoblinWarrior:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SeptimaStabilizer>(), 50));
+                case NPCID.GoblinPeon:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SeptimaStabilizer>(), 60));
+                    break;
+                case NPCID.Lihzahrd:
+                case NPCID.LihzahrdCrawler:
+                case NPCID.FlyingSnake:
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ScarletGoldFragment>(), 28));
                     break;
             }
             base.ModifyNPCLoot(npc, npcLoot);
