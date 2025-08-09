@@ -9,7 +9,7 @@ namespace GvMod.Content.Projectiles
 {
     public class Thunder : ModProjectile
     {
-        private bool Delay { get => Projectile.ai[0] == 0; }
+        private int Delay { get => (int)Projectile.ai[0]; }
         private int additionalDuration { get => (int)Projectile.ai[1]; }
         private int timer = 0;
         private int frame = 0;
@@ -50,10 +50,10 @@ namespace GvMod.Content.Projectiles
             darken = Main.rand.NextBool(3);
             skipDraw = false;
             independentSkipDraw = false;
-            if (Delay)
+            if (Delay > 0)
             {
                 // Find a sound for a delayed thunder
-                Projectile.timeLeft += 60;
+                Projectile.timeLeft += Delay;
             } else
             {
                 // Find a sound for a constant thunder 
@@ -91,10 +91,10 @@ namespace GvMod.Content.Projectiles
                 }
             }
 
-            if (Delay)
+            if (Delay > 0)
             {
-                if (timer < 62) frame = 0;
-                if (timer < 60) frame = 3;
+                if (timer < Delay + 2) frame = 0;
+                if (timer < Delay) frame = 3;
             }
             else
             {
@@ -113,19 +113,19 @@ namespace GvMod.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if ((Delay && timer < 60) || timer < 2) return false;
+            if ((Delay > 0 && timer < Delay) || timer < 2) return false;
             return base.CanHitNPC(target);
         }
 
         public override bool CanHitPlayer(Player target)
         {
-            if ((Delay && timer < 60) || timer < 2) return false;
+            if ((Delay > 0 && timer < Delay) || timer < 2) return false;
             return base.CanHitPlayer(target);
         }
 
         public override bool CanHitPvp(Player target)
         {
-            if ((Delay && timer < 60) || timer < 2) return false;
+            if ((Delay > 0 && timer < Delay) || timer < 2) return false;
             return base.CanHitPvp(target);
         }
 

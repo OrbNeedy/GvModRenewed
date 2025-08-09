@@ -20,6 +20,7 @@ Projectiles: {
 	DragonsphereProjectile.DisplayName: Dragonsphere
 	GrandStrizerProjectile.DisplayName: Grand Strizer
 	// AzureStrikerClaw.DisplayName: Dragon Claw
+	// FlashphereProjectile.DisplayName: Flashphere Projectile
 }
 
 DamageClasses: {
@@ -422,6 +423,22 @@ Items: {
 		// DisplayName: Septima Lump
 		// Tooltip: ""
 	}
+
+	DragonSaviorsBody: {
+		// SetBonus: Mods.GvMod.Items.DragonSaviorsBody.SetBonus
+		// DisplayName: Dragon Saviors Body
+		// Tooltip: ""
+	}
+
+	DragonSaviorsLegs: {
+		// DisplayName: Dragon Saviors Legs
+		// Tooltip: ""
+	}
+
+	PulsarHead: {
+		// DisplayName: Pulsar Head
+		// Tooltip: ""
+	}
 }
 
 /* PrevasionDescription:
@@ -490,6 +507,11 @@ Buffs: {
 			Entered a state of Armored Phenomenon, septimal abilities 
 			increased.
 			''' */
+	}
+
+	DnizerBuff: {
+		// DisplayName: Dnizer Buff
+		// Description: Mods.GvMod.Buffs.DnizerBuff.Description
 	}
 }
 

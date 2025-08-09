@@ -24,6 +24,9 @@ namespace GvMod.Common.Systems
         private UserInterface SkillNotificationsUserInterface;
         private SkillNotice SkillNotifications;
 
+        private UserInterface DnizerModeUserInterface;
+        private DnizerUI DnizerUI;
+
         private bool lastSkillUI;
         private bool hidingUI = false;
 
@@ -56,6 +59,12 @@ namespace GvMod.Common.Systems
             SkillNotifications.Activate();
             SkillNotificationsUserInterface.SetState(SkillNotifications);
 
+
+            DnizerModeUserInterface = new UserInterface();
+            DnizerUI = new DnizerUI();
+            DnizerUI.Activate();
+            DnizerModeUserInterface.SetState(DnizerUI);
+
             lastSkillUI = false;
         }
 
@@ -66,6 +75,7 @@ namespace GvMod.Common.Systems
             SkillDisplay = null;
             SkillSelect = null;
             SkillNotifications = null;
+            DnizerUI = null;
         }
 
         public override void UpdateUI(GameTime gameTime)
@@ -90,6 +100,11 @@ namespace GvMod.Common.Systems
             if (SkillNotificationsUserInterface?.CurrentState != null)
             {
                 SkillNotificationsUserInterface.Update(gameTime);
+            }
+
+            if (DnizerModeUserInterface?.CurrentState != null)
+            {
+                DnizerModeUserInterface.Update(gameTime);
             }
         }
 
@@ -141,6 +156,21 @@ namespace GvMod.Common.Systems
                     },
                     InterfaceScaleType.UI)
                 );
+
+                layers.Insert(resourceBarIndex, new LegacyGameInterfaceLayer(
+                    "Gunvolt Mod: Dnizer Mode UI",
+                    delegate {
+                        if (_lastUpdatedGameTime != null)
+                        {
+                            if (DnizerModeUserInterface?.CurrentState != null)
+                            {
+                                DnizerModeUserInterface.Draw(Main.spriteBatch, _lastUpdatedGameTime);
+                            }
+                        }
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
             }
         }
 
@@ -173,6 +203,7 @@ namespace GvMod.Common.Systems
                 hidingUI = true;
             }
         }
+
         public void ShowUI()
         {
             EPBarUserInterface?.SetState(EPBar);

@@ -7,10 +7,17 @@ using Terraria.ModLoader;
 
 namespace GvMod.Content.Projectiles
 {
+    public enum OrbitsBehavior
+    {
+        Default, 
+        Spread
+    }
+
     public class AstrasphereOrbits : ModProjectile
     {
         private int fieldIndex { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         private float baseRotation { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
+        private int behavior { get => (int)Projectile.ai[2]; set => Projectile.ai[2] = value; }
 
         private int frame = 0;
         private int frameTimer = 0;
@@ -54,19 +61,20 @@ namespace GvMod.Content.Projectiles
                 if (fieldIndex > 0)
                 {
                     Projectile targetField = Main.projectile[fieldIndex];
-                    if (targetField.active && targetField.owner == Projectile.owner && 
-                        targetField.ModProjectile is AstrasphereProjectile)
+                    if (targetField.active && targetField.owner == Projectile.owner &&
+                        (targetField.ModProjectile is AstrasphereProjectile || 
+                        targetField.ModProjectile is FlashphereProjectile))
                     {
                         target = targetField.Center;
                     }
                 }
                 target = Main.projectile[fieldIndex].Center;
                 Projectile.Center = target + new Vector2(0, 122).RotatedBy(baseRotation);
+                Projectile.netUpdate = true;
             }
 
             TextureCycles();
             baseRotation += MathHelper.TwoPi / 100;
-            Projectile.netUpdate = true;
             base.AI();
         }
 

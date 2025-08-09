@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GvMod.Common.GlobalNPCs;
 using GvMod.Common.Players.Skills;
 using GvMod.Content;
@@ -10,7 +11,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace GvMod.Common.Players.Sevenths
@@ -20,6 +20,9 @@ namespace GvMod.Common.Players.Sevenths
         // Septima uniques
         public bool activeFlashfield = false;
         public int flashfieldIndex = -1;
+        public bool[] activeSpheres = { false, false, false };
+        public int[] spheresIndexes = { -1, -1, -1 };
+        public float sphereBaseRotation = 0;
 
         public int attackFrame = 0;
         public int attackTimer = 0;
@@ -127,11 +130,13 @@ namespace GvMod.Common.Players.Sevenths
             }
 
             attackRotation -= 0.001745329252f;
+            sphereBaseRotation += MathHelper.TwoPi / 100;
 
             if (flashfieldIndex > -1)
             {
                 Projectile flashfield = Main.projectile[flashfieldIndex];
-                activeFlashfield = flashfield.active && flashfield.ModProjectile is Flashfield &&
+                activeFlashfield = flashfield.active && (flashfield.ModProjectile is Flashfield || 
+                    flashfield.ModProjectile is FlashphereProjectile) && 
                     flashfield.owner == player.whoAmI;
             } else
             {
@@ -153,6 +158,11 @@ namespace GvMod.Common.Players.Sevenths
         {
             player.maxRunSpeed *= 1.075f;
             player.runAcceleration *= 1.2f;
+
+            if (adept.DnizerMode)
+            {
+                player.GetModPlayer<PlayerBuffs>().FreeFloat = true;
+            }
         }
 
         public override bool MainSkillUse(Player player, SeptimaPlayer adept)
@@ -171,26 +181,81 @@ namespace GvMod.Common.Players.Sevenths
 
             if ((!activeFlashfield || flashfieldIndex == -1) && Main.myPlayer == player.whoAmI)
             {
-                flashfieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center,
-                    Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0, player.whoAmI);
+                if (adept.DnizerMode)
+                {
+                    float adjustedDamage = BasicAttackDamage + (adept.Stage * 2);
+                    int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
+                        ApplyTo(adjustedDamage);
+                    flashfieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"),
+                        player.Center, Vector2.Zero, ModContent.ProjectileType<FlashphereProjectile>(), 
+                        finalDamage, 3, player.whoAmI, (int)AstraspheredBehavior.Follow);
+                } else
+                {
+                    flashfieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"),
+                        player.Center, Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0,
+                        player.whoAmI);
+                }
             }
 
             Projectile flashfield = Main.projectile[flashfieldIndex];
-            activeFlashfield = flashfield.active && flashfield.ModProjectile is Flashfield &&
-                flashfield.owner == player.whoAmI;
+            if (adept.DnizerMode) 
+            {
+                activeFlashfield = flashfield.active && flashfield.ModProjectile is FlashphereProjectile &&
+                    flashfield.owner == player.whoAmI;
+            } else
+            {
+                activeFlashfield = flashfield.active && flashfield.ModProjectile is Flashfield &&
+                    flashfield.owner == player.whoAmI;
+            }
 
             // Reset timer and assert friendlyness
             if (activeFlashfield)
             {
-                flashfield.timeLeft = 3;
+                flashfield.timeLeft = 6;
                 flashfield.friendly = true;
                 flashfield.hostile = false;
                 flashfield.netUpdate = true;
             }
+            
+            if (adept.DnizerMode)
+            {
+                for (int i = 0; i < activeSpheres.Length; i++)
+                {
+                    bool flag = activeSpheres[i];
+                    int index = spheresIndexes[i];
+
+                    if ((!flag || index == -1) && Main.myPlayer == player.whoAmI && activeFlashfield)
+                    {
+                        float adjustedDamage = BasicAttackDamage + (adept.Stage * 2);
+                        int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
+                            ApplyTo(adjustedDamage);
+                        index = spheresIndexes[i] = Projectile.NewProjectile(
+                            player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero, 
+                            ModContent.ProjectileType<AstrasphereOrbits>(), finalDamage, 3, player.whoAmI, 
+                            flashfieldIndex, sphereBaseRotation + (MathHelper.TwoPi * i / 3));
+                    }
+
+                    Projectile sphere = Main.projectile[index];
+                    flag = activeSpheres[i] = sphere.active && sphere.ModProjectile is AstrasphereOrbits &&
+                            sphere.owner == player.whoAmI;
+
+                    if (activeSpheres[i])
+                    {
+                        Main.NewText("Asserting time for sphere " + activeSpheres[i]);
+                        sphere.timeLeft = 6;
+                        sphere.friendly = true;
+                        sphere.hostile = false;
+                        sphere.netUpdate = true;
+                    }
+                }
+            }
 
             // Give player fall immunity
             player.noFallDmg = true;
-            player.maxFallSpeed *= 0.25f;
+            if (!player.GetModPlayer<PlayerBuffs>().FreeFloat)
+            {
+                player.maxFallSpeed *= 0.25f;
+            }
             player.fallStart = (int)player.Center.Y;
 
             float knockback = 0;
@@ -214,7 +279,7 @@ namespace GvMod.Common.Players.Sevenths
 
                 // Damage gets reduced if the player has too many tags
                 float adjustedDamage = BasicAttackDamage * (1f + (adept.TaggedNPCs.tagLevel[i] * 0.625f))
-                    / (1 + (adept.TaggedNPCs.targetCount * 0.075f));
+                    / (1 + (adept.TaggedNPCs.targetCount * 0.05f));
                 int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
                     ApplyTo(adjustedDamage);
                 int direction = 1;
@@ -327,6 +392,21 @@ namespace GvMod.Common.Players.Sevenths
             base.DrawAttack(ref drawInfo, player, adept);
         }
 
+        public override void OnDnizerActive(Player player, SeptimaPlayer adept)
+        {
+            for (int i = -5; i < 6; i++)
+            {
+                Vector2 offset = new Vector2(120 * i, 0);
+                int delay = 6 * Math.Abs(i);
+                int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
+                    ApplyTo(22 + adept.Stage * 2);
+                Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center - offset,
+                    Vector2.Zero, ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 
+                    delay);
+            }
+            base.OnDnizerActive(player, adept);
+        }
+
         public override void SetArmedPhenomenonEquip(Player player, SeptimaPlayer adept, Mod mod)
         {
             player.head = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Head);
@@ -337,10 +417,6 @@ namespace GvMod.Common.Players.Sevenths
                 EquipType.HandsOff);
             player.waist = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Waist);
             player.wings = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Wings);
-        }
-
-        public override void ItemUse(Player player, SeptimaPlayer adept, Item item)
-        {
         }
 
         public override void ArmedPhenomenonPreUpdate(Player player, SeptimaPlayer adept, int potency)

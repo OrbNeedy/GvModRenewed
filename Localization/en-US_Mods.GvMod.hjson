@@ -14,12 +14,13 @@ Projectiles: {
 	Thunder.DisplayName: Thunder
 	AstrasphereOrbits.DisplayName: Orbits
 	OrochiDrone.DisplayName: Drone
-	AstrasphereProjectile.DisplayName: Astrasphere Projectile
-	LuxcaliburProjectile.DisplayName: Luxcalibur Projectile
-	VoltaicChainProjectile.DisplayName: Voltaic Chain Projectile
-	DragonsphereProjectile.DisplayName: Dragonsphere Projectile
-	GrandStrizerProjectile.DisplayName: Grand Strizer Projectile
+	AstrasphereProjectile.DisplayName: Astrasphere
+	LuxcaliburProjectile.DisplayName: Luxcalibur
+	VoltaicChainProjectile.DisplayName: Voltaic Chain
+	DragonsphereProjectile.DisplayName: Dragonsphere
+	GrandStrizerProjectile.DisplayName: Grand Strizer
 	AzureStrikerClaw.DisplayName: Dragon Claw
+	FlashphereProjectile.DisplayName: Astrasphere
 }
 
 DamageClasses: {
@@ -412,13 +413,53 @@ Items: {
 		Tooltip:
 			'''
 			A fragment from a lost metal, refined with ancient lihzahrd techniques.
-			It�s very hard and shines like the Sun.
+			Its very hard and shines like the Sun.
 			'''
 	}
 
 	SeptimaLump: {
 		DisplayName: Septima Lump
-		Tooltip: ""
+		Tooltip: "Pick up to recover EP"
+	}
+
+	DragonSaviorsBody: {
+		SetBonus: 
+			'''
+			Activate armor set bonus and hold down to enter Dnizer mode.
+			Dnizer mode gives infinite EP, free flight, and improves septima abilities.
+			However, staying for too long in Dnizer mode will cause increasing damage.
+			Allows the use of prevasion.
+			{$PrevasionDescription}
+			'''
+		DisplayName: Dragon Saviors Uniform
+		Tooltip: 
+			'''
+			A uniform from Sumeragi's bureau of Dragon Saviors.
+			Increases septima damage by {0}%.
+			Decreased EP use by {1}%.
+			Increased EP recovery by {2}%.
+			Increased damage from the septima's main ability by {3}%.
+			'''
+	}
+
+	DragonSaviorsLegs: {
+		DisplayName: Dragon Saviors Leggins
+		Tooltip: 
+			'''
+			Increases movement speed by {0}%.
+			Increased septima crit chance by {1}%, and increased cooldown recovery by {2}%.
+			'''
+	}
+
+	PulsarHead: {
+		DisplayName: Pulsar Mask
+		Tooltip: 
+			'''
+			A mask that signifies an adept's power.
+			Increases septima damage by {0}%.
+			Increases damage from special skills by {1}%.
+			Increases max EP by {2}%.
+			'''
 	}
 }
 
@@ -488,6 +529,11 @@ Buffs: {
 			Entered a state of Armored Phenomenon, septimal abilities 
 			increased.
 			'''
+	}
+
+	DnizerBuff: {
+		DisplayName: Dnizer Buff
+		Description: Mods.GvMod.Buffs.DnizerBuff.Description
 	}
 }
 

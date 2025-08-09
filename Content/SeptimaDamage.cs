@@ -16,5 +16,21 @@ namespace GvMod.Content
                 return StatInheritanceData.Full;
             return StatInheritanceData.None;
         }
+
+        public override bool GetEffectInheritance(DamageClass damageClass)
+        {
+            if (damageClass == DamageClass.Generic)
+                return true;
+
+            return base.GetEffectInheritance(damageClass);
+        }
+
+        public override bool GetPrefixInheritance(DamageClass damageClass)
+        {
+            if (damageClass == DamageClass.Generic)
+                return true;
+
+            return base.GetsPrefixesFor(damageClass);
+        }
     }
 }

@@ -217,6 +217,11 @@ namespace GvMod.Common.Players.Sevenths
 
         }
 
+        public virtual void OnDnizerActive(Player player, SeptimaPlayer adept)
+        {
+
+        }
+
         public virtual void SetArmedPhenomenonEquip(Player player, SeptimaPlayer adept, Mod mod)
         {
 

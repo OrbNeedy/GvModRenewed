@@ -11,7 +11,6 @@ using GvMod.Common.Players.Skills;
 using Terraria.Localization;
 using GvMod.Content.Buffs;
 using Terraria.Audio;
-using Terraria.WorldBuilding;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +18,7 @@ namespace GvMod.Common.Players
 {
     public class SeptimaPlayer : ModPlayer
     {
-        // Cheating check, for testing purposes
+        // Cheating item check, for testing purposes
         public bool perfectionCheck = false;
 
         // Septima identifiers
@@ -46,7 +45,8 @@ namespace GvMod.Common.Players
         // This one is affected by equipment and other modifiers, it's reset later
         public int ModifiedMaxSP { get; set; } = 0;
         public float CurrentSP { get; set; } = 2;
-
+        public bool PreviousDnizerState { get; set; } = false;
+        public bool DnizerMode { get; set; } = false;
 
         // State related
         public int ChargeguardLevel { get; set; } = 0;
@@ -648,6 +648,8 @@ namespace GvMod.Common.Players
             EPCooldownModifier = 1;
             SPRecoveryModifier = 1;
             OverheatRecoveryModifier = 1;
+            PreviousDnizerState = DnizerMode;
+            DnizerMode = false;
 
             septima.UpdateTimers(perfectionCheck);
             if (SecondarySkillCooldown > 0) SecondarySkillCooldown--;
@@ -837,13 +839,14 @@ namespace GvMod.Common.Players
         {
             //Main.NewText("Forcing overheat");
             bool returnValue = true;
-            if (Player.HasBuff<InfiniteSurgeBuff>())
+            if (Player.HasBuff<InfiniteSurgeBuff>() || Player.HasBuff<DnizerBuff>())
             {
                 //Main.NewText("Player has buffs");
                 if (resetBuffs)
                 {
                     //Main.NewText("Clearing buffs");
                     Player.ClearBuff(ModContent.BuffType<InfiniteSurgeBuff>());
+                    Player.ClearBuff(ModContent.BuffType<DnizerBuff>());
                 }
                 if (ignoreBuffs)
                 {
