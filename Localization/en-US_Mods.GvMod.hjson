@@ -425,10 +425,11 @@ Items: {
 	DragonSaviorsBody: {
 		SetBonus: 
 			'''
-			Activate armor set bonus and hold down to enter Dnizer mode.
+			Allows the use of prevasion.
+			Activate armor set bonus and hold down the button to enter Dnizer mode.
 			Dnizer mode gives infinite EP, free flight, and improves septima abilities.
 			However, staying for too long in Dnizer mode will cause increasing damage.
-			Allows the use of prevasion.
+			Right click the obtained buff to deactivate Dnizer mode.
 			{$PrevasionDescription}
 			'''
 		DisplayName: Dragon Saviors Uniform
@@ -532,8 +533,16 @@ Buffs: {
 	}
 
 	DnizerBuff: {
-		DisplayName: Dnizer Buff
-		Description: Mods.GvMod.Buffs.DnizerBuff.Description
+		DisplayName: Dnizer mode
+		Description: 
+			'''
+			Septima abilities greatly increased.
+			Infinite flight and EP allowed. 
+			Using skills will fill up the Primal Dragon gauge, and over 100% 
+			the user will get damaged.
+			The higher the Primal Dragon gauge, the longer it will take to 
+			activate.
+			'''
 	}
 }
 
