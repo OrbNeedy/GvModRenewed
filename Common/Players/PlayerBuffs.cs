@@ -1,7 +1,10 @@
 ﻿using GvMod.Content.Buffs;
+using GvMod.Content.Dusts;
+using GvMod.Content.Items.Accessories;
 using Microsoft.Xna.Framework;
 using MonoMod.Cil;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameInput;
@@ -17,7 +20,10 @@ namespace GvMod.Common.Players
         public bool ArmedPhenomenonVisuals { get; set; } = false;
         public int ArmedPhenomenonStats { get; set; } = 0;
         public bool FreeFloat { get; set; } = false;
+        public bool Reviberoptics { get; set; } = false;
         private Vector2 flyingVelocity = Vector2.Zero;
+        public SpecialWingEquip specialWingType = SpecialWingEquip.None;
+        public List<WingDust> dustType = new List<WingDust>();
 
         public override void Load()
         {
@@ -91,6 +97,31 @@ namespace GvMod.Common.Players
             base.PostUpdateEquips();
         }
 
+        public override void PostUpdateMiscEffects()
+        {
+            if (dustType.Count <= 0) return;
+            WingDust dust = dustType[Main.rand.Next(0, dustType.Count)];
+            int type = -1;
+            switch (dust)
+            {
+                case WingDust.Lumen1:
+                    type = ModContent.DustType<LumenDust>();
+                    break;
+                case WingDust.Lumen2:
+                    type = ModContent.DustType<LumenDust2>();
+                    break;
+            }
+
+            if (Player.velocity.Y != 0 && Player.controlJump && type != -1 &&
+                Main.rand.NextBool(45))
+            {
+                Dust.NewDust(Player.position + new Vector2(-8, -12), Player.width + 16, Player.height + 24, 
+                    type, newColor: Color.White);
+            }
+
+            base.PostUpdateMiscEffects();
+        }
+
         public override void FrameEffects()
         {
             if (ArmedPhenomenonVisuals)
@@ -99,6 +130,22 @@ namespace GvMod.Common.Players
                 adept.septima.SetArmedPhenomenonEquip(Player, adept, Mod);
             }
             base.FrameEffects();
+        }
+
+        public override void UpdateLifeRegen()
+        {
+            SeptimaPlayer adept = Player.GetModPlayer<SeptimaPlayer>();
+            if (adept.septimaType == Sevenths.SeptimaType.None) return;
+
+            if (Reviberoptics)
+            {
+                if (!adept.Overheated)
+                {
+                    Player.lifeRegenTime += 2;
+                    Player.lifeRegen += 8;
+                }
+            }
+            base.UpdateLifeRegen();
         }
 
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
@@ -134,7 +181,10 @@ namespace GvMod.Common.Players
             ArmedPhenomenonVisuals = false;
             ArmedPhenomenonStats = 0;
             FreeFloat = false;
+            Reviberoptics = false;
             flyingVelocity = Vector2.Zero;
+            specialWingType = SpecialWingEquip.None;
+            dustType.Clear();
         }
 
         private void ModifyEyes_DrawPlayer_21_Head_TheFace(ILContext il)

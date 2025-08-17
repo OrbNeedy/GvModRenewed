@@ -161,17 +161,32 @@ namespace GvMod.Content.Projectiles
                 if (target.active && target.life > 0 && !target.immortal && !target.friendly && 
                     adept.septimaType != SeptimaType.None)
                 {
+                    int timer = 600;
                     for (int i = 0; i < 3; i++)
                     {
                         DartLeaderUpgrades upgrade = (DartLeaderUpgrades)Projectile.ai[i];
                         if (upgrade == DartLeaderUpgrades.Ouroboros)
                         {
-                            adept.TaggedNPCs.AddTag(target.whoAmI, 1800);
-                            base.OnHitNPC(target, hit, damageDone);
-                            return;
+                            timer = 1800;
                         }
                     }
-                    adept.TaggedNPCs.AddTag(target.whoAmI);
+                    adept.TaggedNPCs.AddTag(target.whoAmI, timer);
+
+                    if (adept.TaggedNPCs.tagLevel[target.whoAmI] >= 3)
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FullTagSound") with
+                        {
+                            Volume = 0.5f,
+                            PitchVariance = 0.1f
+                        }, Projectile.Center);
+                    } else
+                    {
+                        SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/TagSound") with
+                        {
+                            Volume = 0.5f,
+                            PitchVariance = 0.1f
+                        }, Projectile.Center);
+                    }
                 }
             }
             base.OnHitNPC(target, hit, damageDone);

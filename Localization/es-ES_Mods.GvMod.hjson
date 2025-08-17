@@ -20,7 +20,7 @@ Projectiles: {
 	DragonsphereProjectile.DisplayName: Dragonsphere
 	GrandStrizerProjectile.DisplayName: Grand Strizer
 	// AzureStrikerClaw.DisplayName: Dragon Claw
-	// FlashphereProjectile.DisplayName: Flashphere Projectile
+	// FlashphereProjectile.DisplayName: Astrasphere
 }
 
 DamageClasses: {
@@ -415,28 +415,83 @@ Items: {
 		/* Tooltip:
 			'''
 			A fragment from a lost metal, refined with ancient lihzahrd techniques.
-			It�s very hard and shines like the Sun.
+			Its very hard and shines like the Sun.
 			''' */
 	}
 
 	SeptimaLump: {
 		// DisplayName: Septima Lump
-		// Tooltip: ""
+		// Tooltip: Pick up to recover EP
 	}
 
 	DragonSaviorsBody: {
-		// SetBonus: Mods.GvMod.Items.DragonSaviorsBody.SetBonus
-		// DisplayName: Dragon Saviors Body
-		// Tooltip: ""
+		/* SetBonus:
+			'''
+			Allows the use of prevasion.
+			Activate armor set bonus and hold down the button to enter Dnizer mode.
+			Dnizer mode gives infinite EP, free flight, and improves septima abilities.
+			However, staying for too long in Dnizer mode will cause increasing damage.
+			Right click the obtained buff to deactivate Dnizer mode.
+			{$PrevasionDescription}
+			''' */
+		// DisplayName: Dragon Saviors Uniform
+		/* Tooltip:
+			'''
+			A uniform from Sumeragi's bureau of Dragon Saviors.
+			Increases septima damage by {0}%.
+			Decreased EP use by {1}%.
+			Increased EP recovery by {2}%.
+			Increased damage from the septima's main ability by {3}%.
+			''' */
 	}
 
 	DragonSaviorsLegs: {
-		// DisplayName: Dragon Saviors Legs
-		// Tooltip: ""
+		// DisplayName: Dragon Saviors Leggins
+		/* Tooltip:
+			'''
+			Increases movement speed by {0}%.
+			Increased septima crit chance by {1}%, and increased cooldown recovery by {2}%.
+			''' */
 	}
 
 	PulsarHead: {
-		// DisplayName: Pulsar Head
+		// DisplayName: Pulsar Mask
+		/* Tooltip:
+			'''
+			A mask that signifies an adept's power.
+			Increases septima damage by {0}%.
+			Increases damage from special skills by {1}%.
+			Increases max EP by {2}%.
+			''' */
+	}
+
+	Reviberoptic: {
+		// DisplayName: Reviberoptic
+		// Tooltip: ""
+	}
+
+	ActinoBlancCrystal: {
+		// DisplayName: Actino Blanc Crystal
+		// Tooltip: ""
+	}
+
+	BlancCells: {
+		// DisplayName: Blanc Cells
+		// Tooltip: ""
+	}
+
+	PureBlancCells: {
+		// DisplayName: Pure Blanc Cells
+		// Tooltip: ""
+	}
+
+	MorphoWings: {
+		// DisplayName: Morpho Wings
+		// Tooltip: ""
+	}
+
+	LumenWings: {
+		// DisplayName: Lumen Wings
 		// Tooltip: ""
 	}
 }
@@ -510,8 +565,16 @@ Buffs: {
 	}
 
 	DnizerBuff: {
-		// DisplayName: Dnizer Buff
-		// Description: Mods.GvMod.Buffs.DnizerBuff.Description
+		// DisplayName: Dnizer mode
+		/* Description:
+			'''
+			Septima abilities greatly increased.
+			Infinite flight and EP allowed. 
+			Using skills will fill up the Primal Dragon gauge, and over 100% 
+			the user will get damaged.
+			The higher the Primal Dragon gauge, the longer it will take to 
+			activate.
+			''' */
 	}
 }
 

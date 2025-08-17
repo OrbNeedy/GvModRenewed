@@ -419,11 +419,11 @@ Items: {
 
 	SeptimaLump: {
 		DisplayName: Septima Lump
-		Tooltip: "Pick up to recover EP"
+		Tooltip: Pick up to recover EP
 	}
 
 	DragonSaviorsBody: {
-		SetBonus: 
+		SetBonus:
 			'''
 			Allows the use of prevasion.
 			Activate armor set bonus and hold down the button to enter Dnizer mode.
@@ -433,7 +433,7 @@ Items: {
 			{$PrevasionDescription}
 			'''
 		DisplayName: Dragon Saviors Uniform
-		Tooltip: 
+		Tooltip:
 			'''
 			A uniform from Sumeragi's bureau of Dragon Saviors.
 			Increases septima damage by {0}%.
@@ -445,7 +445,7 @@ Items: {
 
 	DragonSaviorsLegs: {
 		DisplayName: Dragon Saviors Leggins
-		Tooltip: 
+		Tooltip:
 			'''
 			Increases movement speed by {0}%.
 			Increased septima crit chance by {1}%, and increased cooldown recovery by {2}%.
@@ -454,13 +454,43 @@ Items: {
 
 	PulsarHead: {
 		DisplayName: Pulsar Mask
-		Tooltip: 
+		Tooltip:
 			'''
 			A mask that signifies an adept's power.
 			Increases septima damage by {0}%.
 			Increases damage from special skills by {1}%.
 			Increases max EP by {2}%.
 			'''
+	}
+
+	Reviberoptic: {
+		DisplayName: Reviberoptic
+		Tooltip: ""
+	}
+
+	ActinoBlancCrystal: {
+		DisplayName: Actino Blanc Crystal
+		Tooltip: ""
+	}
+
+	BlancCells: {
+		DisplayName: Blanc Cells
+		Tooltip: ""
+	}
+
+	PureBlancCells: {
+		DisplayName: Pure Blanc Cells
+		Tooltip: ""
+	}
+
+	MorphoWings: {
+		DisplayName: Morpho Wings
+		Tooltip: ""
+	}
+
+	LumenWings: {
+		DisplayName: Lumen Wings
+		Tooltip: ""
 	}
 }
 
@@ -534,7 +564,7 @@ Buffs: {
 
 	DnizerBuff: {
 		DisplayName: Dnizer mode
-		Description: 
+		Description:
 			'''
 			Septima abilities greatly increased.
 			Infinite flight and EP allowed. 

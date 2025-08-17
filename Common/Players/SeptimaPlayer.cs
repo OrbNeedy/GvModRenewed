@@ -887,27 +887,37 @@ namespace GvMod.Common.Players
 
         public float GetTotalEPUseModifier()
         {
-            return EPUseModifier;
+            float returnValue = EPUseModifier;
+            if (returnValue < 0) returnValue = 0;
+            return returnValue;
         }
 
         public float GetTotalEPRecoveryModifier()
         {
-            return EPRecoveryModifier + septima.EPRecoveryModifier;
+            float returnValue = EPRecoveryModifier + septima.EPRecoveryModifier;
+            if (returnValue < 0.01f) returnValue = 0.01f;
+            return returnValue;
         }
 
         public float GetTotalSPRecoveryModifier()
         {
-            return SPRecoveryModifier + septima.SPRecoveryModifier;
+            float returnValue = SPRecoveryModifier + septima.SPRecoveryModifier;
+            if (returnValue < 0.01f) returnValue = 0.01f;
+            return returnValue;
         }
 
         public float GetTotalEPCooldownModifier()
         {
-            return EPCooldownModifier + septima.EPCooldownModifier;
+            float returnValue = EPCooldownModifier + septima.EPCooldownModifier;
+            if (returnValue < 0.01f) returnValue = 0.01f;
+            return returnValue;
         }
 
         public float GetTotalOverheatRecoveryModifier()
         {
-            return OverheatRecoveryModifier;
+            float returnValue = OverheatRecoveryModifier;
+            if (returnValue < 0.01f) returnValue = 0.01f;
+            return returnValue;
         }
 
         public float GetEPPercent()
