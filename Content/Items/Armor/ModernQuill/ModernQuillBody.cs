@@ -46,11 +46,11 @@ namespace GvMod.Content.Items.Armor.ModernQuill
 
         public override void UpdateArmorSet(Player player)
         {
-            player.GetModPlayer<ResurrectionPlayer>().resurrectionPower += 1.25f;
-            float overheatRecovery = bonusOverheatRecovery / 100f;
+            player.GetModPlayer<ResurrectionPlayer>().resurrectionPower += 1f;
+            player.GetModPlayer<ResurrectionPlayer>().canResurrect = true;
 
             SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
-            adept.OverheatRecoveryModifier += overheatRecovery;
+            adept.OverheatRecoveryModifier += bonusOverheatRecovery / 100f;
         }
 
         public override void AddRecipes()
