@@ -47,6 +47,12 @@ namespace GvMod.Common.GlobalNPCs
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new AfterPlanteraDropCondition(), 
                     ModContent.ItemType<Stage4Upgrade>(), 38, 2, 12));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BlancCells>(), 28, 1, 6));
+            }
+            // Zombies
+            if (NPCID.Sets.Zombies[npc.type])
+            {
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BlancCells>(), 42, 1, 4));
             }
 
             switch (npc.type)

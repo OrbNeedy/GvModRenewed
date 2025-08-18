@@ -21,9 +21,15 @@ namespace GvMod.Content.Items.Materials
 
         public override void AddRecipes()
         {
+            CreateRecipe(3)
+                .AddIngredient<BlancCells>(9)
+                .AddIngredient(ItemID.Ectoplasm)
+                .AddTile(TileID.LunarCraftingStation)
+                .Register();
+
             CreateRecipe(2)
                 .AddIngredient<BlancCells>(6)
-                .AddIngredient(ItemID.Ectoplasm, 2)
+                .AddIngredient(ItemID.ChlorophyteBar, 2)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }
