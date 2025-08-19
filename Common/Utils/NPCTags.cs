@@ -110,7 +110,6 @@ namespace GvMod.Common.Utils
         {
             for (int i = 0; i < targetCount; i++)
             {
-                // If the tagged entity is already registered, increase tag and update timer
                 if (taggedTargets[i] == index)
                 {
                     return new Tag(taggedTargets[i], tagLevel[i], tagTimer[i], damageTimer[i]);

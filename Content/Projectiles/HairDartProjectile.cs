@@ -172,7 +172,7 @@ namespace GvMod.Content.Projectiles
                     }
                     adept.TaggedNPCs.AddTag(target.whoAmI, timer);
 
-                    if (adept.TaggedNPCs.tagLevel[target.whoAmI] >= 3)
+                    if (adept.TaggedNPCs.GetTag(target.whoAmI).tagLevel >= 3)
                     {
                         SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FullTagSound") with
                         {

@@ -37,7 +37,7 @@ namespace GvMod.Common.Players.Sevenths
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains(), new AlchemicalField(), 
             new InfiniteSurge(), new GalvanicRenewal(), new SeptimalBurst(), new SeptimalShield(), 
-            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere()
+            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere(), new GFree()
         };
         public override float EPUseBase { get; protected set; } = 0.75f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;

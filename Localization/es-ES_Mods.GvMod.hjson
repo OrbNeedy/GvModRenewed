@@ -281,7 +281,11 @@ Items: {
 	}
 
 	ModernQuillBody: {
-		// SetBonus: Reduces EP recovery cooldown by {0}% and makes resurrection stronger.
+		/* SetBonus:
+			'''
+			Reduces EP recovery cooldown by {0}%.
+			Allows reincarnation or powers up reincarnation from other sources.
+			''' */
 		// DisplayName: Quill Combat Uniform
 		/* Tooltip:
 			'''
@@ -576,6 +580,11 @@ Buffs: {
 			activate.
 			''' */
 	}
+
+	GFreeBuff: {
+		// DisplayName: G Free Buff
+		// Description: Mods.GvMod.Buffs.GFreeBuff.Description
+	}
 }
 
 /* UI.LevelDescriptor:
@@ -671,6 +680,11 @@ Skills: {
 	VoltaicChains: {
 		DisplayName: Voltaic Chains
 		Description: Deploys electrifying chains, the power increases with the number of targets hit.
+	}
+
+	GFree: {
+		// DisplayName: EM Float
+		// Description: Utilizes the earth's magnetic field to levitate freely temporarily.
 	}
 }
 
