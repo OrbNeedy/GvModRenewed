@@ -13,6 +13,7 @@ using GvMod.Content.Buffs;
 using Terraria.Audio;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.DataStructures;
 
 namespace GvMod.Common.Players
 {
@@ -88,6 +89,7 @@ namespace GvMod.Common.Players
         /// </summary>
         public float SPRecoveryModifier { get; set; } = 1;
         // Skills will only have one key to activate it, and another key to select it quickly 
+        public float SPSaveChance { get; set; } = 0;
         public int SelectedSkill { get; set; } = 0;
         public int SecondarySkillCooldown { get; set; } = 0;
         // Flags for the dragon veins this player already visited
@@ -185,7 +187,10 @@ namespace GvMod.Common.Players
                             }, Player.Center);
                         }
                         UsingSpecialSkill = special.OnSkillUse(Player, this);
-                        CurrentSP -= special.SPCost;
+                        if (1 - SPSaveChance >= Main.rand.NextFloat())
+                        {
+                            CurrentSP -= special.SPCost;
+                        }
                         special.CooldownTime = special.MaxCooldownTime;
                     }
                 }
@@ -446,6 +451,12 @@ namespace GvMod.Common.Players
                 // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
                 if (septima.MainSkillUse(Player, this))
                 {
+                    for (int i = 0; i < TaggedNPCs.targetCount; i++)
+                    {
+                        Tag currentTag = TaggedNPCs.GetTagByIndex(i);
+                        int finalDamage = septima.TagEffect(Player, this, i, ref TaggedNPCs);
+                        TryTriggerTagLifesteal(finalDamage);
+                    }
                     CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
                     EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
                 }
@@ -459,6 +470,20 @@ namespace GvMod.Common.Players
                 {
                     EPCooldownTimer--;
                 }
+            }
+        }
+
+        public void TryTriggerTagLifesteal(int damage)
+        {
+            if (damage <= 0) return;
+
+            if (Player.GetModPlayer<PlayerBuffs>().LifeLoupe && Player.lifeSteal > 0)
+            {
+                int lifeDrain = (int)(damage * 0.05f);
+                if (lifeDrain <= 0) lifeDrain = 1;
+                Player.Heal(lifeDrain);
+
+                Player.lifeSteal -= lifeDrain;
             }
         }
 
@@ -647,6 +672,7 @@ namespace GvMod.Common.Players
             EPRecoveryModifier = 1;
             EPCooldownModifier = 1;
             SPRecoveryModifier = 1;
+            SPSaveChance = 0;
             OverheatRecoveryModifier = 1;
             PreviousDnizerState = DnizerMode;
             DnizerMode = false;

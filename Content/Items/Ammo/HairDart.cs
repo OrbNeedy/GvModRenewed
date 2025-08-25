@@ -14,7 +14,7 @@ namespace GvMod.Content.Items.Ammo
             Item.damage = 1;
             Item.DamageType = DamageClass.Default;
 
-            Item.maxStack = 9999;
+            Item.maxStack = Item.CommonMaxStack;
             Item.consumable = true;
             Item.knockBack = 2f;
             Item.value = Item.sellPrice(0, 0, 0, 10);

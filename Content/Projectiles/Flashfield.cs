@@ -60,6 +60,8 @@ namespace GvMod.Content.Projectiles
                 Volume = 0.25f
             }, Projectile.Center, StopSound);
             frame = Main.rand.Next(0, 4);
+
+            //Main.NewText("Spawn damage: " + Projectile.damage);
         }
 
         public override void AI()

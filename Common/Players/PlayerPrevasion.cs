@@ -9,7 +9,9 @@ namespace GvMod.Common.Players
 {
     public class PlayerPrevasion : ModPlayer
     {
+        public float PrevasionCostAvoidanceChance { get; set; } = 0;
         public float PrevasionCost { get; set; } = 0;
+        public float PrevasionCostModifier { get; set; } = 1;
         /// <summary>
         /// The maximum percent of damage relative to the player's max life that can be prevaded.
         /// <br/>If the damage is less than this plus <see cref="PrevasionDamageLimit"/>, it can be prevaded.
@@ -71,11 +73,17 @@ namespace GvMod.Common.Players
             {
                 //Main.NewText("Prevasion activated");
 
-                adept.CurrentEP -= MathHelper.Clamp(PrevasionCost * adept.GetTotalEPUseModifier(), 0, 
-                    adept.CurrentEP * 10);
-                if (adept.CurrentEP <= 0)
+                if (1 - PrevasionCostAvoidanceChance >= Main.rand.NextFloat())
                 {
-                    adept.ForceOverheat(ignoreBuffs: true);
+                    float finalEPCost = PrevasionCost * PrevasionCostModifier;
+                    
+                    if (finalEPCost < 0) finalEPCost = 0;
+
+                    adept.CurrentEP -= finalEPCost;
+                    if (adept.CurrentEP <= 0)
+                    {
+                        adept.ForceOverheat(ignoreBuffs: true);
+                    }
                 }
 
                 Player.immune = true;
@@ -115,6 +123,8 @@ namespace GvMod.Common.Players
 
             PrevasionLifeLimit = 0;
             PrevasionDamageLimit = 0;
+            PrevasionCostAvoidanceChance = 0;
+            PrevasionCostModifier = 1;
             base.ResetEffects();
         }
     }

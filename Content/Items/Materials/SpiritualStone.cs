@@ -1,4 +1,5 @@
-﻿using Terraria.ID;
+﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Materials
@@ -11,7 +12,7 @@ namespace GvMod.Content.Items.Materials
             ItemID.Sets.ItemNoGravity[Item.type] = true;
             Item.rare = ItemRarityID.LightRed;
 
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
         }
     }
 }

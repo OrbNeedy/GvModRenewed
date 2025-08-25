@@ -21,6 +21,8 @@ namespace GvMod.Common.Players
         public int ArmedPhenomenonStats { get; set; } = 0;
         public bool FreeFloat { get; set; } = false;
         public bool Reviberoptics { get; set; } = false;
+        public bool LifeLoupe { get; set; } = false;
+        public bool DilationReticles { get; set; } = false;
         private Vector2 flyingVelocity = Vector2.Zero;
         public SpecialWingEquip specialWingType = SpecialWingEquip.None;
         public List<WingDust> dustType = new List<WingDust>();
@@ -139,11 +141,8 @@ namespace GvMod.Common.Players
 
             if (Reviberoptics)
             {
-                if (!adept.Overheated)
-                {
-                    Player.lifeRegenTime += 2;
-                    Player.lifeRegen += 8;
-                }
+                Player.lifeRegenTime += 2;
+                Player.lifeRegen += 8;
             }
             base.UpdateLifeRegen();
         }
@@ -182,6 +181,8 @@ namespace GvMod.Common.Players
             ArmedPhenomenonStats = 0;
             FreeFloat = false;
             Reviberoptics = false;
+            DilationReticles = false;
+            LifeLoupe = false;
             flyingVelocity = Vector2.Zero;
             specialWingType = SpecialWingEquip.None;
             dustType.Clear();

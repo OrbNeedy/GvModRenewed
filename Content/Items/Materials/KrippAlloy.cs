@@ -1,5 +1,6 @@
 ﻿using GvMod.Common.Systems;
 using GvMod.Content.Tiles;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,7 +20,7 @@ namespace GvMod.Content.Items.Materials
             ItemID.Sets.SortingPriorityMaterials[Item.type] = 58;
             Item.DefaultToPlaceableTile(ModContent.TileType<KrippAlloyBar>());
 
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
         }
 
         public override void AddRecipes()

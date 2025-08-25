@@ -5,6 +5,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Accessories
@@ -12,6 +13,8 @@ namespace GvMod.Content.Items.Accessories
     [AutoloadEquip(EquipType.Wings)]
     public class LumenWings : ModItem
     {
+        private int damageReduction = 10;
+
         public override void SetStaticDefaults()
         {
             // These wings use the same values as the solar wings
@@ -24,9 +27,11 @@ namespace GvMod.Content.Items.Accessories
 
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.Yellow;
             Item.accessory = true;
         }
+
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageReduction);
 
         public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
             ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
@@ -53,6 +58,11 @@ namespace GvMod.Content.Items.Accessories
                 {
                     effects.specialWingType = SpecialWingEquip.Lumen;
                 }
+            }
+
+            if (player.GetModPlayer<ResurrectionPlayer>().resurrected)
+            {
+                player.endurance += damageReduction / 100f;
             }
             base.UpdateAccessory(player, hideVisual);
         }

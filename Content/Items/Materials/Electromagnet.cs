@@ -11,7 +11,7 @@ namespace GvMod.Content.Items.Materials
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.buyPrice(0, 0, 25, 15);
 
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
         }
     }
 }

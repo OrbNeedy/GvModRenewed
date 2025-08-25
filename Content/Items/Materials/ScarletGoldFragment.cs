@@ -11,7 +11,7 @@ namespace GvMod.Content.Items.Materials
         {
             Item.rare = ItemRarityID.Lime;
 
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
         }
 
         public override void PostUpdate()

@@ -51,10 +51,10 @@ namespace GvMod.Common.Players.Skills
         // knockback
         public override void NPCHitUpdate(Player player, SeptimaPlayer adept, NPC npc, ref Player.HurtModifiers modifiers)
         {
-            if (player.GetModPlayer<ResurrectionPlayer>().resurrectionTime >= 36000 && 
-                player.GetModPlayer<ResurrectionPlayer>().resurrected)
+            if (player.GetModPlayer<ResurrectionPlayer>().resurrected)
             {
                 modifiers.SourceDamage.Base = 1;
+                modifiers.SetMaxDamage(1);
                 modifiers.Knockback.Base = 0;
             }
             base.NPCHitUpdate(player, adept, npc, ref modifiers);
@@ -62,10 +62,10 @@ namespace GvMod.Common.Players.Skills
 
         public override void ProjectileHitUpdate(Player player, SeptimaPlayer adept, Projectile projectile, ref Player.HurtModifiers modifiers)
         {
-            if (player.GetModPlayer<ResurrectionPlayer>().resurrectionTime >= 36000 &&
-                player.GetModPlayer<ResurrectionPlayer>().resurrected)
+            if (player.GetModPlayer<ResurrectionPlayer>().resurrected)
             {
                 modifiers.SourceDamage.Base = 1;
+                modifiers.SetMaxDamage(1);
                 modifiers.Knockback.Base = 0;
             }
             base.ProjectileHitUpdate(player, adept, projectile, ref modifiers);

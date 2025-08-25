@@ -54,6 +54,18 @@ Items: {
 			principal de la septima por {0}%, pero aumenta el consumo de 
 			EP en {1}.
 			'''
+		/* TrueTooltip:
+			'''
+			A pair of glasses that increase damage dealt by the septima's 
+			main skill by {0}, but increases EP consumption by {1}.
+			Increases both main skill and EP consumption after defeating 
+			all mechanical bosses.
+			''' */
+		/* UpgradeTooltip:
+			'''
+			A pair of glasses that increase damage dealt by the septima's 
+			main skill by {0}, but increases EP consumption by {1}.
+			''' */
 	}
 
 	CapacityUpgrade: {
@@ -352,7 +364,13 @@ Items: {
 
 	DynamoEye: {
 		// DisplayName: Dynamo Eye
-		// Tooltip: Increases max EP by {0}.
+		// Tooltip: ""
+		/* TrueTooltip:
+			'''
+			Increases max EP by {0}.
+			Increases max EP after defeating the Wall of Flesh.
+			''' */
+		// UpgradeTooltip: Increases max EP by {0}.
 	}
 
 	OverflashPendant: {
@@ -471,32 +489,192 @@ Items: {
 
 	Reviberoptic: {
 		// DisplayName: Reviberoptic
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			Increases life regeneration, but decreases EP and Overheat 
+			recovery by {0}%.
+			''' */
 	}
 
 	ActinoBlancCrystal: {
 		// DisplayName: Actino Blanc Crystal
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			Blanc Cell atoms that were crystalized by a chlorophyte 
+			Extractinator.
+			''' */
 	}
 
 	BlancCells: {
 		// DisplayName: Blanc Cells
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			Special cells capable of producing large amounts of 
+			enegy.
+			''' */
 	}
 
 	PureBlancCells: {
 		// DisplayName: Pure Blanc Cells
-		// Tooltip: ""
+		/* Tooltip:
+			'''
+			Blanc cells with no impurities, capable of generating 
+			great energy when heated up.
+			''' */
 	}
 
 	MorphoWings: {
 		// DisplayName: Morpho Wings
-		// Tooltip: ""
+		// Tooltip: Wings of a fairy, torn by greed.
 	}
 
 	LumenWings: {
 		// DisplayName: Lumen Wings
+		/* Tooltip:
+			'''
+			Large wings that ressonate with the power of a muse.
+			While under the effects of anthem, increases damage reduction 
+			by {0}%.
+			''' */
+	}
+
+	AdmirersEye: {
+		// DisplayName: Admirer's Eye
 		// Tooltip: ""
+		/* TrueTooltip:
+			'''
+			Increases special skill damage by {0}%
+			Increased damage after defeating Plantera.
+			''' */
+		/* UpgradeTooltip:
+			'''
+			Increases special skill damage by {0}%
+			Further increases special skill damage by {1}% when under the 
+			effects of resurrection.
+			''' */
+	}
+
+	AdrenalineLens: {
+		// DisplayName: Adrenaline Lens
+		// Tooltip: When using a special skill, there is a {0}% chance to not spend SP.
+	}
+
+	DilationReticle: {
+		// DisplayName: Dilation Reticle
+		/* Tooltip:
+			'''
+			Greatly increases untagged damage and decreases tagged damage.
+			Damage still scales with modifiers.
+			''' */
+	}
+
+	LoversLens: {
+		// DisplayName: Lover's Lens
+		// Tooltip: ""
+		/* TrueTooltip:
+			'''
+			Increases main skill damage by {0}%
+			Increased damage after defeating Plantera.
+			''' */
+		/* UpgradeTooltip:
+			'''
+			Increases main skill damage by {0}%
+			Further increases main skill damage by {1}% when under the 
+			effects of resurrection.
+			''' */
+	}
+
+	RechargeLens: {
+		// DisplayName: Recharge Lens
+		// Tooltip: ""
+		/* TrueTooltip:
+			'''
+			Increases EP recovery rate by {0}%
+			Increased EP recovery after defeating Skeletron.
+			''' */
+		// UpgradeTooltip: Increases EP recovery rate by {0}%
+	}
+
+	RecirculatorLens: {
+		// DisplayName: Recirculator Lens
+		// Tooltip: ""
+		/* TrueTooltip:
+			'''
+			Adds a {0}% chance to prevade without using EP.
+			Does not provide prevasion.
+			Chance increases after defeating all mechanical bosses.
+			''' */
+		/* UpgradeTooltip:
+			'''
+			Adds a {0}% chance to prevade without using EP.
+			Does not provide prevasion.
+			''' */
+	}
+
+	SeerSpecs: {
+		// DisplayName: Seer Specs
+		/* Tooltip:
+			'''
+			Decreases prevasion cost by {0}%.
+			Does not provide prevasion.
+			''' */
+	}
+
+	SweepersLens: {
+		// DisplayName: Sweeper's Lens
+		// Tooltip: ""
+		/* TrueTooltip:
+			'''
+			Increases secondary skill damage by {0}%
+			Increased damage after defeating Plantera.
+			''' */
+		/* UpgradeTooltip:
+			'''
+			Increases secondary skill damage by {0}%
+			Further increases secondary skill damage by {1}% when under the 
+			effects of resurrection.
+			''' */
+	}
+
+	VanishingSpecs: {
+		// DisplayName: Vanishing Specs
+		/* Tooltip:
+			'''
+			Has a chance of {0}% of not consuming EP when prevading.
+			Decreases EP use when prevading by {1}%.
+			Does not provide prevasion.
+			It feels like wearing a ghost.
+			''' */
+	}
+
+	VigorLens: {
+		// DisplayName: Vigor Lens
+		/* Tooltip:
+			'''
+			Increases SP recovery by {0}%, but reduces EP recovery and 
+			overheat recovery by {1}%, also increases the time it 
+			takes to begin EP recovery by {1}%.
+			''' */
+	}
+
+	HighPerformanceNcGbx: {
+		// DisplayName: High Performance Nc Gbx
+		// Tooltip: ""
+	}
+
+	Nanochip98: {
+		// DisplayName: Nanochip98
+		// Tooltip: ""
+	}
+
+	LifeLoupe: {
+		// DisplayName: Life Loupe
+		/* Tooltip:
+			'''
+			Tag damage steals life, but increases EP use and decreases main attack 
+			damage by {0}%, also increases the time it takes to begin EP recovery 
+			by {1}%.
+			''' */
 	}
 }
 
@@ -583,7 +761,7 @@ Buffs: {
 
 	GFreeBuff: {
 		// DisplayName: G Free Buff
-		// Description: Mods.GvMod.Buffs.GFreeBuff.Description
+		// Description: You can fly through the air uninterrupted.
 	}
 }
 

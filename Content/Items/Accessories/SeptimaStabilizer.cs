@@ -19,10 +19,8 @@ namespace GvMod.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            float epBonus = epModifier / 100f;
-            float recoveryBonus = recoveryModifier / 100f;
-            player.GetModPlayer<SeptimaPlayer>().EPUseModifier -= epBonus;
-            player.GetModPlayer<SeptimaPlayer>().EPRecoveryModifier += recoveryBonus;
+            player.GetModPlayer<SeptimaPlayer>().EPUseModifier -= epModifier / 100f;
+            player.GetModPlayer<SeptimaPlayer>().EPRecoveryModifier += recoveryModifier / 100f;
         }
     }
 }

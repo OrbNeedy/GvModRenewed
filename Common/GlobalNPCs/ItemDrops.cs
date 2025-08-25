@@ -45,7 +45,7 @@ namespace GvMod.Common.GlobalNPCs
             // Skeletons
             if (NPCID.Sets.Skeletons[npc.type])
             {
-                npcLoot.Add(ItemDropRule.ByCondition(new AfterPlanteraDropCondition(), 
+                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), 
                     ModContent.ItemType<Stage4Upgrade>(), 38, 2, 12));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BlancCells>(), 28, 1, 6));
             }
@@ -116,12 +116,17 @@ namespace GvMod.Common.GlobalNPCs
                 // Non-bosses
                 case NPCID.Ghost:
                 case NPCID.Poltergeist:
-                    npcLoot.Add(ItemDropRule.ByCondition(new AfterPlanteraDropCondition(), 
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), 
                         ModContent.ItemType<Stage4Upgrade>(), 25, 5, 20));
                     break;
                 case NPCID.GoblinWarrior:
                 case NPCID.GoblinPeon:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SeptimaStabilizer>(), 60));
+                    break;
+                case NPCID.GoblinScout:
+                case NPCID.GoblinThief:
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(),
+                        ModContent.ItemType<HighPerformanceNcGbx>(), 45));
                     break;
                 case NPCID.Lihzahrd:
                 case NPCID.LihzahrdCrawler:

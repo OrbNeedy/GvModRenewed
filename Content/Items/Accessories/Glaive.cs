@@ -10,7 +10,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 
 namespace GvMod.Content.Items.Accessories
 {
@@ -132,16 +131,7 @@ namespace GvMod.Content.Items.Accessories
                 .AddIngredient(ItemID.HellstoneBar, 7)
                 .AddIngredient(ItemID.IronBroadsword)
                 .AddIngredient<SpiritualStone>(15)
-                .AddIngredient<Stage1Upgrade>()
-                .AddTile(TileID.Anvils)
-                .AddTile(TileID.Hellforge)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.HellstoneBar, 7)
-                .AddIngredient(ItemID.LeadBroadsword)
-                .AddIngredient<SpiritualStone>(15)
-                .AddIngredient<Stage1Upgrade>()
+                .AddIngredient<BlancCells>(20)
                 .AddTile(TileID.Anvils)
                 .AddTile(TileID.Hellforge)
                 .Register();

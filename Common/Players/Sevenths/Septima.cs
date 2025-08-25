@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GvMod.Common.Players.Skills;
+using GvMod.Common.Utils;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace GvMod.Common.Players.Sevenths
 {
@@ -26,9 +27,7 @@ namespace GvMod.Common.Players.Sevenths
     {
         // Base values
         public virtual float BaseBasicAttackDamage { get; protected set; } = 0;
-        public virtual float BasicAttackDamage { get; protected set; } = 0;
         public virtual float BaseSecondaryAttackDamage { get; protected set; } = 0;
-        public virtual float SecondaryAttackDamage { get; protected set; } = 0;
         public virtual List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill() };
         public virtual List<SpecialSkill> AvailableSkills { get; protected set; } = new();
         public virtual float EPUseBase { get; protected set; } = 0;
@@ -128,6 +127,19 @@ namespace GvMod.Common.Players.Sevenths
         public virtual bool MainSkillUse(Player player, SeptimaPlayer adept)
         {
             return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <param name="index"></param>
+        /// <param name="tags"></param>
+        /// <returns>The damage dealt by the tag attack.</returns>
+        public virtual int TagEffect(Player player, SeptimaPlayer adept, int index, ref NPCTags tags)
+        {
+            return 0;
         }
 
         public virtual bool CanUseSecondarySkill(Player player, SeptimaPlayer adept)
@@ -240,6 +252,59 @@ namespace GvMod.Common.Players.Sevenths
         public virtual void ItemUse(Player player, SeptimaPlayer adept, Item item)
         {
 
+        }
+
+        public virtual float GetBasicSkillPower(Player player, SeptimaPlayer adept)
+        {
+            return BaseBasicAttackDamage;
+        }
+
+        public virtual float GetTagSkillPower(Player player, SeptimaPlayer adept, Tag tag, int tagCount)
+        {
+            return BaseBasicAttackDamage;
+        }
+
+        public virtual float GetSecondarySkillPower(Player player, SeptimaPlayer adept)
+        {
+            return BaseSecondaryAttackDamage;
+        }
+
+        // Essentially a duplicate of Player.ApplyDamageToNPC, but returns the final damage
+        public static int ApplyDamageToNPCAndReturnFinalDamage(Player player, NPC npc, int damage, 
+            float knockback, int direction, bool crit = false, DamageClass? damageType = null, 
+            bool damageVariation = false)
+        {
+            if (!PlayerLoader.CanHitNPC(player, npc))
+                return 0;
+
+            var modifiers = npc.GetIncomingStrikeModifiers(damageType ?? DamageClass.Default, 0);
+            PlayerLoader.ModifyHitNPC(player, npc, ref modifiers);
+
+            player.ApplyBannerOffenseBuff(npc, ref modifiers);
+
+            modifiers.ArmorPenetration += player.GetTotalArmorPenetration(damageType ?? DamageClass.Generic);
+
+            player.OnHit(npc.Center.X, npc.Center.Y, npc);
+            
+            NPCKillAttempt attempt = new NPCKillAttempt(npc);
+            NPC.HitInfo hit = modifiers.ToHitInfo(damage, crit, knockback, damageVariation, player.luck);
+            int dmg = npc.StrikeNPC(hit);
+            PlayerLoader.OnHitNPC(player, npc, hit, dmg);
+
+            if (player.accDreamCatcher && !npc.HideStrikeDamage)
+                player.addDPS(dmg);
+
+            if (Main.netMode != NetmodeID.SinglePlayer)
+                NetMessage.SendStrikeNPC(npc, hit);
+
+            int num2 = Item.NPCtoBanner(npc.BannerID());
+            if (num2 >= 0)
+                player.lastCreatureHit = num2;
+
+            if (attempt.DidNPCDie())
+                player.OnKillNPC(ref attempt, null);
+
+            return dmg;
         }
     }
 

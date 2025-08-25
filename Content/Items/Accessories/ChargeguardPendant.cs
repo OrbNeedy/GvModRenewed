@@ -13,6 +13,7 @@ namespace GvMod.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.accessory = true;
+            Item.defense += 2;
 
             Item.rare = ItemRarityID.Lime;
         }

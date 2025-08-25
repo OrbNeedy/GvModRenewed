@@ -33,7 +33,7 @@ namespace GvMod.Common.GlobalPlayers
                     Request<Texture2D>($"GvMod/Assets/Effects/{resurrection.type.ToString()}");
             Vector2 boundSize = new Vector2(82, 82);
             Vector2 offset = new Vector2(0, -10);
-            int maxFrames = 5;
+            int maxFrames = 4;
 
             switch (resurrection.type)
             {
@@ -42,6 +42,11 @@ namespace GvMod.Common.GlobalPlayers
                     boundSize = new Vector2(82, 82);
                     offset = new Vector2(0, -10);
                     maxFrames = 4;
+                    // Special visual effect when combined with Septimal Surge, has no gameplay effect
+                    if (player.HasBuff<SeptimalSurgeBuff>())
+                    {
+                        aura = ModContent.Request<Texture2D>($"GvMod/Assets/Effects/Muse");
+                    }
                     break;
             }
 
@@ -60,7 +65,7 @@ namespace GvMod.Common.GlobalPlayers
                 aura.Value,
                 player.MountedCenter - Main.screenPosition + offset,
                 new Rectangle(0, (int)(boundSize.Y * frame), (int)boundSize.X, (int)boundSize.Y),
-                Color.White * 0.5f,
+                Color.White * 0.45f,
                 0,
                 boundSize / 2,
                 1f,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GvMod.Common.GlobalNPCs;
 using GvMod.Common.Players.Skills;
+using GvMod.Common.Utils;
 using GvMod.Content;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
@@ -31,18 +32,16 @@ namespace GvMod.Common.Players.Sevenths
         public int ArmedPhenomenonClawCooldown = 0;
 
         public override float BaseBasicAttackDamage { get; protected set; } = 5;
-        public override float BasicAttackDamage { get; protected set; } = 5;
         public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
-        public override float SecondaryAttackDamage { get; protected set; } = 20;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains(), new AlchemicalField(), 
             new InfiniteSurge(), new GalvanicRenewal(), new SeptimalBurst(), new SeptimalShield(), 
             new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere(), new GFree()
         };
         public override float EPUseBase { get; protected set; } = 0.75f;
-        public override float EPRecoveryBaseRate { get; protected set; } = 0.006666f;
+        public override float EPRecoveryBaseRate { get; protected set; } = 0.004761904762f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
-        public override float OverheatRecoveryBaseRate { get; protected set; } = 0.003333f;
+        public override float OverheatRecoveryBaseRate { get; protected set; } = 0.002380952381f;
         public override float SPRecoveryBaseRate { get; protected set; } = 0.000185f;
         public override int PrevasionEPCooldownBaseTimer { get; protected set; } = 90;
 
@@ -145,8 +144,6 @@ namespace GvMod.Common.Players.Sevenths
 
             AllowPrevasion = !activeFlashfield;
 
-            BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
-
             if (ArmedPhenomenonClawCooldown > 0)
             {
                 ArmedPhenomenonClawCooldown--;
@@ -179,21 +176,28 @@ namespace GvMod.Common.Players.Sevenths
                 }
             }
 
+            if (adept.MainSkillUseTime <= 0)
+            {
+                adept.CurrentEP -= adept.GetTotalMaxEP() * 0.08f * adept.GetTotalEPUseModifier();
+            }
+
             if ((!activeFlashfield || flashfieldIndex == -1) && Main.myPlayer == player.whoAmI)
             {
                 if (adept.DnizerMode)
                 {
-                    float adjustedDamage = BasicAttackDamage + (adept.Stage * 2);
                     int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
-                        ApplyTo(adjustedDamage);
+                        ApplyTo(GetBasicSkillPower(player, adept));
                     flashfieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"),
                         player.Center, Vector2.Zero, ModContent.ProjectileType<FlashphereProjectile>(), 
                         finalDamage, 3, player.whoAmI, (int)AstraspheredBehavior.Follow);
                 } else
                 {
+                    int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
+                        ApplyTo(GetBasicSkillPower(player, adept));
                     flashfieldIndex = Projectile.NewProjectile(player.GetSource_FromThis("Septima"),
-                        player.Center, Vector2.Zero, ModContent.ProjectileType<Flashfield>(), 1, 0,
+                        player.Center, Vector2.Zero, ModContent.ProjectileType<Flashfield>(), finalDamage, 0,
                         player.whoAmI);
+                    // Main.NewText("Damage applied: " + finalDamage);
                 }
             }
 
@@ -226,9 +230,8 @@ namespace GvMod.Common.Players.Sevenths
 
                     if ((!flag || index == -1) && Main.myPlayer == player.whoAmI && activeFlashfield)
                     {
-                        float adjustedDamage = BasicAttackDamage + (adept.Stage * 2);
                         int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
-                            ApplyTo(adjustedDamage);
+                            ApplyTo(GetBasicSkillPower(player, adept));
                         index = spheresIndexes[i] = Projectile.NewProjectile(
                             player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero, 
                             ModContent.ProjectileType<AstrasphereOrbits>(), finalDamage, 3, player.whoAmI, 
@@ -241,7 +244,7 @@ namespace GvMod.Common.Players.Sevenths
 
                     if (activeSpheres[i])
                     {
-                        Main.NewText("Asserting time for sphere " + activeSpheres[i]);
+                        // Main.NewText("Asserting time for sphere " + activeSpheres[i]);
                         sphere.timeLeft = 6;
                         sphere.friendly = true;
                         sphere.hostile = false;
@@ -258,45 +261,46 @@ namespace GvMod.Common.Players.Sevenths
             }
             player.fallStart = (int)player.Center.Y;
 
+            return true;
+        }
+
+        public override int TagEffect(Player player, SeptimaPlayer adept, int index, ref NPCTags tags)
+        {
+            Tag tag = tags.GetTagByIndex(index);
             float knockback = 0;
             if (adept.MainSkillUseTime <= 0)
             {
-                adept.CurrentEP -= adept.GetTotalMaxEP() * 0.08f * adept.GetTotalEPUseModifier();
                 knockback = 2.5f;
             }
 
-            //Main.NewText("Main Skill: " + adept.MainSkillUseTime);
-            // Deal damage to tagged NPCs
-            // TODO: Move this loop to the septima player with a method for the septima to use 
-            for (int i = 0; i < adept.TaggedNPCs.targetCount; i++)
+            // Tell the taggedNPC to show damage effects
+            NPC target = Main.npc[tag.targetIndex];
+            target.GetGlobalNPC<TagNPC>().attacked = true;
+            target.GetGlobalNPC<TagNPC>().framesUntilReset = 2;
+
+            if (tag.damageTimer > 0) return 0;
+
+            // Damage gets reduced if the player has too many tags
+            int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
+                ApplyTo(GetTagSkillPower(player, adept, tag, adept.TaggedNPCs.targetCount));
+            int direction = 1;
+            if ((target.Center.X - player.Center.X) < 0)
             {
-                // Tell the taggedNPC to show damage effects
-                NPC target = Main.npc[adept.TaggedNPCs.taggedTargets[i]];
-                target.GetGlobalNPC<TagNPC>().attacked = true;
-                target.GetGlobalNPC<TagNPC>().framesUntilReset = 2;
-
-                if (adept.TaggedNPCs.damageTimer[i] > 0) continue;
-
-                // Damage gets reduced if the player has too many tags
-                float adjustedDamage = BasicAttackDamage * (1f + (adept.TaggedNPCs.tagLevel[i] * 0.625f))
-                    / (1 + (adept.TaggedNPCs.targetCount * 0.05f));
-                int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
-                    ApplyTo(adjustedDamage);
-                int direction = 1;
-                if ((target.Center.X - player.Center.X) < 0)
-                {
-                    direction = -1;
-                }
-
-                bool crit = player.GetTotalCritChance<SpecialAttackDamage>() < Main.rand.NextFloat();
-                player.ApplyDamageToNPC(target, finalDamage, knockback, direction, crit, 
-                    ModContent.GetInstance<MainAttackDamage>(), true);
-                // player.Hurt(new PlayerDeathReason(), finalDamage, direction, true, dodgeable: false);
-
-                adept.TaggedNPCs.damageTimer[i] = 10;
+                direction = -1;
             }
 
-            return true;
+            bool crit = player.GetTotalCritChance<MainAttackDamage>() < Main.rand.NextFloat();
+            /*player.ApplyDamageToNPC(target, finalDamage, knockback, direction, crit,
+                ModContent.GetInstance<MainAttackDamage>(), true);*/
+            int returnDamage = ApplyDamageToNPCAndReturnFinalDamage(player, target, finalDamage, knockback, 
+                direction, crit, ModContent.GetInstance<MainAttackDamage>(), true);
+            // player.Hurt(new PlayerDeathReason(), finalDamage, direction, true, dodgeable: false);
+            if (returnDamage > 0)
+            {
+                tags.damageTimer[index] = 10;
+            }
+
+            return returnDamage;
         }
 
         public override int SecondarySkillUse(Player player, SeptimaPlayer adept)
@@ -310,7 +314,7 @@ namespace GvMod.Common.Players.Sevenths
                 }, player.Center);
 
                 int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
-                    ApplyTo(38 + adept.Stage * 2);
+                    ApplyTo(GetSecondarySkillPower(player, adept));
                 Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero, 
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }
@@ -319,7 +323,6 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void OnLevelUp(Player player, SeptimaPlayer adept)
         {
-            BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f) + ((int)(adept.Stage / 5) * 20);
             base.OnLevelUp(player, adept);
         }
 
@@ -335,7 +338,8 @@ namespace GvMod.Common.Players.Sevenths
                 for (int i = 0; i < adept.TaggedNPCs.targetCount; i++)
                 {
                     if (i > 9) break;
-                    NPC target = Main.npc[adept.TaggedNPCs.taggedTargets[i]];
+                    Tag currentTag = adept.TaggedNPCs.GetTagByIndex(i);
+                    NPC target = Main.npc[currentTag.targetIndex];
                     float totalDistance = player.Center.Distance(target.Center);
                     Vector2 baseDirection = new Vector2(0, -1).
                         RotatedBy((MathHelper.TwoPi / adept.TaggedNPCs.targetCount * i));
@@ -399,7 +403,7 @@ namespace GvMod.Common.Players.Sevenths
                 Vector2 offset = new Vector2(120 * i, 0);
                 int delay = 6 * Math.Abs(i);
                 int finalDamage = (int)player.GetTotalDamage<SecondaryAttackDamage>().
-                    ApplyTo(22 + adept.Stage * 2);
+                    ApplyTo(GetSecondarySkillPower(player, adept));
                 Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center - offset,
                     Vector2.Zero, ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 
                     delay);
@@ -478,6 +482,55 @@ namespace GvMod.Common.Players.Sevenths
             {
                 adept.SPRecoveryModifier += 0.1f;
             }
+        }
+
+        public override float GetBasicSkillPower(Player player, SeptimaPlayer adept)
+        {
+            float returnValue = 1;
+            if (adept.DnizerMode)
+            {
+                returnValue += BaseBasicAttackDamage + (adept.Stage * 2) + (adept.Level * 0.25f);
+            }
+            if (player.GetModPlayer<PlayerBuffs>().DilationReticles)
+            {
+                if (adept.DnizerMode)
+                {
+                    returnValue *= 1.25f;
+                } else
+                {
+                    float stageDamage = adept.Stage * 2;
+                    float levelDamage = adept.Level * 0.25f;
+                    /*Main.NewText("Base damage: " + BaseBasicAttackDamage);
+                    Main.NewText("Stage damage: " + stageDamage);
+                    Main.NewText("Level damage: " + levelDamage);
+                    Main.NewText("Septima Damage Modifier: " + 
+                        player.GetDamage<SeptimaDamage>().Additive);
+                    Main.NewText("Main Damage Modifier: " +
+                        player.GetDamage<MainAttackDamage>().Additive);*/
+                    returnValue = BaseBasicAttackDamage + stageDamage + levelDamage;
+                    //Main.NewText("Final damage: " + returnValue);
+                }
+            }
+            
+            return returnValue;
+        }
+
+        public override float GetTagSkillPower(Player player, SeptimaPlayer adept, Tag tag, int tagCount)
+        {
+            float returnValue = BaseBasicAttackDamage * 
+                (1f + (tag.tagLevel * 0.625f)) / 
+                (1 + (tagCount * 0.025f));
+            if (player.GetModPlayer<PlayerBuffs>().DilationReticles)
+            {
+                returnValue *= 0.75f;
+            }
+            return returnValue;
+        }
+
+        public override float GetSecondarySkillPower(Player player, SeptimaPlayer adept)
+        {
+            float returnValue = 12 + adept.Stage * 2;
+            return returnValue;
         }
     }
 }

@@ -35,6 +35,7 @@ namespace GvMod.Common.Utils
         public List<int> tagTimer { get; private set; } = new();
         // Damage timer, specific time depends on the septima
         public List<int> damageTimer { get; private set; } = new();
+        public List<int> deletionQueue { get; private set; } = new();
 
         public void Update(SeptimaPlayer adept)
         {
@@ -69,6 +70,14 @@ namespace GvMod.Common.Utils
                         target.GetGlobalNPC<TagNPC>().lastTagType = TagType.AzureStriker;
                         break;
                 }
+            }
+
+            // Say a prayer for me 
+            for (int i = 0; i < deletionQueue.Count; i++)
+            {
+                RemoveTag(deletionQueue[i]);
+                deletionQueue.RemoveAt(i);
+                i--;
             }
         }
 
@@ -106,16 +115,33 @@ namespace GvMod.Common.Utils
             targetCount++;
         }
 
-        public Tag GetTag(int index)
+        public Tag GetTag(int npcIndex)
         {
             for (int i = 0; i < targetCount; i++)
             {
-                if (taggedTargets[i] == index)
+                if (taggedTargets[i] == npcIndex)
                 {
                     return new Tag(taggedTargets[i], tagLevel[i], tagTimer[i], damageTimer[i]);
                 }
             }
             return new Tag(-1, -1, -1, -1);
+        }
+
+        public Tag GetTagByIndex(int index)
+        {
+            if (targetCount > index)
+            {
+                return new Tag(taggedTargets[index], tagLevel[index], tagTimer[index], damageTimer[index]);
+            }
+            return new Tag(-1, -1, -1, -1);
+        }
+
+        public void QueueTagDeletion(int index)
+        {
+            if (targetCount > index)
+            {
+                deletionQueue.Add(index);
+            }
         }
     }
 }

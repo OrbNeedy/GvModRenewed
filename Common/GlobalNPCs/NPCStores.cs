@@ -9,9 +9,18 @@ namespace GvMod.Common.GlobalNPCs
     {
         public override void ModifyShop(NPCShop shop)
         {
-            if (shop.NpcType == NPCID.Mechanic)
+            switch (shop.NpcType)
             {
-                shop.Add<Electromagnet>(Condition.DownedMechBossAll);
+                case NPCID.Mechanic:
+                    shop.Add<Electromagnet>(Condition.DownedMechBossAll);
+                    shop.Add<HighPerformanceNcGbx>(Condition.DownedGoblinArmy, Condition.Hardmode);
+                    break;
+                case NPCID.Merchant:
+                    shop.Add<Nanochip98>(Condition.DownedEyeOfCthulhu);
+                    break;
+                case NPCID.GoblinTinkerer:
+                    shop.Add<HighPerformanceNcGbx>(Condition.Hardmode);
+                    break;
             }
             base.ModifyShop(shop);
         }
