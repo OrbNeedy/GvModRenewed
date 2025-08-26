@@ -46,6 +46,7 @@ namespace GvMod.Content.Items.Armor.ModernQuill
 
         public override void UpdateArmorSet(Player player)
         {
+            player.setBonus = SetBonusText.Value;
             player.GetModPlayer<ResurrectionPlayer>().resurrectionPower += 1f;
             player.GetModPlayer<ResurrectionPlayer>().canResurrect = true;
 

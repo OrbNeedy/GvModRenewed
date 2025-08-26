@@ -57,14 +57,14 @@ Items: {
 		/* TrueTooltip:
 			'''
 			A pair of glasses that increase damage dealt by the septima's 
-			main skill by {0}, but increases EP consumption by {1}.
+			main skill by {0}%, but increases EP consumption by {1}%.
 			Increases both main skill and EP consumption after defeating 
 			all mechanical bosses.
 			''' */
 		/* UpgradeTooltip:
 			'''
 			A pair of glasses that increase damage dealt by the septima's 
-			main skill by {0}, but increases EP consumption by {1}.
+			main skill by {0}%, but increases EP consumption by {1}%.
 			''' */
 	}
 
@@ -659,12 +659,12 @@ Items: {
 
 	HighPerformanceNcGbx: {
 		// DisplayName: High Performance Nc Gbx
-		// Tooltip: ""
+		// Tooltip: A High-performance nanochip made with goblin technology.
 	}
 
 	Nanochip98: {
 		// DisplayName: Nanochip98
-		// Tooltip: ""
+		// Tooltip: A nanochip in common circulation.
 	}
 
 	LifeLoupe: {

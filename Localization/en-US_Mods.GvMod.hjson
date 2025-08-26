@@ -653,12 +653,12 @@ Items: {
 
 	HighPerformanceNcGbx: {
 		DisplayName: High Performance Nc Gbx
-		Tooltip: "A High-performance nanochip made with goblin technology."
+		Tooltip: A High-performance nanochip made with goblin technology.
 	}
 
 	Nanochip98: {
 		DisplayName: Nanochip98
-		Tooltip: "A nanochip in common circulation."
+		Tooltip: A nanochip in common circulation.
 	}
 
 	LifeLoupe: {
