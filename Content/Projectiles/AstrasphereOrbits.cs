@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -10,6 +11,7 @@ namespace GvMod.Content.Projectiles
     public enum OrbitsBehavior
     {
         Default, 
+        Launch,
         Spread
     }
 
@@ -18,6 +20,8 @@ namespace GvMod.Content.Projectiles
         private int fieldIndex { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         private float baseRotation { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
         private int behavior { get => (int)Projectile.ai[2]; set => Projectile.ai[2] = value; }
+        private Vector2 target = Vector2.Zero;
+        private int distance = 122;
 
         private int frame = 0;
         private int frameTimer = 0;
@@ -48,28 +52,55 @@ namespace GvMod.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
+            target = Projectile.Center;
             Projectile.Center = Projectile.Center + new Vector2(0, 122).RotatedBy(baseRotation);
+            switch (behavior)
+            {
+                case (int)OrbitsBehavior.Launch:
+                    Projectile.timeLeft += 100;
+                    break;
+                case (int)OrbitsBehavior.Spread:
+                    Projectile.timeLeft += 200;
+                    break;
+            }
+
+            Projectile.netUpdate = true;
             base.OnSpawn(source);
+        }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(target);
+            writer.Write7BitEncodedInt(distance);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            target = reader.ReadVector2();
+            distance = reader.Read7BitEncodedInt();
+            base.ReceiveExtraAI(reader);
         }
 
         public override void AI()
         {
-            Vector2 target = Vector2.Zero;
-
             if (Main.myPlayer == Projectile.owner)
             {
-                if (fieldIndex > 0)
-                {
+                if (fieldIndex >= 0)
+                {   
                     Projectile targetField = Main.projectile[fieldIndex];
                     if (targetField.active && targetField.owner == Projectile.owner &&
-                        (targetField.ModProjectile is AstrasphereProjectile || 
+                        (targetField.ModProjectile is AstrasphereProjectile ||
                         targetField.ModProjectile is FlashphereProjectile))
                     {
                         target = targetField.Center;
                     }
+                    else if (behavior == (int)OrbitsBehavior.Spread)
+                    {
+                        distance += 6;
+                    }
                 }
-                target = Main.projectile[fieldIndex].Center;
-                Projectile.Center = target + new Vector2(0, 122).RotatedBy(baseRotation);
+                Projectile.Center = target + new Vector2(0, distance).RotatedBy(baseRotation);
                 Projectile.netUpdate = true;
             }
 

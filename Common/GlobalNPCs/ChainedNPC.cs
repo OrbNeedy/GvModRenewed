@@ -21,6 +21,16 @@ namespace GvMod.Common.GlobalNPCs
             Pierced = bitReader.ReadBit();
         }
 
+        public override bool CanHitNPC(NPC npc, NPC target)
+        {
+            return base.CanHitNPC(npc, target) && Pierced;
+        }
+
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
+        {
+            return base.CanHitPlayer(npc, target, ref cooldownSlot) && Pierced;
+        }
+
         public override bool PreAI(NPC npc)
         {
             if (Pierced)

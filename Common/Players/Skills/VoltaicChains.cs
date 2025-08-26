@@ -27,6 +27,7 @@ namespace GvMod.Common.Players.Skills
         private int BaseChainWaitTimer { get; set; } = 0;
         private List<Projectile> ReleasedChains = new();
         private bool EarlyCancel { get; set; } = false;
+        private float initialPower = 0;
 
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
@@ -49,6 +50,9 @@ namespace GvMod.Common.Players.Skills
             BaseChainWaitTimer = ChainWaitTimer = (ChainsLeft * BaseChainReleaseTimer) + 
                 (int)VoltaicChainProjectile.MoveTime + 8;
             BaseChainWaitTimer += ElectrocutionTimer;
+
+            initialPower = player.GetModPlayer<ResurrectionPlayer>().resurrectionPower;
+
             EarlyCancel = false;
             return true;
         }
@@ -72,8 +76,8 @@ namespace GvMod.Common.Players.Skills
                 (Vector2, Vector2) chainInfo = ChainGeneration.GetPositionAndSpeed(player.Center, radius: 1200, 
                     VoltaicChainProjectile.MoveTime);
                 ReleasedChains.Add(Projectile.NewProjectileDirect(player.GetSource_FromThis("Septima"), 
-                    chainInfo.Item1, chainInfo.Item2, ModContent.ProjectileType<VoltaicChainProjectile>(), finalDamage, 
-                    4.25f, player.whoAmI, ElectrocutionTimer, ChainWaitTimer));
+                    chainInfo.Item1, chainInfo.Item2, ModContent.ProjectileType<VoltaicChainProjectile>(), 
+                    finalDamage, 4.25f, player.whoAmI, ElectrocutionTimer, ChainWaitTimer));
                 ChainReleaseTimer = 0;
                 ChainsLeft--;
             }
@@ -122,6 +126,22 @@ namespace GvMod.Common.Players.Skills
             //Main.NewText("Time elapsed: " + adept.SpecialSkillUseTime);
             //Main.NewText("Time limit: " + BaseChainWaitTimer);
             //Main.NewText("Cancel: " + EarlyCancel);
+
+            if (adept.SpecialSkillUseTime == BaseChainWaitTimer)
+            {
+                for (int i = -1; i < 2; i++)
+                {
+                    float baseDamage = 65 + (5 * adept.Stage);
+                    int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
+                    Projectile.NewProjectileDirect(player.GetSource_FromThis("Septima"),
+                        new Vector2(Main.MouseWorld.X + (100 * i), player.Center.Y), Vector2.Zero,
+                        ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 15);
+                }
+            }
+
+            if (initialPower >= 3) return adept.SpecialSkillUseTime < BaseChainWaitTimer + 60;
+
+            if (initialPower >= 2) return adept.SpecialSkillUseTime < BaseChainWaitTimer + 60 && !EarlyCancel;
 
             return adept.SpecialSkillUseTime < BaseChainWaitTimer && !EarlyCancel;
         }

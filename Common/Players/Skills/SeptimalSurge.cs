@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GvMod.Content.Buffs;
+﻿using GvMod.Content.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
@@ -27,6 +22,11 @@ namespace GvMod.Common.Players.Skills
 
         public override void StatUpdate(Player player, SeptimaPlayer adept)
         {
+            if (player.GetModPlayer<ResurrectionPlayer>().resurrected)
+            {
+                player.noKnockback = true;
+                player.endurance += 1f;
+            }
             base.StatUpdate(player, adept);
         }
 
@@ -55,7 +55,6 @@ namespace GvMod.Common.Players.Skills
             {
                 modifiers.SourceDamage.Base = 1;
                 modifiers.SetMaxDamage(1);
-                modifiers.Knockback.Base = 0;
             }
             base.NPCHitUpdate(player, adept, npc, ref modifiers);
         }
@@ -66,7 +65,6 @@ namespace GvMod.Common.Players.Skills
             {
                 modifiers.SourceDamage.Base = 1;
                 modifiers.SetMaxDamage(1);
-                modifiers.Knockback.Base = 0;
             }
             base.ProjectileHitUpdate(player, adept, projectile, ref modifiers);
         }

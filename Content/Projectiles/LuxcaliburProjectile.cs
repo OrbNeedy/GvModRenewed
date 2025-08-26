@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -21,6 +23,7 @@ namespace GvMod.Content.Projectiles
         private int timer = 0;
         private int cycle = 0;
         private Asset<Texture2D> field;
+        private List<float[]> oldPositions = new List<float[]>();
         private Asset<Texture2D> extras;
         private float extrasRotation = 0;
 
@@ -67,6 +70,11 @@ namespace GvMod.Content.Projectiles
 
             switch (Behavior)
             {
+                case (int)LuxcaliburBehavior.Launch:
+                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/LuxcaliburProjectile");
+                    Projectile.timeLeft += 120;
+                    Projectile.netUpdate = true;
+                    break;
                 default:
                     field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/LuxcaliburProjectile");
                     Projectile.netUpdate = true;
@@ -76,11 +84,51 @@ namespace GvMod.Content.Projectiles
             timer++;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write7BitEncodedInt(cycle);
+            writer.Write7BitEncodedInt(timer);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            cycle = reader.Read7BitEncodedInt();
+            timer = reader.Read7BitEncodedInt();
+            base.ReceiveExtraAI(reader);
+        }
+
         public override void AI()
         {
             //Main.NewText("Speed: " + Projectile.velocity.Length());
             switch (Behavior)
             {
+                case (int)LuxcaliburBehavior.Launch:
+                    if (cycle == 0)
+                    {
+                        if (Projectile.velocity.Length() > 0.001f)
+                        {
+                            Projectile.velocity *= 0.8f;
+                        }
+                        if (timer >= 75) 
+                        {
+                            timer = 0;
+                            cycle++;
+                            Projectile.velocity = Vector2.Normalize(Projectile.velocity) * 6;
+                        }
+                    } else
+                    {
+                        if (Projectile.velocity.Length() < 16f)
+                        {
+                            Projectile.velocity += Vector2.Normalize(Projectile.velocity) * 0.25f;
+                        }
+                        if (timer%6 == 0 || timer == 0)
+                        {
+                            oldPositions.Add([Projectile.Center.X, Projectile.Center.Y, 1, 
+                                Projectile.rotation]);
+                        }
+                    }
+                    break;
                 default:
                     //Main.NewText("Default Luxcalibur behavior");
                     if (Projectile.velocity.Length() > 0.001f)
@@ -112,6 +160,11 @@ namespace GvMod.Content.Projectiles
 
         private void TextureCycles()
         {
+            for (int i = 0; i < oldPositions.Count; i++)
+            {
+                oldPositions[i][2] -= 0.06f;
+            }
+            oldPositions.RemoveAll((x) => { return x[2] <= 0; });
             switch (Behavior)
             {
                 default:
@@ -209,6 +262,21 @@ namespace GvMod.Content.Projectiles
 
         public override bool PreDraw(ref Color lightColor)
         {
+            foreach (var afterimage in oldPositions)
+            {
+                Rectangle afterimageBounds = new Rectangle(0, 108 * 2, 192, 108);
+                Main.EntitySpriteDraw(
+                    field.Value,
+                    new Vector2(afterimage[0], afterimage[1]) - Main.screenPosition,
+                    afterimageBounds, 
+                    Color.White * afterimage[2],
+                    afterimage[3],
+                    afterimageBounds.Size() * 0.5f,
+                    1, 
+                    SpriteEffects.None
+                );
+            }
+
             Main.EntitySpriteDraw(
                 field.Value,
                 Projectile.Center - Main.screenPosition,
@@ -216,7 +284,8 @@ namespace GvMod.Content.Projectiles
                 darken ? new Color(0.5f, 0.5f, 0.5f) * 0.8f : Color.White,
                 Projectile.rotation,
                 bounds.Size() * 0.5f,
-                visualScale, SpriteEffects.None
+                visualScale, 
+                SpriteEffects.None
             );
 
             return false;

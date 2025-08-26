@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -19,7 +20,6 @@ namespace GvMod.Content.Projectiles
     public class AstrasphereProjectile : ModProjectile
     {
         private int Behavior { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
-        private Vector2 target = new Vector2(0, 0);
         private int timer = 0;
         private int cycle = 0;
         private Asset<Texture2D> field;
@@ -61,6 +61,18 @@ namespace GvMod.Content.Projectiles
             switch (Behavior)
             {
                 case (int)AstraspheredBehavior.Launch:
+                    Projectile.Size = new Vector2(268);
+                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
+                    bounds = new Rectangle(0, 0, 360, 362);
+                    Projectile.timeLeft += 90;
+                    Projectile.netUpdate = true;
+
+                    SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AstrasphereUse") with
+                    {
+                        PitchVariance = 0.1f,
+                        Volume = 0.75f
+                    }, Projectile.Center, StopSound);
+                    break;
                 default:
                     Projectile.Size = new Vector2(268);
                     field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
@@ -78,14 +90,44 @@ namespace GvMod.Content.Projectiles
             timer++;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write7BitEncodedInt(timer);
+            writer.Write7BitEncodedInt(cycle);
+            base.SendExtraAI(writer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            timer = reader.Read7BitEncodedInt();
+            cycle = reader.Read7BitEncodedInt();
+            base.ReceiveExtraAI(reader);
+        }
+
         public override void AI()
         {
             switch (Behavior)
             {
+                case (int)AstraspheredBehavior.Expand:
                 case (int)AstraspheredBehavior.Launch:
-                    if (Main.myPlayer == Projectile.owner)
+                    if (cycle == 0)
                     {
-                        target = Main.MouseWorld;
+                        if (Main.myPlayer == Projectile.owner)
+                        {
+                            Projectile.Center = Main.LocalPlayer.Center;
+                        }
+                        if (timer >= 90)
+                        {
+                            timer = 0;
+                            cycle++;
+                        }
+                        Projectile.netUpdate = true;
+                    } else
+                    {
+                        if (Main.myPlayer == Projectile.owner)
+                        {
+                            LaunchAstrasphere(Main.MouseWorld);
+                        }
                     }
                     break;
                 case (int)AstraspheredBehavior.Default:
@@ -100,6 +142,27 @@ namespace GvMod.Content.Projectiles
 
             timer++;
             TextureCycles();
+        }
+
+        private void LaunchAstrasphere(Vector2 target)
+        {
+            if (timer <= 1)
+            {
+                Projectile.velocity = Projectile.Center.DirectionTo(target) *
+                    Projectile.Center.Distance(target) / 45;
+                Projectile.netUpdate = true;
+
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AstrasphereUse") with
+                {
+                    PitchVariance = 0.1f,
+                    Volume = 0.75f
+                }, Projectile.Center, StopSound);
+            }
+            if (timer >= 45)
+            {
+                Projectile.velocity = Vector2.Zero;
+                Projectile.netUpdate = true;
+            }
         }
 
         private bool StopSound(ActiveSound soundInstance)
