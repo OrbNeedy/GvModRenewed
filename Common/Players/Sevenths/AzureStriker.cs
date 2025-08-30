@@ -445,24 +445,13 @@ namespace GvMod.Common.Players.Sevenths
                     }
                 }
             }
-            /*if (player.GetModPlayer<PlayerBuffs>().ArmedPhenomenonStats > 0)
-            {
-                if (item.axe > 0 || item.pick > 0 || item.hammer > 0 || item.createTile != -1 ||
-                    item.createWall != -1 || item.damage <= 0 || item.accessory || item.defense > 0 ||
-                    item.vanity) return;
-
-                if (ArmedPhenomenonClawCooldown <= 0)
-                {
-                    ArmedPhenomenonClawCooldown = 75;
-                }
-            }*/
         }
 
         public override void ArmedPhenomenonPostEquipUpdate(Player player, SeptimaPlayer adept, int potency)
         {
             if (!adept.Overheated)
             {
-                player.wingTimeMax += (45 * potency);
+                player.wingTimeMax += 30 + (15 * potency);
             }
 
             player.noFallDmg = true;
@@ -472,15 +461,15 @@ namespace GvMod.Common.Players.Sevenths
                 player.endurance += 0.06f * (potency - 1);
             }
 
-            adept.EPUseModifier *= 1.25f + (0.25f * potency);
-            adept.EPRecoveryModifier *= 1f + (0.2f * potency);
-            adept.OverheatRecoveryModifier *= 1f + (0.2f * potency);
-            player.GetDamage<MainAttackDamage>() += 0.1f + (0.1f * potency);
-            player.GetDamage<SecondaryAttackDamage>() += 0.1f + (0.1f * potency);
+            adept.EPUseModifier += (0.15f * potency);
+            adept.EPRecoveryModifier += (0.2f * potency);
+            adept.EPCooldownModifier += (0.2f * potency);
+            adept.OverheatRecoveryModifier -= 0.25f;
+            player.GetDamage<SeptimaDamage>() += 0.1f + (0.05f * potency);
 
             if (potency >= 3)
             {
-                adept.SPRecoveryModifier += 0.1f;
+                adept.SPRecoveryModifier += 0.2f;
             }
         }
 
@@ -498,8 +487,8 @@ namespace GvMod.Common.Players.Sevenths
                     returnValue *= 1.25f;
                 } else
                 {
-                    float stageDamage = adept.Stage * 2;
-                    float levelDamage = adept.Level * 0.25f;
+                    float stageDamage = adept.Stage * 1.75f;
+                    float levelDamage = adept.Level * 0.2f;
                     /*Main.NewText("Base damage: " + BaseBasicAttackDamage);
                     Main.NewText("Stage damage: " + stageDamage);
                     Main.NewText("Level damage: " + levelDamage);
@@ -517,19 +506,18 @@ namespace GvMod.Common.Players.Sevenths
 
         public override float GetTagSkillPower(Player player, SeptimaPlayer adept, Tag tag, int tagCount)
         {
-            float returnValue = BaseBasicAttackDamage * 
-                (1f + (tag.tagLevel * 0.625f)) / 
-                (1 + (tagCount * 0.025f));
+            float returnValue = (BaseBasicAttackDamage + (adept.Level * 0.08f) + (adept.Stage)) * 
+                (1f + ((float)tag.tagLevel * 0.5f)) / (1f + ((float)tagCount * 0.02f));
             if (player.GetModPlayer<PlayerBuffs>().DilationReticles)
             {
-                returnValue *= 0.75f;
+                returnValue *= 0.7f;
             }
             return returnValue;
         }
 
         public override float GetSecondarySkillPower(Player player, SeptimaPlayer adept)
         {
-            float returnValue = 12 + adept.Stage * 2;
+            float returnValue = 10 + (adept.Stage * 3) + (adept.Level * 0.4f);
             return returnValue;
         }
     }

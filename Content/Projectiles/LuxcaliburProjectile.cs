@@ -46,7 +46,7 @@ namespace GvMod.Content.Projectiles
             Projectile.damage = 250;
             Projectile.knockBack = 3;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 16;
             Projectile.penetrate = -1;
             Projectile.ArmorPenetration = 30;
 

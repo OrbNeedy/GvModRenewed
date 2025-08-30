@@ -28,7 +28,7 @@ namespace GvMod.Common.Players.Skills
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
             player.noFallDmg = true;
-            player.velocity = Vector2.Zero;
+            player.velocity = new Vector2(0, 0.0000001f);
             player.position = player.oldPosition;
             player.fallStart = (int)player.Center.Y;
             base.MoveUpdate(player, adept);
@@ -36,7 +36,7 @@ namespace GvMod.Common.Players.Skills
 
         public override bool OnSkillUse(Player player, SeptimaPlayer adept)
         {
-            int baseDamage = 250 + (5 * adept.Stage);
+            float baseDamage = 220 + (8 * adept.Stage) + (0.5f * adept.Level);
             player.oldPosition = player.position;
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 
@@ -47,11 +47,19 @@ namespace GvMod.Common.Players.Skills
             {
                 swordBehavior = (int)LuxcaliburBehavior.Launch;
             }
-            initialPower = resurrectionState.resurrectionPower;
+
+            if (player.GetModPlayer<ResurrectionPlayer>().resurrected)
+            {
+                initialPower = player.GetModPlayer<ResurrectionPlayer>().resurrectionPower;
+            }
+            else
+            {
+                initialPower = 0;
+            }
 
             Vector2 direction = player.Center.DirectionTo(Main.MouseWorld);
             Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, direction * 26, 
-                ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 5, player.whoAmI, 
+                ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 3.5f, player.whoAmI, 
                 swordBehavior);
 
             if (resurrectionState.resurrected && (resurrectionState.resurrectionPower >= 3 || 
@@ -59,11 +67,11 @@ namespace GvMod.Common.Players.Skills
             {
                 Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, 
                     direction.RotatedBy(MathHelper.PiOver2) * 26,
-                    ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 5, player.whoAmI,
+                    ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 3.5f, player.whoAmI,
                     swordBehavior); 
                 Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, 
                     direction.RotatedBy(-MathHelper.PiOver2) * 26, 
-                    ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 5, player.whoAmI, 
+                    ModContent.ProjectileType<LuxcaliburProjectile>(), finalDamage, 3.5f, player.whoAmI, 
                     swordBehavior);
             }
 

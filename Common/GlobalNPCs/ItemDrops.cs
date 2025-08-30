@@ -30,6 +30,8 @@ namespace GvMod.Common.GlobalNPCs
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UniversalUpgradeItem>(), 250, 1, 5));
                 npcLoot.Add(ItemDropRule.ByCondition(new SeptimaLumpCondition(),
                     ModContent.ItemType<SeptimaLump>(), 1, 10, 20));
+                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(),
+                    ModContent.ItemType<MysteriousGemstone>(), 4));
             } else
             {
                 npcLoot.Add(ItemDropRule.ByCondition(new SeptimaLumpCondition(),
@@ -88,6 +90,8 @@ namespace GvMod.Common.GlobalNPCs
                 case NPCID.Spazmatism:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<VasukiUpgrade>(), 8));
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Stage3Upgrade>(), 12, 1, 7));
+                    npcLoot.Add(ItemDropRule.ByCondition(new NotBeatenAnyMechBoss(),
+                        ModContent.ItemType<MysteriousGemstone>()));
                     break;
                 case NPCID.Plantera:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OrochiUpgrade>(), 2));

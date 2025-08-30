@@ -24,7 +24,7 @@ namespace GvMod.Common.Players.Skills
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
             player.noFallDmg = true;
-            player.velocity = Vector2.Zero;
+            player.velocity = new Vector2(0, 0.0000001f);
             player.position = player.oldPosition;
             player.fallStart = (int)player.Center.Y;
             base.MoveUpdate(player, adept);
@@ -34,9 +34,9 @@ namespace GvMod.Common.Players.Skills
         {
             player.oldPosition = player.position;
             int finalFieldDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
-                    ApplyTo(71.4f + (1.6f * adept.Stage));
+                    ApplyTo(42.5f + (1.8f * adept.Stage) + (0.65f * adept.Level));
             int finalSphereDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
-                    ApplyTo(37.4f + (1.6f * adept.Stage));
+                    ApplyTo(22.5f + (1.7f * adept.Stage) + (0.25f * adept.Level));
             int fieldAI = (int)AstraspheredBehavior.Default;
             int orbitAI = (int)OrbitsBehavior.Default;
 

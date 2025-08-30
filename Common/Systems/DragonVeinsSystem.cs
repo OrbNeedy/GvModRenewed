@@ -132,5 +132,15 @@ namespace GvMod.Common.Systems
                 return false;
             }
         }
+
+        public bool CheckPlayerDistance(Player player, float distance)
+        {
+            foreach (var vein in veinPoints)
+            {
+                if (player.Center.Distance(vein.ToWorldCoordinates()) <= distance) return true;
+            }
+
+            return false;
+        }
     }
 }

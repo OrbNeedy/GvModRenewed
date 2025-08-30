@@ -1,7 +1,6 @@
 ﻿using GvMod.Common.Players;
 using GvMod.Common.Players.Sevenths;
 using GvMod.Content.Items.Materials;
-using GvMod.Content.Items.Upgrades;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -21,8 +20,7 @@ namespace GvMod.Content.Items.Accessories
         {
             Item.accessory = true;
 
-
-            Item.rare = ItemRarityID.Lime;
+            Item.rare = ItemRarityID.LightRed;
         }
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
@@ -74,6 +72,11 @@ namespace GvMod.Content.Items.Accessories
                 return false;
             }
             return base.CanEquipAccessory(player, slot, modded);
+        }
+
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return equippedItem.ModItem is not Grimoire && equippedItem.ModItem is not BindingBrand;
         }
 
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, 
@@ -129,11 +132,11 @@ namespace GvMod.Content.Items.Accessories
         {
             CreateRecipe()
                 .AddIngredient(ItemID.HellstoneBar, 7)
-                .AddIngredient(ItemID.IronBroadsword)
-                .AddIngredient<SpiritualStone>(15)
-                .AddIngredient<BlancCells>(20)
+                .AddIngredient(ItemID.WoodenSword)
+                .AddIngredient<SpiritualStone>(20)
+                .AddIngredient<BlancCells>(25)
+                .AddIngredient(ItemID.Bone, 5)
                 .AddTile(TileID.Anvils)
-                .AddTile(TileID.Hellforge)
                 .Register();
         }
     }

@@ -36,7 +36,7 @@ namespace GvMod.Content.Projectiles
             Projectile.damage = 250;
             Projectile.knockBack = 3;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 15;
+            Projectile.localNPCHitCooldown = 12;
             Projectile.penetrate = -1;
             Projectile.ArmorPenetration = 30;
 
@@ -173,6 +173,13 @@ namespace GvMod.Content.Projectiles
         public override bool? CanCutTiles()
         {
             return true;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            float targetHealth = MathHelper.Clamp(target.life / target.lifeMax, 0, 1);
+            modifiers.SourceDamage += 1 - targetHealth;
+            base.ModifyHitNPC(target, ref modifiers);
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

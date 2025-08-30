@@ -18,7 +18,7 @@ namespace GvMod.Content.Buffs
         {
             SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
             adept.DnizerMode = true;
-            adept.EPUseModifier = 0;
+            adept.EPUseModifier *= 0;
             player.GetDamage<SeptimaDamage>() += 0.1f;
             base.Update(player, ref buffIndex);
         }

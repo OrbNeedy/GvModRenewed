@@ -19,15 +19,15 @@ Projectiles: {
 	VoltaicChainProjectile.DisplayName: Voltaic Chain
 	DragonsphereProjectile.DisplayName: Dragonsphere
 	GrandStrizerProjectile.DisplayName: Grand Strizer
-	// AzureStrikerClaw.DisplayName: Dragon Claw
-	// FlashphereProjectile.DisplayName: Astrasphere
+	AzureStrikerClaw.DisplayName: Dragon Claw
+	FlashphereProjectile.DisplayName: Astrasphere
 }
 
 DamageClasses: {
-	SeptimaDamage.DisplayName: Da�o Septima
-	MainAttackDamage.DisplayName: Da�o principal
-	SecondaryAttackDamage.DisplayName: Da�o secundario
-	SpecialAttackDamage.DisplayName: Da�o especial
+	SeptimaDamage.DisplayName: Daño Septima
+	MainAttackDamage.DisplayName: Da{o principal
+	SecondaryAttackDamage.DisplayName: Daño secundario
+	SpecialAttackDamage.DisplayName: Daño especial
 }
 
 Items: {
@@ -48,24 +48,19 @@ Items: {
 
 	WrathfulEye: {
 		DisplayName: Wrathful Eye
-		Tooltip:
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Un par de gafas que aumentan el da�o causado por la habilidad 
-			principal de la septima por {0}%, pero aumenta el consumo de 
-			EP en {1}.
+			Aumenta el daño causado por la habilidad principal de la septima 
+			en {0}%, pero aumenta el consumo de EP en {1}%.
+			Aumenta el daño causado y el consumo de EP luego de derrotar a 
+			todos los jefes mecanicos.
 			'''
-		/* TrueTooltip:
+		UpgradeTooltip:
 			'''
-			A pair of glasses that increase damage dealt by the septima's 
-			main skill by {0}%, but increases EP consumption by {1}%.
-			Increases both main skill and EP consumption after defeating 
-			all mechanical bosses.
-			''' */
-		/* UpgradeTooltip:
+			Aumenta el daño causado por la habilidad principal de la septima 
+			en {0}%, pero aumenta el consumo de EP en {1}%.
 			'''
-			A pair of glasses that increase damage dealt by the septima's 
-			main skill by {0}%, but increases EP consumption by {1}%.
-			''' */
 	}
 
 	CapacityUpgrade: {
@@ -223,467 +218,676 @@ Items: {
 	}
 
 	ProtectiveBody: {
-		// SetBonus: Increases septimal damage by {0}%.
-		// DisplayName: Protective Armor
-		// Tooltip: Increases septimal damage by {0}%.
+		SetBonus: Aumenta el daño septimo en {0}%.
+		DisplayName: Armadura protectora
+		Tooltip: Aumenta el daño septimo en {0}%.
 	}
 
 	ProtectiveLegs: {
-		// DisplayName: Protective Boots
-		// Tooltip: ""
+		DisplayName: Botas protectivas
+		Tooltip: ""
 	}
 
 	RuinedDartGun: {
-		// DisplayName: Damaged Dart Leader
-		/* Tooltip:
+		DisplayName: Dart Leader dañado
+		Tooltip:
 			'''
-			Barely works, but can be used to shoot darts that tag enemies.
-			Tagged enemies will be damaged regardless of distance from the 
-			player.
-			''' */
+			Apenas funciona, pero puede ser usado para disparar dardos que 
+			marcan enemigos.
+			los enemigos marcados tomarán daño sin importar la distancia al 
+			jugador.
+			'''
 	}
 
 	QuillBody: {
-		// SetBonus: Increases EP recovery by {0}% and by {1}% on overheat.
-		// DisplayName: Quill Agent Uniform
-		/* Tooltip:
+		SetBonus:
 			'''
-			Specially made to suit an adept's needs.
-			Increases septima damage by {0}%.
-			''' */
+			Aumenta la recuperación de EP en {0}% y la recuperación 
+			en sobrecalentamiento en {1}%.
+			'''
+		DisplayName: Uniforme de agente de Quill
+		Tooltip:
+			'''
+			Hecho especialmente para encajar con las necesidades de 
+			un adepto.
+			Aumenta el daño septimo en {0}%.
+			'''
 	}
 
 	QuillLegs: {
-		// DisplayName: Quill Agent Boots
-		// Tooltip: Increases movement speed by {0}%.
+		DisplayName: Botas de agente de Quill
+		Tooltip: Aumenta la velocidad de movimiento en {0}%.
 	}
 
 	SpiritualStone: {
-		// DisplayName: Spiritual Stone
-		// Tooltip: A stone with special properties.
+		DisplayName: Piedra espiritual
+		Tooltip: Una piedra con propiedades especiales.
 	}
 
 	QuillOfficerBody: {
-		/* SetBonus:
+		SetBonus:
 			'''
-			Increases overheat recovery by {3}% and allows the use of prevasion.
+			Aumenta la recuperación en sobrecarga en {3}% y permite el uso de
+			prevasión.
 			{$PrevasionDescription}
-			''' */
-		// DisplayName: Quill Officer Uniform
-		/* Tooltip:
 			'''
-			The uniform worn by Quill's commanding officers.
-			Increases septima damage by {0}% and decreases EP use by {1}%.
-			''' */
+		DisplayName: Uniforme de oficial de Quill
+		Tooltip:
+			'''
+			El uniforme usado por oficiales de comando de Quill.
+			Aumenta el daño de septima en {0}% y reduce el uso de EP en {1}%
+			'''
 	}
 
 	SeptimaStabilizer: {
-		// DisplayName: Septima Stabilizer
-		/* Tooltip:
+		DisplayName: Estabilizador de Septima
+		Tooltip:
 			'''
-			A device commonly used by adepts with little control over their 
-			septima.
-			Reduces EP use by {0}% and increases EP recovery rate by {1}%.
-			''' */
+			Un dispositivo usado comunmente por adeptos con poco control 
+			sobre su septima.
+			Reduce el EP usado en {0}% y aumenta la recuperación de EP en {1}%.
+			'''
 	}
 
 	QuillOfficerLegs: {
-		// DisplayName: Quill Officer Boots
-		// Tooltip: Increases movement speed by {0}%.
+		DisplayName: Botas de oficial de Quill
+		Tooltip: Aumenta la velocidad de movimiento en {0}%.
 	}
 
 	ModernQuillBody: {
-		/* SetBonus:
+		SetBonus:
 			'''
-			Reduces EP recovery cooldown by {0}%.
-			Allows reincarnation or powers up reincarnation from other sources.
-			''' */
-		// DisplayName: Quill Combat Uniform
-		/* Tooltip:
+			Reduce el tiempo de espera de recuperación de EP en {0}%.
+			Permite reencarnar o mejora la reencarnación de otras fuentes.
 			'''
-			An improvement over the agent uniform.
-			Increased septimal damage by {0}% and decreased EP use by {1}%.
-			''' */
+		DisplayName: Uniforme de combate de Quill
+		Tooltip:
+			'''
+			Una mejora del uniforme de agente.
+			Aumenta el daño septimo en {0}% y reduce el EP usado en {1}%.
+			'''
 	}
 
 	AltQuillOfficerBody: {
-		/* SetBonus:
+		SetBonus:
 			'''
-			Increases overheat recovery by {3}% and allows the use of prevasion.
+			Aumenta la recuperación en sobrecarga en {3}% y permite el uso de
+			prevasión.
 			{$PrevasionDescription}
-			''' */
-		// DisplayName: Quill Officer Uniform
-		/* Tooltip:
 			'''
-			An alternative to the uniform worn by Quill's commanding officers.
-			Increases septima damage by {0}% and decreases EP use by {1}%.
-			''' */
+		DisplayName: Uniforme de oficial de Quill
+		Tooltip:
+			'''
+			El uniforme usado por oficiales de comando de Quill.
+			Aumenta el daño de septima en {0}% y reduce el uso de EP en {1}%
+			'''
 	}
 
 	PrevasionChain: {
-		// DisplayName: Prevasion Chain
-		/* Tooltip:
+		DisplayName: Cadena de prevasión
+		Tooltip:
 			'''
-			Allows the use of prevasion.
+			Permite el uso de prevasión.
 			{$PrevasionDescription}
-			''' */
+			'''
 	}
 
 	ModernQuillLegs: {
-		// DisplayName: Quill Combat Boots
-		/* Tooltip:
+		DisplayName: Botas de combate de Quill
+		Tooltip:
 			'''
-			Increases movement speed by {0}%.
-			Increases septimal crit chance by {1}% and EP recovery by {2}%.
-			''' */
+			Aumenta la velocidad de movimiento en {0}%.
+			Aumenta la posibilidad de critico de daño septimo en {1}% y 
+			la recuperación de EP en {2}%.
+			'''
 	}
 
 	Electromagnet: {
-		// DisplayName: Strong Electromagnet
-		// Tooltip: An electromagnet with great strength.
+		DisplayName: Electroiman fuerte
+		Tooltip: Un electroiman con gran fuerza.
 	}
 
 	Kripp: {
-		// DisplayName: Kripp
-		/* Tooltip:
+		DisplayName: Kripp
+		Tooltip:
 			'''
-			A relatively soft metal found alongside other minerals in 
-			trace ammounts.
-			''' */
+			Un metal relativamente blando encontrado junto con otros 
+			minerales en cantidades de raztro.
+			'''
 	}
 
 	KrippAlloy: {
-		// DisplayName: Kripp Alloy
-		// Tooltip: An alloy that can improve resistance of other metals.
+		DisplayName: Aleasión de Kripp
+		Tooltip: Una aleasión que puede mejorar la resistencia de otros metales.
 	}
 
 	ChargeguardPendant: {
-		// DisplayName: Chargeguard Pendant
-		// Tooltip: Gives some invincibility frames while recharging, with a cooldown.
+		DisplayName: Pendante de carga segura
+		Tooltip:
+			'''
+			Otorga fotogramas de invencibilidad mientras se recarga, con 
+			un cooldown.
+			'''
 	}
 
 	DynamoEye: {
-		// DisplayName: Dynamo Eye
-		// Tooltip: ""
-		/* TrueTooltip:
+		DisplayName: Ojo de dinamo
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Increases max EP by {0}.
-			Increases max EP after defeating the Wall of Flesh.
-			''' */
-		// UpgradeTooltip: Increases max EP by {0}.
+			Aumenta el EP maximo en {0}.
+			Aumenta el EP maximo luego de vencer al muro de carne.
+			'''
+		UpgradeTooltip: Aumenta el EP maximo en {0}.
 	}
 
 	OverflashPendant: {
-		// DisplayName: Overflash Pendant
-		/* Tooltip:
+		DisplayName: Pendante de sobrecarga
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			A pendant that increase damage dealt by the septima's 
-			main ability by {0}, but increases EP consumption by {1}.
-			''' */
+			Un pendante que aumenta el daño causado por la habilidad 
+			principal en {0}%, pero aumenta el consumo de EP en {1}%.
+			Aumenta el daño y consumo de EP aún más luego de vencer 
+			al muro de carne.
+			'''
+		UpgradeTooltip:
+			'''
+			Un pendante que aumenta el daño causado por la habilidad 
+			principal en {0}%, pero aumenta el consumo de EP en {1}%.
+			'''
 	}
 
 	SeptimaEmblem: {
-		// DisplayName: Septima Emblem
-		// Tooltip: "{0}% increased septima damage"
+		DisplayName: Emblema de Septima
+		Tooltip: Daño de septima aumentado en {0}%
 	}
 
 	StalwartMedal: {
-		// DisplayName: Stalwart Medal
-		// Tooltip: Increases damage reduction by {0}% and defense by {1} when overheated
+		DisplayName: Medalla de valor
+		Tooltip:
+			'''
+			Aumenta la reducción de daño en {0}% cuando se está en 
+			sobrecalentamiento.
+			'''
 	}
 
 	Glaive: {
-		// DisplayName: Glaive
-		/* Tooltip:
+		DisplayName: Glaive
+		Tooltip:
 			'''
-			A device based on a sumeragi device designed to force an Armed 
-			Phenomenon in an adept.
-			Unlike the sumeragi version, the adept keeps their ability to use 
-			their septima even without the glaive.
-			''' */
+			Un dispositivo basado en un dispositivo de sumeragi diseñado para 
+			forzar un fenomeno armado en un adepto.
+			A diferencia de la versión de sumeragi, el adepto mantiene la 
+			capacidad de usar su septima sin el glaive.
+			'''
 	}
 
 	SumeragiSupervisorBody: {
-		/* SetBonus:
+		SetBonus:
 			'''
-			Increases special skill damage by {3}% and allows the use of prevasion.
+			Aumenta el daño especial en {3}% y permite el uso de prevasión.
 			{$PrevasionDescription}
-			''' */
-		// DisplayName: Sumeragi Supervisor Uniform
-		/* Tooltip:
 			'''
-			The uniform worn by Sumeragi Supervisor units, refitted for combat.
-			Increases septima damage by {0}%, decreases EP recovery by {1}%, and 
-			increases EP recovery by {2}%.
-			''' */
+		DisplayName: Uniforme de supervisor de Sumeragi
+		Tooltip:
+			'''
+			El uniforme usado por unidades supervisoras de sumeragi, modificado 
+			para combate.
+			Aumenta el daño septimo en {0}%, reduce la recuperación de EP en 
+			{1}%, y aumenta la recuperación de EP en {2}%.
+			'''
 	}
 
 	SumeragiSupervisorLegs: {
-		// DisplayName: Sumeragi Supervisor Boots
-		/* Tooltip:
+		DisplayName: Botas de supervisor de Sumeragi
+		Tooltip:
 			'''
-			Increases movement speed by {0}%.
-			Increased septima crit chance by {1}%, and increased SP recovery by {2}%.
-			''' */
+			Aumenta la velocidad de movimiento en {0}%.
+			Aumenta la posibilidad de daño critico septimo en {1}% y aumenta la 
+			recuperación de SP en {2}%.
+			'''
 	}
 
 	PulsarFragment: {
-		// DisplayName: Pulsar Fragment
-		// Tooltip: This fragment pulses with immense power.
+		DisplayName: Fragmento de pulsar
+		Tooltip: Este fragmento pulsa con poder inmenso.
 	}
 
 	ScarletGoldFragment: {
-		// DisplayName: Scarlet Gold Fragment
-		/* Tooltip:
+		DisplayName: Fragmento dorado-escarlata
+		Tooltip:
 			'''
-			A fragment from a lost metal, refined with ancient lihzahrd techniques.
-			Its very hard and shines like the Sun.
-			''' */
+			Un fragmento de un metal perdido, refinado con tecnicas Lihzahrd 
+			antiguas.
+			Es muy duro y brilla como el sol.
+			'''
 	}
 
 	SeptimaLump: {
-		// DisplayName: Septima Lump
-		// Tooltip: Pick up to recover EP
+		DisplayName: Grumo de septima
+		Tooltip: Recoger para recuperar EP
 	}
 
 	DragonSaviorsBody: {
-		/* SetBonus:
+		SetBonus:
 			'''
-			Allows the use of prevasion.
-			Activate armor set bonus and hold down the button to enter Dnizer mode.
-			Dnizer mode gives infinite EP, free flight, and improves septima abilities.
-			However, staying for too long in Dnizer mode will cause increasing damage.
-			Right click the obtained buff to deactivate Dnizer mode.
+			Permite el uso de prevasión.
+			Activa el bonus de armadura y manten oprimido el botón para entrar en modo
+			Dnizer.
+			El modo Dnizer otorga EP infinito, vuelo libre, y mejora las habilidades 
+			septimas.
+			Sin embargo, quedarse por mucho tiempo en el modo Dnizer causará daño en 
+			aumento.
+			Oprime click derecho en el buff obtenido para desactivar el modo Dnizer.
 			{$PrevasionDescription}
-			''' */
-		// DisplayName: Dragon Saviors Uniform
-		/* Tooltip:
 			'''
-			A uniform from Sumeragi's bureau of Dragon Saviors.
-			Increases septima damage by {0}%.
-			Decreased EP use by {1}%.
-			Increased EP recovery by {2}%.
-			Increased damage from the septima's main ability by {3}%.
-			''' */
+		DisplayName: Uniforme de salvadores Dragón
+		Tooltip:
+			'''
+			Un uniforme del departamento de salvadores dragón de sumeragi.
+			Aumenta el daño septimo en {0}%.
+			Reduce el uso de EP en {1}%.
+			Aumenta la recuperación de EP en {2}%.
+			Aumenta el daño de la habilidad principal de la septima en {3}%.
+			'''
 	}
 
 	DragonSaviorsLegs: {
-		// DisplayName: Dragon Saviors Leggins
-		/* Tooltip:
+		DisplayName: Piernas de salvadores Dragón
+		Tooltip:
 			'''
-			Increases movement speed by {0}%.
-			Increased septima crit chance by {1}%, and increased cooldown recovery by {2}%.
-			''' */
+			Aumenta la velocidad de movimiento en {0}%.
+			Aumenta la posibilidad de critico de daño septimo en {1}% y 
+			aumenta la recuperación de sobrecalentamiento en {2}%.
+			'''
 	}
 
 	PulsarHead: {
-		// DisplayName: Pulsar Mask
-		/* Tooltip:
+		DisplayName: Mascara de Pulsar
+		Tooltip:
 			'''
-			A mask that signifies an adept's power.
-			Increases septima damage by {0}%.
-			Increases damage from special skills by {1}%.
-			Increases max EP by {2}%.
-			''' */
+			Una mascara que simboliza el poder de un adepto.
+			Aumenta el daño septimo en {0}%.
+			Aumenta el daño de habilidades especiales en {1}%.
+			Aumenta el EP maximo en {2}%.
+			'''
 	}
 
 	Reviberoptic: {
-		// DisplayName: Reviberoptic
-		/* Tooltip:
+		DisplayName: Reviberoptic
+		Tooltip:
 			'''
-			Increases life regeneration, but decreases EP and Overheat 
-			recovery by {0}%.
-			''' */
+			Aumenta la regeneración de vida, pero reduce la 
+			recuperación de EP y sobrecalentamiento en {0}%.
+			'''
 	}
 
 	ActinoBlancCrystal: {
-		// DisplayName: Actino Blanc Crystal
-		/* Tooltip:
+		DisplayName: Cristal de Blanc Actina
+		Tooltip:
 			'''
-			Blanc Cell atoms that were crystalized by a chlorophyte 
-			Extractinator.
-			''' */
+			Atomos de celulas blanc que fueron cristalizados por 
+			un extractor de clorofita.
+			'''
 	}
 
 	BlancCells: {
-		// DisplayName: Blanc Cells
-		/* Tooltip:
+		DisplayName: Celulas blanc
+		Tooltip:
 			'''
-			Special cells capable of producing large amounts of 
-			enegy.
-			''' */
+			Celulas especiales capaces de producir grandes 
+			cantidades de energía.
+			'''
 	}
 
 	PureBlancCells: {
-		// DisplayName: Pure Blanc Cells
-		/* Tooltip:
+		DisplayName: Celulas blanc puras
+		Tooltip:
 			'''
-			Blanc cells with no impurities, capable of generating 
-			great energy when heated up.
-			''' */
+			Celulas blanc sin impurezas, capaces de generar 
+			energía cuando se calientan.
+			'''
 	}
 
 	MorphoWings: {
-		// DisplayName: Morpho Wings
-		// Tooltip: Wings of a fairy, torn by greed.
+		DisplayName: Alas de Morpho
+		Tooltip: '''"Mi canción vivirá por siempre en ti"'''
 	}
 
 	LumenWings: {
-		// DisplayName: Lumen Wings
+		DisplayName: Alas de lumen
 		/* Tooltip:
 			'''
-			Large wings that ressonate with the power of a muse.
 			While under the effects of anthem, increases damage reduction 
 			by {0}%.
+			"I'll catch you when you fall"
 			''' */
 	}
 
 	AdmirersEye: {
-		// DisplayName: Admirer's Eye
-		// Tooltip: ""
-		/* TrueTooltip:
+		DisplayName: Ojo de admirador
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Increases special skill damage by {0}%
-			Increased damage after defeating Plantera.
-			''' */
-		/* UpgradeTooltip:
+			Aumenta el daño especial en {0}%.
+			Aumenta el daño luego de vencer a Plantera.
 			'''
-			Increases special skill damage by {0}%
-			Further increases special skill damage by {1}% when under the 
-			effects of resurrection.
-			''' */
+		UpgradeTooltip:
+			'''
+			Aumenta el daño especial en {0}%.
+			Aumenta el daño especial aún más por {1}% mientras se está 
+			bajo los efectos del himno
+			'''
 	}
 
 	AdrenalineLens: {
-		// DisplayName: Adrenaline Lens
-		// Tooltip: When using a special skill, there is a {0}% chance to not spend SP.
+		DisplayName: Lentes de Adrenalina
+		Tooltip:
+			'''
+			Cuando se usa una habilidad especial, hay una posibilidad
+			de {0}% de no usar SP.
+			'''
 	}
 
 	DilationReticle: {
-		// DisplayName: Dilation Reticle
-		/* Tooltip:
+		DisplayName: Reticula de dilatación
+		Tooltip:
 			'''
-			Greatly increases untagged damage and decreases tagged damage.
-			Damage still scales with modifiers.
-			''' */
+			Aumenta el daño sin marca en gran medida y reduce el daño con 
+			marca.
+			El daño aún escala con modificadores.
+			'''
 	}
 
 	LoversLens: {
-		// DisplayName: Lover's Lens
-		// Tooltip: ""
-		/* TrueTooltip:
+		DisplayName: Lentes de amante
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Increases main skill damage by {0}%
-			Increased damage after defeating Plantera.
-			''' */
-		/* UpgradeTooltip:
+			Aumenta el daño principal en {0}%.
+			Aumenta el daño luego de derrotar a Plantera.
 			'''
-			Increases main skill damage by {0}%
-			Further increases main skill damage by {1}% when under the 
-			effects of resurrection.
-			''' */
+		UpgradeTooltip:
+			'''
+			Aumenta el daño principal en {0}%.
+			Aumenta el daño principal aún más por {1}% mientras se está 
+			bajo los efectos del himno
+			'''
 	}
 
 	RechargeLens: {
-		// DisplayName: Recharge Lens
-		// Tooltip: ""
-		/* TrueTooltip:
+		DisplayName: Lentes de recarga
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Increases EP recovery rate by {0}%
+			Aumenta la recuperación de EP en {0}%.
+			Aumenta la recuperación de EP aún más luego de vencer a 
+			Skeletron.
 			Increased EP recovery after defeating Skeletron.
-			''' */
-		// UpgradeTooltip: Increases EP recovery rate by {0}%
+			'''
+		UpgradeTooltip: Aumenta la recuperación de EP en {0}%.
 	}
 
 	RecirculatorLens: {
-		// DisplayName: Recirculator Lens
-		// Tooltip: ""
-		/* TrueTooltip:
+		DisplayName: Lentes de recirculación
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Adds a {0}% chance to prevade without using EP.
-			Does not provide prevasion.
-			Chance increases after defeating all mechanical bosses.
-			''' */
-		/* UpgradeTooltip:
+			Añade una posibilidad de {0}% de prevadir sin usar EP.
+			No provee prevasión.
+			La posibilidad aumenta luego de vencer a todos los jefes 
+			mecanicos.
 			'''
-			Adds a {0}% chance to prevade without using EP.
-			Does not provide prevasion.
-			''' */
+		UpgradeTooltip:
+			'''
+			Añade una posibilidad de {0}% de prevadir sin usar EP.
+			No provee prevasión.
+			'''
 	}
 
 	SeerSpecs: {
-		// DisplayName: Seer Specs
-		/* Tooltip:
+		DisplayName: Gafas de vidente
+		Tooltip:
 			'''
-			Decreases prevasion cost by {0}%.
-			Does not provide prevasion.
-			''' */
+			Reduce el costo de prevasión en {0}%.
+			No provee prevasión.
+			'''
 	}
 
 	SweepersLens: {
-		// DisplayName: Sweeper's Lens
-		// Tooltip: ""
-		/* TrueTooltip:
+		DisplayName: Lentes de limpiador
+		Tooltip: ""
+		TrueTooltip:
 			'''
-			Increases secondary skill damage by {0}%
-			Increased damage after defeating Plantera.
-			''' */
-		/* UpgradeTooltip:
+			Aumenta el daño secundario en {0}%.
+			Aumenta el daño luego de derrotar a Plantera.
 			'''
-			Increases secondary skill damage by {0}%
-			Further increases secondary skill damage by {1}% when under the 
-			effects of resurrection.
-			''' */
+		UpgradeTooltip:
+			'''
+			Aumenta el daño secundario en {0}%.
+			Aumenta el daño secundario aún más por {1}% mientras se está 
+			bajo los efectos del himno.
+			'''
 	}
 
 	VanishingSpecs: {
-		// DisplayName: Vanishing Specs
-		/* Tooltip:
+		DisplayName: Gafas desvanecientes
+		Tooltip:
 			'''
-			Has a chance of {0}% of not consuming EP when prevading.
-			Decreases EP use when prevading by {1}%.
-			Does not provide prevasion.
-			It feels like wearing a ghost.
-			''' */
+			Da una posibilidad de {0}% de no consumir EP mientras se 
+			prevade.
+			Reduce el EP usado al prevadir en {1}%.
+			No provee prevasión.
+			Se siente como usar a un fantasma.
+			'''
 	}
 
 	VigorLens: {
-		// DisplayName: Vigor Lens
-		/* Tooltip:
+		DisplayName: Lentes vigorozos
+		Tooltip:
 			'''
-			Increases SP recovery by {0}%, but reduces EP recovery and 
-			overheat recovery by {1}%, also increases the time it 
-			takes to begin EP recovery by {1}%.
-			''' */
+			Aumenta la recuperación de SP en {0}%, pero reduce la 
+			recuperación de EP y la recuperación de sobrecalentamiento 
+			en {1}%, también aumenta el daño que toma para iniciar la 
+			recuperación de EP en {1}%.
+			'''
 	}
 
 	HighPerformanceNcGbx: {
-		// DisplayName: High Performance Nc Gbx
-		// Tooltip: A High-performance nanochip made with goblin technology.
+		DisplayName: NcGbx de alto rendimiento
+		Tooltip: Un nanochip de alto rendimiento hecho con tecnología goblin.
 	}
 
 	Nanochip98: {
-		// DisplayName: Nanochip98
-		// Tooltip: A nanochip in common circulation.
+		DisplayName: Nanochip 98
+		Tooltip: Un nanochip común.
 	}
 
 	LifeLoupe: {
-		// DisplayName: Life Loupe
-		/* Tooltip:
+		DisplayName: Lupa de vida
+		Tooltip:
 			'''
-			Tag damage steals life, but increases EP use and decreases main attack 
-			damage by {0}%, also increases the time it takes to begin EP recovery 
-			by {1}%.
-			''' */
+			El daño con marca roba vida, pero aumenta el uso de EP y reduce el 
+			daño de ataque principal en {0}%, también aumenta el tiempo que toma 
+			en recuperar EP en {1}%.
+			'''
+	}
+
+	BindingBrand: {
+		DisplayName: Glaive verdadera
+		Tooltip:
+			'''
+			Un artefacto espiritual capaz de manipular venas de dragón.
+			Esta versión sin embargo solo toma prestado supoder para mejorar la 
+			septima del usuario y entrar en un estado de fenomeno armado.
+			'''
+	}
+
+	Grimoire: {
+		DisplayName: Grimorio
+		Tooltip:
+			'''
+			Fabricado basado en el Glaive, este objeto hace que su usuario entre 
+			en estado de fenomeno armado.
+			Este, potenciado por el poder de la musa, mejora la septima del 
+			usuario aún más que una Glaive regular.
+			'''
+	}
+
+	JouleWings: {
+		DisplayName: Alas de Joule
+		Tooltip:
+			'''
+			Aumenta la reducción de daño en {0}% y el daño de septima en {1}%
+			bajo los efectos del himno o en modo Dnizer.
+
+			"Incluso si se pierde la esperanza.
+			Incluso si la vida se acaba.
+			-La voluntad de luchar permanece."
+			'''
+	}
+
+	CooldownLens: {
+		DisplayName: Lentes de sobrecalentamiento
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Aumenta la recuperación de sobrecalentamiento en {0}%.
+			Aumenta aún más luego de vencer al Cerebro de Cthulhu o el 
+			devorador de mundos.
+			'''
+		UpgradeTooltip: Aumenta la recuperación de sobrecalentamiento en {0}%.
+	}
+
+	FeralFocus: {
+		DisplayName: Enfoque feroz
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Aumenta el daño en {0}% y el uso de EP en {1}% cuando la vida está 
+			bajo 50%.
+			Aumenta aún más luego de vencer al Golem.
+			'''
+		UpgradeTooltip:
+			'''
+			Aumenta el daño en {0}% y el uso de EP en {1}% cuando la vida está 
+			bajo 50%.
+			Aumenta aún mas el daño en {1}% cuando la vida está bajo 20%.
+			'''
+	}
+
+	LatencyLens: {
+		DisplayName: Lentes de latencia
+		Tooltip: Aumenta el daño secundario en {0}% cuando se sobrecalienta.
+	}
+
+	SealingSpecs: {
+		DisplayName: Lentes selladores
+		Tooltip:
+			'''
+			Gafas de sol usadas para sellar el poder de un adepto cuando 
+			es muy grande, modificado para optimizar su uso.
+			Aumenta el EP maximo en {0}.
+			Reduce el uso de EP en {1}%.
+			Aumenta la recuperación de EP en {2}% y reduce el tiempo que 
+			toma para iniciar la recuperación de EP en {3}%.
+			Aumenta la recuperación de SP en {4}%.
+			Aumenta la recuperación durante sobrecalentamiento en {5}%.
+			Reduce el daño septimo en {6}%.
+			'''
+	}
+
+	SoulmateSight: {
+		DisplayName: Vista de alma gemela
+		Tooltip:
+			'''
+			Aumenta el daño septimo en {0}%.
+			Aumenta el daño septimo aún más en {1}% cuando se está afectado 
+			por el himno.
+			'''
+	}
+
+	BarrierLocket: {
+		DisplayName: Medallón de barrera
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Aumenta la reducción de daño en {0}% cuando se usa la habilidad 
+			principal.
+			Aumenta aún más luego de vencer al Golem.
+			'''
+		UpgradeTooltip:
+			'''
+			Aumenta la reducción de daño en {0}% y la defensa en {1} cuando 
+			se usa la habilidad principal, secundaria o cualquier habilidad 
+			especial.
+			'''
+	}
+
+	SolidMedallion: {
+		DisplayName: Medallón solido
+		Tooltip: Otorga resistencia al retroceso cuando se está sobrecalentado.
+	}
+
+	SolidStalwartPendant: {
+		DisplayName: Pendante de valentía solida
+		Tooltip:
+			'''
+			Aumenta la reducción de daño en {0}% y otorga resistencia al 
+			retroceso cuando se está sobrecalentado.
+			'''
+	}
+
+	PowerfulDye: {
+		DisplayName: Tinte poderoso
+		Tooltip:
+			'''
+			Un objeto usado para enlazar un shader a una ID de shader.
+			No fue hecho para usarse como tinte de armadura, pero 
+			sientete libre de usarlo así.
+			'''
+	}
+
+	BrokenNecklace: {
+		DisplayName: Collar de gemas
+		TrueName: Collar roto
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Un collar hecho de gemas que recolectaste antes.
+			No tiene ningún efecto, ¿Verdad?
+			'''
+		UpgradeTooltip:
+			'''
+			Un collar que se rompió durante una lucha, salvando tu vida.
+			La canción de la musa ahora vive adentro de el, permitiendo 
+			resurreción por medio del himno.
+			'''
+	}
+
+	DjinnBunny: {
+		DisplayName: Conejo Djinn
+		Tooltip:
+			'''
+			Un muñeco que de alguna manera tiene poder increible adentro 
+			similar al de la musa.
+			Permite la resurección con un himno unico.
+			'''
+	}
+
+	MysteriousGemstone: {
+		DisplayName: Gema misteriosa
+		Tooltip: Una gema preciosa de un tipo desconocido, es muy linda.
 	}
 }
 
-/* PrevasionDescription:
+PrevasionDescription:
 	'''
-	Prevasion will ignore attacks with less than {0}% of the player's 
-	max life plus {1} damage at the cost of {2} EP.
-	Does not stack with other prevasion items.
-	''' */
+	La prevasión va a ignorar ataques de menos de {0}% de la salud maxima 
+	del usuario mas {1} daño al costo de {2} EP.
+	No aumenta con otros objetos de prevasión.
+	'''
 
 UpgradeDescription: {
 	Darts:
@@ -703,7 +907,7 @@ Buffs: {
 		Description:
 			'''
 			Revivido por el poder de la Ciber Diva.
-			All septimal abilities are increased.
+			Todas las habilidades septimas son aumentadas.
 			'''
 	}
 
@@ -734,42 +938,42 @@ Buffs: {
 
 	SeptimalSurgeBuff: {
 		DisplayName: Septimal Surge
-		Description: Duplica el da�o causado.
+		Description: Aumenta el da�o causado.
 	}
 
 	ArmedPhenomenonBuff: {
-		// DisplayName: Armed Phenomenon
-		/* Description:
+		DisplayName: Fenomeno armado
+		Description:
 			'''
-			Entered a state of Armored Phenomenon, septimal abilities 
-			increased.
-			''' */
+			Estado de fenomeno armado, las habilidades septimas se ven 
+			mejoradas.
+			'''
 	}
 
 	DnizerBuff: {
-		// DisplayName: Dnizer mode
-		/* Description:
+		DisplayName: Dnizer
+		Description:
 			'''
-			Septima abilities greatly increased.
-			Infinite flight and EP allowed. 
-			Using skills will fill up the Primal Dragon gauge, and over 100% 
-			the user will get damaged.
-			The higher the Primal Dragon gauge, the longer it will take to 
-			activate.
-			''' */
+			Las habilidades septimas mejoran bastante.
+			Vuelo infinito y EP infinito.
+			Usar habilidades llenará el medidor de dragón primigenio, y sobre 
+			el 100% se comenzará a recibir daño.
+			Mientras mayor sea el medidor de dragón primigenio, más tiempo 
+			tomará en activarse.
+			'''
 	}
 
 	GFreeBuff: {
-		// DisplayName: G Free Buff
-		// Description: You can fly through the air uninterrupted.
+		DisplayName: G Free
+		Description: Puedes volar en el aire sin interrupciones.
 	}
 }
 
-/* UI.LevelDescriptor:
+UI.LevelDescriptor:
 	'''
 	Lvl {0}
-	Stage {1}
-	''' */
+	Fase {1}
+	'''
 
 Configs: {
 	GameplayConfig: {
@@ -782,8 +986,7 @@ Configs: {
 				'''
 				Apagar para deshabilitar la posibilidad de que los jefes revivan luego de morir 
 				si ya fueron derrotados antes.
-				Esto no va a alterar la resurecci�n del jugador, pero har� imposible la 
-				adquisici�n de objetos relacionados con resurecci�n.
+				Esto no va a alterar la resurecci�n del jugador.
 				'''
 		}
 	}
@@ -861,8 +1064,8 @@ Skills: {
 	}
 
 	GFree: {
-		// DisplayName: EM Float
-		// Description: Utilizes the earth's magnetic field to levitate freely temporarily.
+		DisplayName: EM Float
+		Description: Utiliza el campo magnetico de la tierra para levitar libremente temporalmente.
 	}
 }
 
@@ -872,7 +1075,7 @@ Generation: {
 }
 
 LevelUpMessage: {
-	// Regular: Your septima feels stronger.
+	Regular: Tu septima se siente más fuerte.
 	DragonVein0: Una fuerza misteriosa empodera tu septima.
 	DragonVein1: La tierra misma empodera tu septima.
 	DragonVein2: Sientes un surgimiento repentino de poder.
@@ -895,16 +1098,19 @@ DragonVeins: {
 
 ArmedPhenomenon: {
 	AzureStriker: {
-		// Name: "[c/{0}:Azure Striker]"
-		/* Description:
+		Name: "[c/{0}:Azure Striker]"
+		Description:
 			'''
-			Increased flight time and immunity to fall damage using the earth's 
-			magnetic fields.
-			Increased defense and damage reduction unless overheated.
-			Increased main and secondary damage, as well as EP use and recovery.
-			When attacking, shoots a dragon claw at the enemy with immense 
-			electromagnetic force, which then returns to the user.
-			A glimpse into the terrifying power of a primal dragon.
-			''' */
+			Aumenta el tiempo de vuelo y otorga inmunidad a las caidas usando 
+			el campo magnetico de la tierra.
+			Aumenta la defensa y reducción de daño a menos que se esté en 
+			sobrecalentamiento.
+			Aumenta el septimo, el uso y recuperación de EP.
+			Al atacar, dispara una garra de dragón al enemigo con fuerzas 
+			electromagneticas inmensas, el cual después regresa al usuario.
+			Un vistazo al aterrador poder de un dragón primordial.
+			'''
 	}
 }
+
+Conditions.MinimalDistance: Estar cerca a una vena dragón.

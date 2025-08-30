@@ -1,10 +1,18 @@
 ﻿using GvMod.Common.GlobalNPCs;
 using GvMod.Common.Players;
+using GvMod.Common.Systems;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader;
 
 namespace GvMod.Common
 {
+    public static class CraftConditions
+    {
+        public static Condition NearDragonVein = new Condition("Mods.GvMod.Conditions.MinimalDistance", 
+            () => ModContent.GetInstance<DragonVeinsSystem>().CheckPlayerDistance(Main.LocalPlayer, 64));
+    }
+
     public class MirrorShardDropCondition : IItemDropRuleCondition, IProvideItemConditionDescription
     {
         public bool CanDrop(DropAttemptInfo info)
@@ -106,6 +114,25 @@ namespace GvMod.Common
         public bool CanShowItemDropInUI()
         {
             return false;
+        }
+
+        public string GetConditionDescription()
+        {
+            // TODO: Get the translations for this string
+            return "Anyone if the player lacks EP.";
+        }
+    }
+
+    public class NotBeatenAnyMechBoss : IItemDropRuleCondition, IProvideItemConditionDescription
+    {
+        public bool CanDrop(DropAttemptInfo info)
+        {
+            return !NPC.downedMechBossAny;
+        }
+
+        public bool CanShowItemDropInUI()
+        {
+            return true;
         }
 
         public string GetConditionDescription()

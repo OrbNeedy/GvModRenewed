@@ -369,10 +369,18 @@ Items: {
 
 	OverflashPendant: {
 		DisplayName: Overflash Pendant
-		Tooltip:
+		Tooltip: ""
+		TrueTooltip:
 			'''
 			A pendant that increase damage dealt by the septima's 
-			main ability by {0}, but increases EP consumption by {1}.
+			main ability by {0}, but increases EP consumption by {1}%.
+			Increases damage and EP consumption further after defeating 
+			the Wall of Flesh.
+			'''
+		UpgradeTooltip:
+			'''
+			A pendant that increase damage dealt by the septima's 
+			main ability by {0}, but increases EP consumption by {1}%.
 			'''
 	}
 
@@ -383,7 +391,7 @@ Items: {
 
 	StalwartMedal: {
 		DisplayName: Stalwart Medal
-		Tooltip: Increases damage reduction by {0}% and defense by {1} when overheated
+		Tooltip: Increases damage reduction by {0}% when overheated.
 	}
 
 	Glaive: {
@@ -519,16 +527,16 @@ Items: {
 
 	MorphoWings: {
 		DisplayName: Morpho Wings
-		Tooltip: Wings of a fairy, torn by greed.
+		Tooltip: '''"My song will live on forever inside of you"'''
 	}
 
 	LumenWings: {
 		DisplayName: Lumen Wings
 		Tooltip:
 			'''
-			Large wings that ressonate with the power of a muse.
 			While under the effects of anthem, increases damage reduction 
 			by {0}%.
+			"I'll catch you when you fall"
 			'''
 	}
 
@@ -670,6 +678,168 @@ Items: {
 			by {1}%.
 			'''
 	}
+
+	BindingBrand: {
+		DisplayName: Binding Brand
+		Tooltip:
+			'''
+			A spiritual artefact capable of manipulating Dragon Veins.
+			This version however simply borrows it's power to enhance the user's 
+			septima and enter a state of Armed Phenomenon.
+			'''
+	}
+
+	Grimoire: {
+		DisplayName: Grimoire
+		Tooltip:
+			'''
+			Fabricated based on the Glaive, this item makes it's owner get into an 
+			Armed Phenomenon state.
+			This one, powered by the muse's power, enhances the user's septima 
+			more than a regular glaive.
+			'''
+	}
+
+	JouleWings: {
+		DisplayName: Joule Wings
+		Tooltip:
+			'''
+			Increases damage reduction by {0}% and septima damage by {1}% when
+			under the effects of an anthem or Dnizer mode.
+
+			Even should hope be lost.
+			Even should life be waning.
+			-The will to fight still remains.
+			'''
+	}
+
+	CooldownLens: {
+		DisplayName: Cooldown Lens
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Increases recovery from cooldown by {0}%.
+			Increased further after defeating the Brain of Cthulhu or the Eater 
+			of Worlds.
+			'''
+		UpgradeTooltip: Increases recovery from cooldown by {0}%.
+	}
+
+	FeralFocus: {
+		DisplayName: Feral Focus
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Increases damage by {0}% and EP use by {1}% when life is under 50%.
+			Increased further after defeating the Golem.
+			'''
+		UpgradeTooltip:
+			'''
+			Increases damage by {0}% and EP use by {2}% when life is under 50%.
+			Further increases damage by {1}% when life is under 20%.
+			'''
+	}
+
+	LatencyLens: {
+		DisplayName: Latency Lens
+		Tooltip: Increases secondary skill damage by {0}% when overheated.
+	}
+
+	SealingSpecs: {
+		DisplayName: Sealing Specs
+		Tooltip:
+			'''
+			Sunglasses used to seal an adept's power when it's too great, 
+			modified to optimizea it's output.
+			Increases Max EP by {0}.
+			Decreases EP use by {1}%.
+			Increases EP recovery by {2}% and reduces the time it takes to 
+			start recovering EP by {3}%.
+			Increases SP recovery by {4}%.
+			Increases recovery from overheat by {5}%.
+			Decreases septima damage by {6}%.
+			'''
+	}
+
+	SoulmateSight: {
+		DisplayName: Soulmate Sight
+		Tooltip:
+			'''
+			Increases septima damage by {0}%.
+			Further increased by {1}% when affected by an anthem.
+			'''
+	}
+
+	BarrierLocket: {
+		DisplayName: Barrier Locket
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			Increases damage reduction by {0}% when using the main skill.
+			Increased further after defeating the Golem.
+			'''
+		UpgradeTooltip:
+			'''
+			Increases damage reduction by {0}% and defense by {1} when 
+			using the main, secondary or any special skill.
+			'''
+	}
+
+	SolidMedallion: {
+		DisplayName: Solid Medallion
+		Tooltip: Gives knockback resistance when overheated.
+	}
+
+	SolidStalwartPendant: {
+		DisplayName: Solid Stalwart Pendant
+		Tooltip:
+			'''
+			Increases damage reduction by {0}% and gives knockback resistance 
+			when overheated.
+			'''
+	}
+
+	PowerfulDye: {
+		DisplayName: Powerful Dye
+		Tooltip:
+			'''
+			An item used to bind a shader to a shaderID.
+			It was not intended to be used as regular armor dye, but 
+			feel free to use it as such.
+			'''
+	}
+
+	BrokenNecklace: {
+		DisplayName: Gemstone Necklace
+		TrueName: Broken Necklace
+		Tooltip: ""
+		TrueTooltip:
+			'''
+			A necklace made of jewels you collected before. 
+			It has no effect at all, right?
+			'''
+		UpgradeTooltip:
+			'''
+			The necklace broke during a fight, saving your life.
+			The song of the muse now lives inside of it, allowing 
+			resurrection via anthem.
+			'''
+	}
+
+	DjinnBunny: {
+		DisplayName: Djinn Bunny
+		Tooltip:
+			'''
+			A plush that somehow has incredible power inside akin 
+			to that of a muse.
+			Allows resurrection with a unique anthem.
+			'''
+	}
+
+	MysteriousGemstone: {
+		DisplayName: Mysterious Gemstone
+		Tooltip: A precious gem of an unknown kind, it's very pretty.
+	}
 }
 
 PrevasionDescription:
@@ -728,7 +898,7 @@ Buffs: {
 
 	SeptimalSurgeBuff: {
 		DisplayName: Septimal Surge
-		Description: Damage dealt is doubled.
+		Description: Damage dealt is increased.
 	}
 
 	ArmedPhenomenonBuff: {
@@ -754,7 +924,7 @@ Buffs: {
 	}
 
 	GFreeBuff: {
-		DisplayName: G Free Buff
+		DisplayName: G Free
 		Description: You can fly through the air uninterrupted.
 	}
 }
@@ -776,8 +946,7 @@ Configs: {
 				'''
 				Turn off to disable bosses having a chance to resurrect after dying if they were 
 				defeated before. 
-				This will not disrupt player resurrection, but make it impossible to accquire 
-				resurrection related items.
+				This will not disrupt player resurrection.
 				'''
 		}
 	}
@@ -816,7 +985,7 @@ Skills: {
 
 	GrandStrizer: {
 		DisplayName: Glorious Strizer
-		Description: Unleashes an electric blade that scales with remaining health over half the max.
+		Description: Unleashes an electric blade that scales with remaining player health and enemy health lost.
 	}
 
 	InfiniteSurge: {
@@ -902,3 +1071,5 @@ ArmedPhenomenon: {
 			'''
 	}
 }
+
+Conditions.MinimalDistance: Be close to a Dragon Vein.

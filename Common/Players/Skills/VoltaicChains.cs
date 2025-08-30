@@ -32,7 +32,7 @@ namespace GvMod.Common.Players.Skills
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
             player.noFallDmg = true;
-            player.velocity = Vector2.Zero;
+            player.velocity = new Vector2(0, 0.0000001f);
             player.position = player.oldPosition;
             player.fallStart = (int)player.Center.Y;
             base.MoveUpdate(player, adept);
@@ -43,7 +43,7 @@ namespace GvMod.Common.Players.Skills
             ReleasedChains.Clear();
             player.oldPosition = player.position;
 
-            int baseDamage = 50 + (2 * adept.Stage);
+            float baseDamage = 50 + (2 * adept.Stage) + (0.2f * adept.Level);
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
             ChainsLeft = 5 + (int)(adept.Stage / 3);
             // 4 frames per chain so the 12 frame timer will start after all chains have been shot
@@ -51,7 +51,16 @@ namespace GvMod.Common.Players.Skills
                 (int)VoltaicChainProjectile.MoveTime + 8;
             BaseChainWaitTimer += ElectrocutionTimer;
 
-            initialPower = player.GetModPlayer<ResurrectionPlayer>().resurrectionPower;
+            if (player.GetModPlayer<ResurrectionPlayer>().resurrected)
+            {
+                // Main.NewText("Resurrected");
+                initialPower = player.GetModPlayer<ResurrectionPlayer>().resurrectionPower;
+            }
+            else
+            {
+                // Main.NewText("Not resurrected");
+                initialPower = 0;
+            }
 
             EarlyCancel = false;
             return true;
@@ -77,7 +86,7 @@ namespace GvMod.Common.Players.Skills
                     VoltaicChainProjectile.MoveTime);
                 ReleasedChains.Add(Projectile.NewProjectileDirect(player.GetSource_FromThis("Septima"), 
                     chainInfo.Item1, chainInfo.Item2, ModContent.ProjectileType<VoltaicChainProjectile>(), 
-                    finalDamage, 4.25f, player.whoAmI, ElectrocutionTimer, ChainWaitTimer));
+                    finalDamage, 4f, player.whoAmI, ElectrocutionTimer, ChainWaitTimer));
                 ChainReleaseTimer = 0;
                 ChainsLeft--;
             }
@@ -105,7 +114,7 @@ namespace GvMod.Common.Players.Skills
             if (electrocute && adept.SpecialSkillUseTime % 4 == 0)
             {
                 float baseDamage = 90 + (10 * MathHelper.Clamp(registeredEnemies.Count, 0, 11)) 
-                    + (15 * adept.Stage);
+                    + (10 * adept.Stage) + (0.75f * adept.Level);
                 int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 
                 //Main.NewText("Electricity damage: " + finalDamage);
@@ -127,11 +136,11 @@ namespace GvMod.Common.Players.Skills
             //Main.NewText("Time limit: " + BaseChainWaitTimer);
             //Main.NewText("Cancel: " + EarlyCancel);
 
-            if (adept.SpecialSkillUseTime == BaseChainWaitTimer)
+            if (initialPower >= 2 && adept.SpecialSkillUseTime == BaseChainWaitTimer)
             {
                 for (int i = -1; i < 2; i++)
                 {
-                    float baseDamage = 65 + (5 * adept.Stage);
+                    float baseDamage = 65 + (5 * adept.Stage) + (0.25f * adept.Level);
                     int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
                     Projectile.NewProjectileDirect(player.GetSource_FromThis("Septima"),
                         new Vector2(Main.MouseWorld.X + (100 * i), player.Center.Y), Vector2.Zero,
@@ -149,6 +158,7 @@ namespace GvMod.Common.Players.Skills
         public override void HurtUpdate(Player player, SeptimaPlayer adept, Player.HurtInfo info)
         {
             // Early cancel if the damage is too high
+            if (initialPower >= 3) EarlyCancel = false;
             if (info.Damage >= (player.statLifeMax2 / 7) && !EarlyCancel)
             {
                 EarlyCancel = true;
@@ -162,6 +172,7 @@ namespace GvMod.Common.Players.Skills
                         {
                             // Change if break animation lasts a different amount of frames
                             projectile.timeLeft = VoltaicChainProjectile.BreakTime;
+                            projectile.velocity = Vector2.Zero;
                         }
                     }
                 }

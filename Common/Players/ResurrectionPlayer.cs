@@ -16,7 +16,7 @@ namespace GvMod.Common.Players
         Invisible,
         LumenWeak,
         Lumen,
-        Djin, 
+        Djinn, 
         Muse
     }
 
@@ -24,6 +24,8 @@ namespace GvMod.Common.Players
     {
         public bool resurrected = false;
         public bool canResurrect = false;
+        public bool wearingNecklace = false;
+        public int breakNecklace = 0;
         public float resurrectionPower = 0;
         public ulong resurrectionTime = 0;
         public AnthemAuraType type = AnthemAuraType.LumenWeak;
@@ -34,6 +36,8 @@ namespace GvMod.Common.Players
             if (resurrected) resurrectionTime++;
             resurrected = false;
             canResurrect = false;
+            wearingNecklace = false;
+            if (breakNecklace > 0) breakNecklace--;
             resurrectionPower = 0;
             base.ResetEffects();
         }
@@ -58,13 +62,14 @@ namespace GvMod.Common.Players
             //Main.NewText("Resurrection Player's PreUpdate.");
             if (resurrected)
             {
+                if (breakNecklace > 0) return;
                 // Main.NewText("Resurrection power: " + resurrectionPower);
                 SeptimaPlayer adept = Player.GetModPlayer<SeptimaPlayer>();
 
-                Player.GetDamage<SeptimaDamage>() += resurrectionPower / 25;
-                adept.EPUseModifier -= MathHelper.Clamp((resurrectionPower - 1) * 0.2f, 0, 1);
-                adept.SPRecoveryModifier += resurrectionPower > 3 ? 0.25f : 0;
-                adept.EPRecoveryModifier += 0.1f;
+                adept.EPUseModifier *= MathHelper.Clamp(1 - (resurrectionPower * 0.34f), 0, 1);
+                adept.EPRecoveryModifier += 0.12f * resurrectionPower;
+                adept.EPCooldownModifier *= resurrectionPower >= 2 ? 2 : 1;
+                adept.SPRecoveryModifier += resurrectionPower >= 3 ? 0.25f : 0;
                 Player.GetDamage<SeptimaDamage>() += 0.15f * resurrectionPower;
 
                 if (Player.HasBuff(ModContent.BuffType<ResurrectionCooldown>()) || resurrectionPower <= 0 ||
@@ -97,6 +102,23 @@ namespace GvMod.Common.Players
                 playSound = false;
                 genDust = false;
                 Player.AddBuff(ModContent.BuffType<Anthem>(), 3600 + (int)(1200 * (resurrectionPower - 1)));
+                resurrected = true;
+
+                SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AnthemActive") with
+                {
+                    PitchVariance = 0.1f
+                }, Player.Center);
+                return false;
+            }
+
+            if (wearingNecklace && !Player.HasBuff<ResurrectionCooldown>() && !resurrected)
+            {
+                breakNecklace = 2;
+
+                Player.Heal(Player.statLifeMax2);
+                playSound = false;
+                genDust = false;
+                Player.AddBuff(ModContent.BuffType<Anthem>(), 4800);
                 resurrected = true;
 
                 SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/AnthemActive") with

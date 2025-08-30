@@ -13,7 +13,7 @@ namespace GvMod.Content.Items.Accessories
     [AutoloadEquip(EquipType.Wings)]
     public class LumenWings : ModItem
     {
-        private int damageReduction = 10;
+        private float damageReduction = 10f;
 
         public override void SetStaticDefaults()
         {
@@ -22,7 +22,7 @@ namespace GvMod.Content.Items.Accessories
             // Fly speed: 9 (46 in the wiki)
             // Acceleration multiplier: 2.5
             // Fly time, Fly speed, Acceleration
-            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(150, 6.85f, 1.2f);
+            ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(150, 6.85f, 1.5f);
         }
 
         public override void SetDefaults()
@@ -50,9 +50,7 @@ namespace GvMod.Content.Items.Accessories
             {
                 effects.dustType.AddRange(new List<WingDust> { WingDust.Lumen1, WingDust.Lumen2 });
                 effects.specialWingType = SpecialWingEquip.Lumen;
-            }
-
-            if (hideVisual)
+            } else
             {
                 if (player.velocity.Y != 0)
                 {
@@ -82,7 +80,7 @@ namespace GvMod.Content.Items.Accessories
                 .AddIngredient<ActinoBlancCrystal>(10)
                 .AddIngredient<MorphoWings>()
                 .AddIngredient(ItemID.ChlorophyteBar, 8)
-                .AddTile(ItemID.MythrilAnvil)
+                .AddTile(TileID.MythrilAnvil)
                 .SortBefore(Main.recipe.First(recipe => recipe.createItem.wingSlot != -1))
                 .Register();
         }

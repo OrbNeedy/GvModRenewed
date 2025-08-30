@@ -1,5 +1,6 @@
 ﻿using GvMod.Common.Players;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Accessories
@@ -9,6 +10,8 @@ namespace GvMod.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.accessory = true;
+
+            Item.rare = ItemRarityID.Pink;
         }
 
         public override void UpdateEquip(Player player)
@@ -30,7 +33,8 @@ namespace GvMod.Content.Items.Accessories
         // Preventively adding this to avoid allowing other resurrection items override each other
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return base.CanAccessoryBeEquippedWith(equippedItem, incomingItem, player);
+            return equippedItem.ModItem is not BrokenNecklace && equippedItem.ModItem is not DjinnBunny &&
+                incomingItem.ModItem is not BrokenNecklace && incomingItem.ModItem is not DjinnBunny;
         }
     }
 }

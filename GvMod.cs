@@ -1,3 +1,5 @@
+using GvMod.Content.Items;
+using GvMod.Content.Items.Accessories;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Graphics.Shaders;
@@ -9,9 +11,12 @@ namespace GvMod
 	{
         public override void Load()
         {
-            Asset<Effect> prevasionShader = this.Assets.Request<Effect>("Effects/PrevasionEffect");
+            Asset<Effect> morvoltShader = Assets.Request<Effect>("Effects/RainbowEffect");
 
-            GameShaders.Misc["Prevasion"] = new MiscShaderData(prevasionShader, "Prevasion");
+            GameShaders.Misc["GvMod:Rainbow"] = new MiscShaderData(morvoltShader, "MorvoltWings");
+
+            GameShaders.Armor.BindShader(ModContent.ItemType<PowerfulDye>(), 
+                new ArmorShaderData(morvoltShader, "MorvoltWings"));
             base.Load();
         }
 	}

@@ -1,5 +1,6 @@
 ﻿using GvMod.Common.Players;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Items.Accessories
@@ -8,6 +9,8 @@ namespace GvMod.Content.Items.Accessories
     {
         public override void SetDefaults()
         {
+            Item.rare = ItemRarityID.Master;
+
             Item.accessory = true;
         }
 

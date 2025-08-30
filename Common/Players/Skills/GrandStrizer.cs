@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GvMod.Content;
+﻿using GvMod.Content;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -33,8 +28,8 @@ namespace GvMod.Common.Players.Skills
 
         public override bool OnSkillUse(Player player, SeptimaPlayer adept)
         {
-            float baseDamage = 300 + (5 * adept.Stage);
-            baseDamage *= MathHelper.Clamp(player.statLife/player.statLifeMax2, 1, 2);
+            float baseDamage = 300 + (10 * adept.Stage) + (int)(0.85f * adept.Level);
+            baseDamage *= MathHelper.Clamp(1 + (player.statLife / player.statLifeMax2), 1, 2);
             player.oldPosition = player.position;
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 

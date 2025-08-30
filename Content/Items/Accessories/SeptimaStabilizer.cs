@@ -1,5 +1,6 @@
 ﻿using GvMod.Common.Players;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -13,6 +14,8 @@ namespace GvMod.Content.Items.Accessories
         public override void SetDefaults()
         {
             Item.accessory = true;
+
+            Item.rare = ItemRarityID.Green;
         }
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(epModifier, recoveryModifier);

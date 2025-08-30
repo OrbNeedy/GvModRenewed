@@ -1,9 +1,7 @@
 ﻿using GvMod.Content.Items.Accessories;
+using GvMod.Content.Items.Materials;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -28,6 +26,9 @@ namespace GvMod.Common.GlobalItems
                             oneFromOptionsDrop.dropIds = original.ToArray();
                         }
                     }
+                    break;
+                case ItemID.MoonLordBossBag:
+                    itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DjinnBunny>(), 4));
                     break;
             }
         }

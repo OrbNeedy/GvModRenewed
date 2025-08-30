@@ -1,1 +1,25 @@
-Modify this file with a description of your mod.
+The Azure Striker Mod is a mod that allows you to become the Azure Striker.
+
+It adds a new class, the septima class, which has no weapons and rely on the player's natural powers (their septima).
+The content added includes:
+* 39 accessories
+* 6 armor sets
+* One weapon with an upgrade system that includes 
+	* 7 upgrades, which can be combined in the same weapon
+* A skill system based on ASG1 and ASG2's system, with 15 different special skills, ranging from buffs to attacks
+
+For people unfamiliar with Gunvolt, here is an introduction to the gameplay:
+The player has two different resources to watch for, their EP and SP.
+EP is the bar at the top of the screen.
+SP are the yellow bars at the bottom left corner.
+EP is used whenever the player activates their main attack, and SP is used whenever the player uses any special skill.
+EP recovers quickly, however SP recovers very slowly.
+When the player runs out of EP, they enter an overheated state, where EP recovers slower and they are unable to use the resource until it fills up completely.
+To the left, under the inventory, there is an icon which shows what skill is selected.
+When using a skill, the cost of the skill will be deducted from the SP bar and the skill will activate.
+Skills can be unlocked through consuming items and progressing in the game to increase the Level and Stage, which are shown under the EP bar.
+To deal aditional damage to targets, search for weapons to tag them with.
+Tagged enemies are dealt more damage from the player's main attack, tag damage is also unavoidable.
+The higher the tag level, the higher the damage.
+
+That is all! Enjoy

@@ -20,7 +20,7 @@ namespace GvMod.Content.Items.Accessories
         None, 
         Morpho, 
         Lumen, 
-        // Joule // This is GV3's Berserk GV Wings
+        Joule // This is GV3's Berserk GV Wings
     }
 
     [AutoloadEquip(EquipType.Wings)]
@@ -87,7 +87,7 @@ namespace GvMod.Content.Items.Accessories
                 .AddIngredient(ItemID.SoulofNight, 5)
                 .AddIngredient(ItemID.SoulofLight, 5)
                 .AddIngredient(ItemID.SoulofFlight, 20)
-                .AddTile(ItemID.MythrilAnvil)
+                .AddTile(TileID.MythrilAnvil)
                 .SortBefore(Main.recipe.First(recipe => recipe.createItem.wingSlot != -1))
                 .Register();
         }

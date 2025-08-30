@@ -1,5 +1,4 @@
 ﻿using GvMod.Common.Players;
-using GvMod.Content.Items.Armor.Protective;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -45,9 +44,9 @@ namespace GvMod.Content.Items.Armor.Pulsar
 
         public override void AddRecipes()
         {
-            CreateRecipe()
+            /*CreateRecipe()
                 .AddTile(TileID.MythrilAnvil)
-                .Register();
+                .Register();*/
         }
     }
 }
