@@ -93,7 +93,8 @@ namespace GvMod.Common.Players
         public int SelectedSkill { get; set; } = 0;
         public int SecondarySkillCooldown { get; set; } = 0;
         // Flags for the dragon veins this player already visited
-        public bool[] DragonVeinsVisited { get; set; } = new bool[] { false, false, false, false, false, false, 
+        public const int MaxDragonVeins = 7;
+        public bool[] DragonVeinsVisited { get; set; } = new bool[MaxDragonVeins] { false, false, false, false, false, false, 
             false };
 
         static SeptimaType[] _selectableSeptimas = { SeptimaType.AzureStriker };

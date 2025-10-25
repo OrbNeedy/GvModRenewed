@@ -21,6 +21,8 @@ Projectiles: {
 	GrandStrizerProjectile.DisplayName: Grand Strizer
 	AzureStrikerClaw.DisplayName: Dragon Claw
 	FlashphereProjectile.DisplayName: Astrasphere
+	ShadowstrikerProjectile.DisplayName: Shadowstriker
+	WideThunder.DisplayName: Thunder
 }
 
 DamageClasses: {
@@ -508,9 +510,23 @@ Items: {
 		Tooltip:
 			'''
 			Una mascara que simboliza el poder de un adepto.
-			Aumenta el daño septimo en {0}%.
-			Aumenta el daño de habilidades especiales en {1}%.
-			Aumenta el EP maximo en {2}%.
+			Aumenta el daño especial en {0}%.
+			Aumenta el EP maximo en {1}%.
+			Reduce el tiempo antes de la recuperación de EP en {2}%.
+			'''
+		SetBonus:
+			'''
+			Permite el uso de prevasión.
+			Aumenta la recuperación de SP en {3}%.
+			Aumenta el daño de septima en {4}%.
+			Activa el bonus de armadura y manten oprimido el botón para entrar en modo
+			Dnizer.
+			El modo Dnizer otorga EP infinito, vuelo libre, y mejora las habilidades 
+			septimas.
+			Sin embargo, quedarse por mucho tiempo en el modo Dnizer causará daño en 
+			aumento.
+			Oprime click derecho en el buff obtenido para desactivar el modo Dnizer.
+			{$PrevasionDescription}
 			'''
 	}
 
@@ -880,6 +896,28 @@ Items: {
 		DisplayName: Gema misteriosa
 		Tooltip: Una gema preciosa de un tipo desconocido, es muy linda.
 	}
+
+	PulsarBody: {
+		DisplayName: Uniforme de pulsar
+		Tooltip:
+			'''
+			Un uniforme que puede haber sido usado por un adepto en otro universo.
+			Aumenta el ataque principal en {0}%.
+			Aumenta la recuperación de EP en {1}%.
+			Reduce el uso de EP en {2}%.
+			'''
+	}
+
+	PulsarLegs: {
+		DisplayName: Pantalones de pulsar
+		Tooltip:
+			'''
+			Aumenta la velocidad en {0}%.
+			Aumenta la posibilidad de daño septimo critico en {1}%.
+			Aumenta el daño del ataque secundario en {2}%.
+			Aumenta la recuperación de sobrecalentamiento en {3}%.
+			'''
+	}
 }
 
 PrevasionDescription:
@@ -993,11 +1031,6 @@ Configs: {
 }
 
 Skills: {
-	Default: {
-		DisplayName: Vac�o
-		Description: Sin efecto
-	}
-
 	AlchemicalField: {
 		DisplayName: Alchemical Field
 		Description: Temporalmente aumenta la cantidad de dinero soltado y salud recuperada.
@@ -1006,6 +1039,20 @@ Skills: {
 	Astrasphere: {
 		DisplayName: Astrasphere
 		Description: Libera una esfera de fuerza electrica alrededor del jugador.
+	}
+
+	Default: {
+		DisplayName: Vacío
+		Description: Sin efecto
+	}
+
+	Electroshock: {
+		DisplayName: Electroshock
+		Description:
+			'''
+			Causa daño a toda la pantalla. sobrecalienta al instante, pero aumenta
+			daño con el EP usado.
+			'''
 	}
 
 	Dragonsphere: {
@@ -1021,6 +1068,11 @@ Skills: {
 	GalvanicRenewal: {
 		DisplayName: Galvanic Renewal
 		Description: Estimula la corriente bioelectrica para recuperar toda la salud
+	}
+
+	GFree: {
+		DisplayName: EM Float
+		Description: Utiliza el campo magnetico de la tierra para levitar libremente temporalmente.
 	}
 
 	GrandStrizer: {
@@ -1053,6 +1105,11 @@ Skills: {
 		Description: Canaliza energ�a septima latente para aumentar el poder de ataque.
 	}
 
+	Shadowstriker: {
+		DisplayName: Shadowstriker
+		Description: Crea copias temporales a ambos lados que causan daño.
+	}
+
 	SplitSecond: {
 		DisplayName: Split Second
 		Description: Recarga todo el EP instantaneamente, incluso en sobrecalentamiento.
@@ -1061,11 +1118,6 @@ Skills: {
 	VoltaicChains: {
 		DisplayName: Voltaic Chains
 		Description: Deploys electrifying chains, the power increases with the number of targets hit.
-	}
-
-	GFree: {
-		DisplayName: EM Float
-		Description: Utiliza el campo magnetico de la tierra para levitar libremente temporalmente.
 	}
 }
 
@@ -1113,4 +1165,11 @@ ArmedPhenomenon: {
 	}
 }
 
+PulsarHeadBonus.AzureStriker:
+	'''
+
+	Al sobrecalentarse, hay una posibilidad de recuperarse al instante y 
+	recuperar un SP cada 20 segundos.
+	Cuando se recupera del sobrecalentamiento, libera un rayo.
+	'''
 Conditions.MinimalDistance: Estar cerca a una vena dragón.

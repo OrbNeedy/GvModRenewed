@@ -111,7 +111,7 @@ namespace GvMod.Common.GlobalNPCs
                 case NPCID.LunarTowerSolar:
                 case NPCID.LunarTowerStardust:
                 case NPCID.LunarTowerVortex:
-                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PulsarFragment>(), 1, 3, 15));
+                    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PulsarFragment>(), 1, 10, 30));
                     break;
                 case NPCID.MoonLordCore:
                     npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DullahanUpgrade>(), 2));

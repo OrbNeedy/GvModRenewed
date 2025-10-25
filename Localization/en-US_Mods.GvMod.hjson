@@ -21,6 +21,8 @@ Projectiles: {
 	GrandStrizerProjectile.DisplayName: Grand Strizer
 	AzureStrikerClaw.DisplayName: Dragon Claw
 	FlashphereProjectile.DisplayName: Astrasphere
+	ShadowstrikerProjectile.DisplayName: Shadowstriker Projectile
+	WideThunder.DisplayName: Wide Thunder
 }
 
 DamageClasses: {
@@ -483,9 +485,20 @@ Items: {
 		Tooltip:
 			'''
 			A mask that signifies an adept's power.
-			Increases septima damage by {0}%.
-			Increases damage from special skills by {1}%.
-			Increases max EP by {2}%.
+			Increases special attack damage by {0}%.
+			Increases max EP by {1}.
+			Decreases time left before EP recovery by {2}%.
+			'''
+		SetBonus:
+			'''
+			Allows the use of prevasion.
+			Increases SP recovery by {3}%.
+			Increases septima damage by {4}%.
+			Activate armor set bonus and hold down the button to enter Dnizer mode.
+			Dnizer mode gives infinite EP, free flight, and improves septima abilities.
+			However, staying for too long in Dnizer mode will cause increasing damage.
+			Right click the obtained buff to deactivate Dnizer mode.
+			{$PrevasionDescription}
 			'''
 	}
 
@@ -840,6 +853,28 @@ Items: {
 		DisplayName: Mysterious Gemstone
 		Tooltip: A precious gem of an unknown kind, it's very pretty.
 	}
+
+	PulsarBody: {
+		DisplayName: Pulsar Uniform
+		Tooltip:
+			'''
+			A uniform that may have been used by an adept in another universe.
+			Increases main attack damage by {0}%.
+			Increases EP recovery by {1}%.
+			Decreases EP use by {2}%.
+			'''
+	}
+
+	PulsarLegs: {
+		DisplayName: Pulsar Pants
+		Tooltip:
+			'''
+			Increases speed by {0}%.
+			Increases septima crit chance by {1}%.
+			Increases secondary attack damage by {2}%.
+			Increases overheat recovery by {3}%.
+			'''
+	}
 }
 
 PrevasionDescription:
@@ -953,11 +988,6 @@ Configs: {
 }
 
 Skills: {
-	Default: {
-		DisplayName: None
-		Description: No effect.
-	}
-
 	AlchemicalField: {
 		DisplayName: Alchemical Field
 		Description: Temporarily increases the amount of money droped and health recovered.
@@ -966,6 +996,16 @@ Skills: {
 	Astrasphere: {
 		DisplayName: Astrasphere
 		Description: Deploys a sphere of electrical force around the player.
+	}
+
+	Default: {
+		DisplayName: None
+		Description: No effect.
+	}
+
+	Electroshock: {
+		DisplayName: Electroshock
+		Description: Strikes the entire screen. Instantly overheats, but increases damage with used EP.
 	}
 
 	Dragonsphere: {
@@ -981,6 +1021,11 @@ Skills: {
 	GalvanicRenewal: {
 		DisplayName: Galvanic Renewal
 		Description: Stimulates bioelectric current to completely recover health.
+	}
+
+	GFree: {
+		DisplayName: EM Float
+		Description: Utilizes the earth's magnetic field to levitate freely temporarily.
 	}
 
 	GrandStrizer: {
@@ -1013,6 +1058,11 @@ Skills: {
 		Description: Channels latent septima energy to temporarily increase attack power.
 	}
 
+	Shadowstriker: {
+		DisplayName: Shadowstriker
+		Description: Creates temporary attacking copies at both sides of the player.
+	}
+
 	SplitSecond: {
 		DisplayName: Split Second
 		Description: Instantly recharges all EP, even while overheating.
@@ -1021,11 +1071,6 @@ Skills: {
 	VoltaicChains: {
 		DisplayName: Voltaic Chains
 		Description: Deploys electrifying chains, the power increases with the number of targets hit.
-	}
-
-	GFree: {
-		DisplayName: EM Float
-		Description: Utilizes the earth's magnetic field to levitate freely temporarily.
 	}
 }
 
@@ -1072,4 +1117,11 @@ ArmedPhenomenon: {
 	}
 }
 
+PulsarHeadBonus.AzureStriker:
+	'''
+
+	When overheating, there is a chance to instantly recover, and recover 
+	one SP every 20 seconds.
+	When recovering from overheat, release a thunder.
+	'''
 Conditions.MinimalDistance: Be close to a Dragon Vein.

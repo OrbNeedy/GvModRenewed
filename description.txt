@@ -23,3 +23,13 @@ Tagged enemies are dealt more damage from the player's main attack, tag damage i
 The higher the tag level, the higher the damage.
 
 That is all! Enjoy
+
+Changelog 
++ Added full Pulsar Set.
++ Increased pulsar fragments droped by the pilars.
++ Increased Azure Striker's Armed Phenomenon Attack scaling from source potency.
++ Made the Azure Striker immune to Electrified.
++ Added Shadowstriker from TE.
++ Added Electroshock, it differs from TE's version.
++ Removed stage requirements to unlock Dragonsphere.
+* Dragonsphere is no longer unlocked upon finding any Dragon Vein, instead a specific one must be found before it can be unlocked.

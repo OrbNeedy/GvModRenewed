@@ -1,6 +1,5 @@
 ﻿using GvMod.Content.Buffs;
 using Microsoft.Xna.Framework;
-using System.Security.Cryptography.X509Certificates;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,6 +17,8 @@ namespace GvMod.Common.Players
         public int DnizerModeDamageTimer = 0;
         public int OldDnizerModeActivateTimer = 0;
         public int DnizerModeActivateTimer = 0;
+
+        public bool pulsarUpgrade = false;
 
         public override void PostUpdate()
         {
@@ -114,6 +115,8 @@ namespace GvMod.Common.Players
             }
             DnizerModeTimer = (int)MathHelper.Clamp(DnizerModeTimer, 0, DnizerModeMaxTimer);
             OldDnizerModeActivateTimer = DnizerModeActivateTimer;
+
+            pulsarUpgrade = false;
         }
     }
 }

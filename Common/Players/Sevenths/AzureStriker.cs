@@ -24,6 +24,8 @@ namespace GvMod.Common.Players.Sevenths
         public bool[] activeSpheres = { false, false, false };
         public int[] spheresIndexes = { -1, -1, -1 };
         public float sphereBaseRotation = 0;
+        public int pulsarBonusTimer = 0;
+        public static int maxPulsarBonusTimer = 1200;
 
         public int attackFrame = 0;
         public int attackTimer = 0;
@@ -36,7 +38,8 @@ namespace GvMod.Common.Players.Sevenths
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains(), new AlchemicalField(), 
             new InfiniteSurge(), new GalvanicRenewal(), new SeptimalBurst(), new SeptimalShield(), 
-            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere(), new GFree()
+            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere(), new GFree(), new Electroshock(), 
+            new Shadowstriker()
         };
         public override float EPUseBase { get; protected set; } = 0.75f;
         public override float EPRecoveryBaseRate { get; protected set; } = 0.004761904762f;
@@ -105,9 +108,6 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void PostLoadSeptima(Player player, SeptimaPlayer adept)
         {
-            // Increase by 0.1 every level
-            // Sounds like little, but it's a lot with flashfield
-            // BasicAttackDamage = BaseBasicAttackDamage + (adept.Level * 0.1f);
             base.PostLoadSeptima(player, adept);
         }
 
@@ -148,7 +148,10 @@ namespace GvMod.Common.Players.Sevenths
             {
                 ArmedPhenomenonClawCooldown--;
             }
-            // Main.NewText("Y pos: " + player.Center.Y);
+
+            player.buffImmune[BuffID.Electrified] = true;
+
+            if (pulsarBonusTimer > 0) pulsarBonusTimer--;
         }
 
         public override void MovementEffects(Player player, SeptimaPlayer adept)
@@ -411,6 +414,38 @@ namespace GvMod.Common.Players.Sevenths
             base.OnDnizerActive(player, adept);
         }
 
+        public override void OnOverheat(Player player, SeptimaPlayer adept)
+        {
+            if (player.GetModPlayer<SetBonusPlayer>().pulsarUpgrade)
+            {
+                //Main.NewText("On Overheat pulsar upgrade trigger");
+                if (pulsarBonusTimer <= 0)
+                {
+                    adept.CurrentSP++;
+                    pulsarBonusTimer = maxPulsarBonusTimer;
+                }
+
+                if (Main.rand.NextBool(10))
+                {
+                    //Main.NewText("Secondary effect trigger");
+                    adept.CurrentEP = adept.GetTotalMaxEP();
+                    adept.Overheated = false;
+                }
+            }
+        }
+
+        public override void OnOverheatRecovery(Player player, SeptimaPlayer adept)
+        {
+            if (player.GetModPlayer<SetBonusPlayer>().pulsarUpgrade)
+            {
+                int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
+                    ApplyTo(50 + (adept.Level * 0.25f) * (1 + (adept.Stage * 0.05f)));
+                Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero,
+                    ModContent.ProjectileType<WideThunder>(), finalDamage, 2, player.whoAmI, 0);
+            }
+            base.OnOverheatRecovery(player, adept);
+        }
+
         public override void SetArmedPhenomenonEquip(Player player, SeptimaPlayer adept, Mod mod)
         {
             player.head = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Head);
@@ -434,7 +469,7 @@ namespace GvMod.Common.Players.Sevenths
                 {
                     if (ArmedPhenomenonClawCooldown <= 0)
                     {
-                        float baseClawDamage = 20 + (potency * 5) + (adept.Stage * 5);
+                        float baseClawDamage = 20 + (potency * 10) + (adept.Stage * 5);
                         int finalDamage = (int)player.GetTotalDamage<MainAttackDamage>().
                             ApplyTo(baseClawDamage);
                         Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, 

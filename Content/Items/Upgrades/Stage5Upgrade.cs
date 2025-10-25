@@ -15,7 +15,7 @@ namespace GvMod.Content.Items.Upgrades
         {
             Item.rare = ItemRarityID.Lime;
 
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 8;

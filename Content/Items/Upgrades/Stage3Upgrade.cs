@@ -18,7 +18,8 @@ namespace GvMod.Content.Items.Upgrades
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 5));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 
-            Item.maxStack = 999;
+
+            Item.maxStack = Item.CommonMaxStack;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 8;

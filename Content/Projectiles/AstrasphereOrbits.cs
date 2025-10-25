@@ -12,7 +12,9 @@ namespace GvMod.Content.Projectiles
     {
         Default, 
         Launch,
-        Spread
+        Spread, 
+        Electroshock, 
+        ElectroshockCounterclock
     }
 
     public class AstrasphereOrbits : ModProjectile
@@ -62,6 +64,12 @@ namespace GvMod.Content.Projectiles
                 case (int)OrbitsBehavior.Spread:
                     Projectile.timeLeft += 200;
                     break;
+                case (int)OrbitsBehavior.ElectroshockCounterclock:
+                case (int)OrbitsBehavior.Electroshock:
+                    distance = 0;
+                    Projectile.Center = target;
+                    Projectile.timeLeft += 400;
+                    break;
             }
 
             Projectile.netUpdate = true;
@@ -100,12 +108,22 @@ namespace GvMod.Content.Projectiles
                         distance += 6;
                     }
                 }
+                if (behavior == (int)OrbitsBehavior.Electroshock || behavior == (int)OrbitsBehavior.ElectroshockCounterclock)
+                {
+                    distance += 4;
+                }
                 Projectile.Center = target + new Vector2(0, distance).RotatedBy(baseRotation);
                 Projectile.netUpdate = true;
             }
 
             TextureCycles();
-            baseRotation += MathHelper.TwoPi / 100;
+            if (behavior == (int)OrbitsBehavior.ElectroshockCounterclock)
+            {
+                baseRotation -= MathHelper.TwoPi / 100;
+            } else
+            {
+                baseRotation += MathHelper.TwoPi / 100;
+            }
             base.AI();
         }
 

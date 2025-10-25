@@ -9,15 +9,15 @@ namespace GvMod.Content.Items.Upgrades
     {
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.Lime;
-            Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
+            Item.maxStack = Item.CommonMaxStack;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.useTime = 10;
-            Item.useAnimation = 10;
+            Item.useTime = 8;
+            Item.useAnimation = 8;
             Item.UseSound = SoundID.Item15; // 29, 4, 92
             Item.noMelee = true;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
             Item.consumable = true;
         }
 

@@ -17,7 +17,7 @@ namespace GvMod.Content.Items.Upgrades
             ItemID.Sets.ItemIconPulse[Item.type] = true;
             ItemID.Sets.ItemNoGravity[Item.type] = true;
 
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = 8;
