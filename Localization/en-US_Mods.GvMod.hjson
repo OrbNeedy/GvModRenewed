@@ -11,7 +11,7 @@ Keybinds: {
 Projectiles: {
 	Flashfield.DisplayName: Flashfield
 	HairDartProjectile.DisplayName: Dart
-	Thunder.DisplayName: Thunder
+	Thunder.DisplayName: Crashvolt
 	AstrasphereOrbits.DisplayName: Orbits
 	OrochiDrone.DisplayName: Drone
 	AstrasphereProjectile.DisplayName: Astrasphere
@@ -21,8 +21,54 @@ Projectiles: {
 	GrandStrizerProjectile.DisplayName: Grand Strizer
 	AzureStrikerClaw.DisplayName: Dragon Claw
 	FlashphereProjectile.DisplayName: Astrasphere
-	ShadowstrikerProjectile.DisplayName: Shadowstriker Projectile
-	WideThunder.DisplayName: Wide Thunder
+	ShadowstrikerProjectile.DisplayName: Shadowstriker Copy
+	WideThunder.DisplayName: Thor's Hammer
+	Kunai.DisplayName: Kunai
+	RebirthZombie.DisplayName: Zombie
+	GorgonGazeBeam.DisplayName: Gorgon Gaze
+	SoulSiphonProjectile.DisplayName: Soul Siphon
+	EyeOfCthulhu.DisplayName: Eye Of Cthulhu
+	Skeletron.DisplayName: Skeletron
+	CthulhuServant.DisplayName: Cthulhu Servant
+	SkeletronArm.DisplayName: Skeletron Arm
+	SkullProjectile.DisplayName: Skull
+	QueenBee.DisplayName: Queen Bee
+	Stinger.DisplayName: Stinger
+	Plantera.DisplayName: Plantera
+	PlanteraSeed.DisplayName: Plantera Seed
+	PlanteraTentacle.DisplayName: Plantera Tentacle
+	Spore.DisplayName: Spore
+	ThornBall.DisplayName: Thorn Ball
+	Bubble.DisplayName: Bubble
+	DukeFishron.DisplayName: Duke Fishron
+	Sharknado.DisplayName: Sharknado
+	SharknadoSpawner.DisplayName: Sharknado
+	Sharkron.DisplayName: Sharkron
+	QueenSlime.DisplayName: Queen Slime
+	QueenSmash.DisplayName: Queen Smash
+	RoyalGel.DisplayName: Royal Gel
+	EaterofWorlds.DisplayName: Eater Of Worlds
+	BrainOfCthulhu.DisplayName: Brain Of Cthulhu
+	Creeper.DisplayName: Creeper
+	RebirthHook.DisplayName: Hook
+	RebirthHitbox.DisplayName: Tackle
+	GorgoneiaBeam.DisplayName: Gorgoneia
+	ZombieBat.DisplayName: Zombie Bat
+	ZombieBee.DisplayName: Zombie Bee
+	ZombieBigBat.DisplayName: Zombie Big Bat
+	ZombieCrimera.DisplayName: Zombie Crimera
+	ZombieEaterOfSouls.DisplayName: Zombie Eater Of Souls
+	ZombieFlyingSnake.DisplayName: Zombie Flying Snake
+	ZombieHellBat.DisplayName: Zombie Hell Bat
+	ZombieHornet.DisplayName: Zombie Hornet
+	ZombieIceBat.DisplayName: Zombie Ice Bat
+	ZombiePigron.DisplayName: Zombie Pigron
+	ZombiePixie.DisplayName: Zombie Pixie
+	ZombieScorpion.DisplayName: Zombie Scorpion
+	SoulSiphonExplosion.DisplayName: Explosion
+	ZombieFlyingEye.DisplayName: Zombie Flying Eye
+	ZombieSlime.DisplayName: Zombie Slime
+	ZombieWanderingEye.DisplayName: Zombie Wandering Eye
 }
 
 DamageClasses: {
@@ -30,6 +76,7 @@ DamageClasses: {
 	MainAttackDamage.DisplayName: Main Damage
 	SecondaryAttackDamage.DisplayName: Secondary Damage
 	SpecialAttackDamage.DisplayName: Special Damage
+	SeptimaSummonHybrid.DisplayName: Septima-Summon Damage
 }
 
 Items: {
@@ -565,7 +612,7 @@ Items: {
 			'''
 			Increases special skill damage by {0}%
 			Further increases special skill damage by {1}% when under the 
-			effects of resurrection.
+			effects of anthem.
 			'''
 	}
 
@@ -595,7 +642,7 @@ Items: {
 			'''
 			Increases main skill damage by {0}%
 			Further increases main skill damage by {1}% when under the 
-			effects of resurrection.
+			effects of anthem.
 			'''
 	}
 
@@ -647,7 +694,7 @@ Items: {
 			'''
 			Increases secondary skill damage by {0}%
 			Further increases secondary skill damage by {1}% when under the 
-			effects of resurrection.
+			effects of anthem.
 			'''
 	}
 
@@ -686,9 +733,9 @@ Items: {
 		DisplayName: Life Loupe
 		Tooltip:
 			'''
-			Tag damage steals life, but increases EP use and decreases main attack 
-			damage by {0}%, also increases the time it takes to begin EP recovery 
-			by {1}%.
+			Tag damage steals life, but increases EP use by {0}% and decreases 
+			general septima damage by {1}%, also increases the time it takes 
+			to begin EP recovery by {2}%.
 			'''
 	}
 
@@ -875,6 +922,123 @@ Items: {
 			Increases overheat recovery by {3}%.
 			'''
 	}
+
+	SteelKunai: {
+		DisplayName: Kunai
+		Tooltip:
+			'''
+			A simple kunai meant to be thrown.
+			While holding this with the {$UI.SeptimaNames.Rebirth} septima, use 
+			the main skill to throw the topmost left corpse in your inventory with 
+			it, tagging the enemy and resurrecting the corpse to do your bidding.
+			'''
+	}
+
+	Corpse: {
+		DisplayName: Corpse
+		Tooltip:
+			'''
+			A dead body.
+			Useless to many, but an adept with {$UI.SeptimaNames.Rebirth} can 
+			resurrect these dead bodies as zombies.
+			While selecting them, use the main skill to resurrect it, creating 
+			a stronger zombie than one resurrected by throwing a kunai.
+			'''
+	}
+
+	AffirmationItem: {
+		DisplayName: Affirmation Item
+		Tooltip: ""
+	}
+
+	NegationItem: {
+		DisplayName: Negation Item
+		Tooltip: ""
+	}
+
+	BatCorpse: {
+		DisplayName: Bat Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	BeeCorpse: {
+		DisplayName: Bee Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	BigBatCorpse: {
+		DisplayName: Big Bat Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	CrimeraCorpse: {
+		DisplayName: Crimera Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	EaterOfSoulsCorpse: {
+		DisplayName: Eater Of Souls Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	FlyingSnakeCorpse: {
+		DisplayName: Flying Snake Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	HellBatCorpse: {
+		DisplayName: Hell Bat Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	HornetCorpse: {
+		DisplayName: Hornet Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	IceBatCorpse: {
+		DisplayName: Ice Bat Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	PigronCorpse: {
+		DisplayName: Pigron Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	PixieCorpse: {
+		DisplayName: Pixie Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	ScorpionCorpse: {
+		DisplayName: Scorpion Corpse
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	CorpsePreservingGuide: {
+		DisplayName: Corpse Preserving Guide
+		Tooltip:
+			'''
+			A guide on how to preserve a monster corpse after 
+			killing it. Many find it morbid.
+			'''
+	}
+
+	FlyingEyeCorpse: {
+		DisplayName: Flying Eye Corpse
+		Tooltip: ""
+	}
+
+	SlimeCorpse: {
+		DisplayName: Slime Corpse
+		Tooltip: ""
+	}
+
+	WanderingEyeCorpse: {
+		DisplayName: Wandering Eye Corpse
+		Tooltip: ""
+	}
 }
 
 PrevasionDescription:
@@ -882,6 +1046,8 @@ PrevasionDescription:
 	Prevasion will ignore attacks with less than {0}% of the player's 
 	max life plus {1} damage at the cost of {2} EP.
 	Does not stack with other prevasion items.
+	If the adept's septima doesn't allow prevasion, greatly decreases 
+	damage taken.
 	'''
 
 UpgradeDescription: {
@@ -949,8 +1115,7 @@ Buffs: {
 		DisplayName: Dnizer mode
 		Description:
 			'''
-			Septima abilities greatly increased.
-			Infinite flight and EP allowed. 
+			Grants infinite EP and greatly enhances septima abilities. 
 			Using skills will fill up the Primal Dragon gauge, and over 100% 
 			the user will get damaged.
 			The higher the Primal Dragon gauge, the longer it will take to 
@@ -962,13 +1127,58 @@ Buffs: {
 		DisplayName: G Free
 		Description: You can fly through the air uninterrupted.
 	}
+
+	SoulPetrification: {
+		DisplayName: Soul Petrification
+		Description:
+			'''
+			You became petrified.
+			Tap left and right to be release faster.
+			'''
+	}
+
+	SoulCleanseBuff: {
+		DisplayName: Soul Cleanse
+		Description: Slowly cleaning all negative effects on you.
+	}
+
+	UnlimitedAnimusBuff: {
+		DisplayName: Unlimited Animus Buff
+		Description: You posess the ultimate power.
+	}
 }
 
-UI.LevelDescriptor:
-	'''
-	Lvl {0}
-	Stage {1}
-	'''
+UI: {
+	LevelDescriptor:
+		'''
+		Lvl {0}
+		Stage {1}
+		'''
+
+	SeptimaDescription: {
+		AzureStriker:
+			'''
+			The Azure Striker, a Septima that controls electrons, allowing it's user to generate and manipulate electricity. With these skills, it can attack multiple foes simultaneously, slow down it's fall by using the earth's electromagnetic field, and even increase the user's vital functions.
+			This septima's biggest weakness is water, as it will instantly overheat if the user tries to attack while submerged, and all water attacks will penetrate prevasion.
+			'''
+		EnergyWool:
+			'''
+			Energy Wool creates a fibrous energy source in the form of strings, this allows the user to make objects out of it, and even tie up enemies, at advanced levels, a user of Energy Wool might even transform itself into strings to simulate teleportation and prevasion.
+			The strings created are prone to being destroyed with enough fire, making that it's main weakness.
+			'''
+		Rebirth:
+			'''
+			Rebirth has the main power of returning life to the dead, although weaker users might strugle with it, this still allows them to resurrect others as zombies, this septima also gives the skill gorgon gaze, which turns those who see it into stone.
+			The power to take will always triump over the desire to have; This septima's weakeness come from forces too strong to take from.
+			'''
+	}
+
+	SeptimaNames: {
+		AzureStriker: Azure Striker
+		EnergyWool: Energy Wool
+		Rebirth: Rebirth
+	}
+}
 
 Configs: {
 	GameplayConfig: {
@@ -985,6 +1195,16 @@ Configs: {
 				'''
 		}
 	}
+
+	ClientConfig: {
+		DisplayName: Client Config
+		Headers.SeptimaSelection: Septima Selection
+
+		MrPlaguesButtonOffsetY: {
+			Label: MrPlagues Button Offset Y
+			Tooltip: Offset if playing with MrPlagues Authentic Races.
+		}
+	}
 }
 
 Skills: {
@@ -996,6 +1216,24 @@ Skills: {
 	Astrasphere: {
 		DisplayName: Astrasphere
 		Description: Deploys a sphere of electrical force around the player.
+	}
+
+	AstrasphereMandala1: {
+		DisplayName: Astrasphere Mandala
+		Description:
+			'''
+			Deploys a sphere of electrical force around the player, then launches it 
+			towards the mouse position.
+			'''
+	}
+
+	AstrasphereMandala2: {
+		DisplayName: Astrasphere Mandala
+		Description:
+			'''
+			Deploys a sphere of electrical force around the player, then launches it 
+			towards the mouse position. At the end, sends electric spheres outwards.
+			'''
 	}
 
 	Default: {
@@ -1043,6 +1281,15 @@ Skills: {
 		Description: Deploys a large electric blade in the direction to the mouse.
 	}
 
+	LuxcaliburLauncher: {
+		DisplayName: Luxcalibur Launcher
+		Description:
+			'''
+			Deploys a large electric blade in the direction to the mouse. After a
+			moment, the blade is launched at high speeds.
+			'''
+	}
+
 	SeptimalBurst: {
 		DisplayName: Septimal Burst
 		Description: Channels latent septimal energy to temporarily accelerate EP recovery.
@@ -1072,6 +1319,83 @@ Skills: {
 		DisplayName: Voltaic Chains
 		Description: Deploys electrifying chains, the power increases with the number of targets hit.
 	}
+
+	VoltaicChainsThunder: {
+		DisplayName: Voltaic Chains Thunder
+		Description:
+			'''
+			Deploys electrifying chains, the power increases with the number of targets hit.
+			As the chains fade, a crashbolt will strike the mouse position.
+			'''
+	}
+
+	AnimaReturn: {
+		DisplayName: Anima Return
+		Description: Manipulates the soul to force the body to heal slightly.
+	}
+
+	ReAnimate: {
+		DisplayName: Re-Animate
+		Description: Manipulates the soul to force the body to completely recover from damage.
+	}
+
+	Resurrection: {
+		DisplayName: Resurrection
+		Description: Forces nearby dead players to resurrect, ignoring respawn time and location.
+	}
+
+	Resurexionn: {
+		DisplayName: ReSURexIOnnN
+		Description:
+			'''
+			Die die die die DIE
+			DIE die die die die die DIE
+			Die die DIE die die
+			'''
+	}
+
+	SoulSiphon: {
+		DisplayName: Soul Siphon
+		Description: Steals the souls of enemies in a large area to heal and bursts out the remains.
+	}
+
+	SoulCleanse: {
+		DisplayName: Soul Cleanse
+		Description: Strengthens the user's soul to constantly renew itself, cleaning debuffs it may have.
+	}
+
+	OffensiveResurrection: {
+		DisplayName: Resurrect
+		Description:
+			'''
+			Forces the last boss you killed to resurrect at the mouse location and attack 
+			your enemies.
+			'''
+	}
+
+	Gorgoneia: {
+		DisplayName: Gorgoneia
+		Description: Shoots multiple powerful beams of light that petrify enemies for longer.
+	}
+
+	UnlimitedAnimus: {
+		DisplayName: Unlimited Animus
+		Description: Manifest the ultimate ability to become unkillable for a short time.
+	}
+
+	EternityKunai: {
+		DisplayName: Eternity Kunai
+		Description:
+			'''
+			Throw a huge amount of Kunais even if you lack the item, resurrecting 
+			corpses from your stash at random without consuming them.
+			'''
+	}
+}
+
+CorpseCollection: {
+	Allowed: Stealing enemy corpses is enabled.
+	Disabled: Stealing enemy corpses is disabled.
 }
 
 Generation: {
@@ -1103,7 +1427,7 @@ DragonVeins: {
 
 ArmedPhenomenon: {
 	AzureStriker: {
-		Name: "[c/{0}:Azure Striker]"
+		Name: "[c/{0}:{$UI.SeptimaNames.AzureStriker}]"
 		Description:
 			'''
 			Increased flight time and immunity to fall damage using the earth's 
@@ -1115,13 +1439,59 @@ ArmedPhenomenon: {
 			A glimpse into the terrifying power of a primal dragon.
 			'''
 	}
+
+	Rebirth: {
+		Name: "[c/{0}:{$UI.SeptimaNames.Rebirth}]"
+		Description:
+			'''
+			When moving through ropes or grapples, gain increased defense and 
+			attack power. Become immune to weak physical attacks while traveling 
+			fast with grappling hooks.
+			Allows the use of a special grapple which damages enemies.
+			The ultimate ability to control souls is unleashed.
+			'''
+	}
 }
 
-PulsarHeadBonus.AzureStriker:
-	'''
+PulsarHeadBonus: {
+	AzureStriker:
+		'''
 
-	When overheating, there is a chance to instantly recover, and recover 
-	one SP every 20 seconds.
-	When recovering from overheat, release a thunder.
-	'''
-Conditions.MinimalDistance: Be close to a Dragon Vein.
+		When overheating, there is a chance to instantly recover, and recover 
+		one SP every 20 seconds.
+		When recovering from overheat, release a thunder.
+		'''
+	Rebirth:
+		'''
+
+		Using resurrection also triggers the resurrection of the latest boss 
+		killed if possible.
+		Resurrecting a boss also resurrects all nearby players.
+		When resurrecting players or bosses, enter a super state for a short 
+		amount of time.
+		Hitting non-bosses with less than 50% health has a chance to instantly 
+		kill them, which increases with enemy health lost.
+		'''
+}
+
+Conditions: {
+	MinimalDistance: Be close to a Dragon Vein.
+	SpecificDragonVein: Visited a specific Dragon Vein.
+	AnyDragonVein: Visit any Dragon Vein.
+	AdeptStage2: Get to stage 2.
+	AdeptStage3: Get to stage 3.
+	AdeptStage4: Get to stage 4.
+	AdeptStage5: Get to stage 5.
+	AdeptStage6: Get to stage 6.
+	AdeptStage7: Get to stage 7.
+	AdeptStage8: Get to stage 8.
+	AdeptStage9: Get to stage 9.
+	AdeptStage10: Get to stage 10.
+}
+
+Death: {
+	VanishingWorld: "{0} could not control their power."
+	SpiritPoison: "{0}'s soul was too weak."
+}
+
+RebirthSadism: You find it enlightening.

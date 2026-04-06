@@ -6,6 +6,7 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Projectiles
@@ -22,18 +23,24 @@ namespace GvMod.Content.Projectiles
         private int Behavior { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         private int timer = 0;
         private int cycle = 0;
-        private Asset<Texture2D> field;
+        private static Asset<Texture2D> field;
         private List<float[]> oldPositions = new List<float[]>();
-        private Asset<Texture2D> extras;
-        private float extrasRotation = 0;
+        //private static Asset<Texture2D> extras;
+        //private float extrasRotation = 0;
 
         private Rectangle bounds = new Rectangle(0, 0, 192, 108);
         private Vector2 visualScale = new Vector2(0.125f, 0.4f);
         private bool darken = false;
-        private int extrasFrame = 0;
+        //private int extrasFrame = 0;
         private int frame = 0;
         private int frameTimer = 0;
-        private bool hideExtras = false;
+        //private bool hideExtras = false;
+
+        public override void SetStaticDefaults()
+        {
+            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/LuxcaliburProjectile");
+            //extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
+        }
 
         public override void SetDefaults()
         {
@@ -54,7 +61,7 @@ namespace GvMod.Content.Projectiles
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.timeLeft = 90;
+            Projectile.timeLeft = 60;
             Projectile.ownerHitCheck = false;
             Projectile.netImportant = true;
         }
@@ -71,16 +78,13 @@ namespace GvMod.Content.Projectiles
             switch (Behavior)
             {
                 case (int)LuxcaliburBehavior.Launch:
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/LuxcaliburProjectile");
-                    Projectile.timeLeft += 120;
+                    Projectile.timeLeft += 150;
                     Projectile.netUpdate = true;
                     break;
                 default:
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/LuxcaliburProjectile");
                     Projectile.netUpdate = true;
                     break;
             }
-            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
             timer++;
         }
 
@@ -110,7 +114,7 @@ namespace GvMod.Content.Projectiles
                         {
                             Projectile.velocity *= 0.8f;
                         }
-                        if (timer >= 75) 
+                        if (timer >= 60) 
                         {
                             timer = 0;
                             cycle++;
@@ -146,6 +150,26 @@ namespace GvMod.Content.Projectiles
         public override bool ShouldUpdatePosition()
         {
             return true;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                Vector2 velocity = new Vector2(0, 16).RotatedByRandom(MathHelper.TwoPi);
+                Dust.NewDust(target.Center - target.Size / 2, (int)target.Size.X, 
+                    (int)target.Size.Y, DustID.MartianSaucerSpark, velocity.X, velocity.Y);
+            }
+        }
+
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                Vector2 velocity = new Vector2(0, 16).RotatedByRandom(MathHelper.TwoPi);
+                Dust.NewDust(target.Center - target.Size / 2, (int)target.Size.X,
+                    (int)target.Size.Y, DustID.MartianSaucerSpark, velocity.X, velocity.Y);
+            }
         }
 
         public override void OnKill(int timeLeft)

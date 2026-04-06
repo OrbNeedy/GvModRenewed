@@ -31,12 +31,14 @@ namespace GvMod.Common.UI
         // Selected skill elements
         UIImageButton SelectedSkillButton;
         UIImage SelectedSkillFrame;
+        UIText SelectedSkillNameFirstLine;
         UIText SelectedSkillName;
         UIText SelectedSkillCost;
 
         // Adjacent skills elements
         UIImage[] AdjacentSkillButtons = new UIImage[2];
         UIImage[] AdjacentSkillFrames = new UIImage[2];
+        UIText[] AdjacentSkillNamesFirstLine = new UIText[2];
         UIText[] AdjacentSkillNames = new UIText[2];
         UIText[] AdjacentSkillCosts = new UIText[2];
 
@@ -102,7 +104,14 @@ namespace GvMod.Common.UI
             SelectedSkillFrame.Left.Set(-24, 0.5f);
             SelectedSkillFrame.Top.Set(-15, 0.5f);
 
-            SelectedSkillName = new UIText("None", 0.75f);
+            SelectedSkillNameFirstLine = new UIText("", 0.7f);
+            SelectedSkillNameFirstLine.Width.Set(160, 0f);
+            SelectedSkillNameFirstLine.Height.Set(12, 0f);
+            SelectedSkillNameFirstLine.Left.Set(0, 0f);
+            SelectedSkillNameFirstLine.Top.Set(-42, 0.5f);
+            SelectedSkillNameFirstLine.HAlign = 0.5f;
+
+            SelectedSkillName = new UIText("None", 0.7f);
             SelectedSkillName.Width.Set(160, 0f);
             SelectedSkillName.Height.Set(12, 0f);
             SelectedSkillName.Left.Set(0, 0f);
@@ -137,6 +146,13 @@ namespace GvMod.Common.UI
                 AdjacentSkillFrames[i].ScaleToFit = true;
                 AdjacentSkillFrames[i].ImageScale = 0.5f;
                 AdjacentSkillFrames[i].Color = new Color(170, 170, 170);
+
+                AdjacentSkillNamesFirstLine[i] = new UIText("", 0.5f);
+                AdjacentSkillNamesFirstLine[i].Width.Set(72, 0f);
+                AdjacentSkillNamesFirstLine[i].Height.Set(12, 0f);
+                AdjacentSkillNamesFirstLine[i].Left.Set(0 - (86 * i), i);
+                AdjacentSkillNamesFirstLine[i].Top.Set(-36, 0.5f);
+                AdjacentSkillNamesFirstLine[i].TextColor = new Color(170, 170, 170);
 
                 AdjacentSkillNames[i] = new UIText("None", 0.5f);
                 AdjacentSkillNames[i].Width.Set(72, 0f);
@@ -185,6 +201,7 @@ namespace GvMod.Common.UI
             {
                 UIImage evaluatedFrame = AdjacentSkillFrames[index];
                 UIImage evaluatedIcon = AdjacentSkillButtons[index];
+                UIText evaluatedNameFirstLine = AdjacentSkillNamesFirstLine[index];
                 UIText evaluatedName = AdjacentSkillNames[index];
                 UIText evaluatedCost = AdjacentSkillCosts[index];
 
@@ -204,8 +221,9 @@ namespace GvMod.Common.UI
                     evaluatedIcon.SetImage(DefaultSkill);
                     evaluatedFrame.SetImage(DefaultFrame);
 
+                    evaluatedNameFirstLine.SetText("");
                     evaluatedName.SetText(Language.
-                        GetTextValue($"Mods.GvMod.Skills.Default.Description"));
+                        GetTextValue($"Mods.GvMod.Skills.Default.Name"));
                     evaluatedCost.SetText(""); // Localization unecessary 
 
                     base.Update(gameTime);
@@ -215,9 +233,30 @@ namespace GvMod.Common.UI
                 }
 
                 SpecialSkill evaluatedSkill = adept.septima.AvailableSkills[evaluatedSkillIndex];
+                string? adjacentName = evaluatedSkill.GetFinalName(Main.LocalPlayer, adept);
+                string adjacentNameKey = evaluatedSkill.GetNewNameKey(Main.LocalPlayer, adept);
+                string[] adjacentLines;
+                if (adjacentName == null)
+                {
+                    adjacentLines = Language.GetTextValue($"Mods.GvMod.Skills.{adjacentNameKey}.DisplayName").
+                        Split(["\n"], System.StringSplitOptions.TrimEntries);
+                }
+                else
+                {
+                    adjacentLines = adjacentName.Split(["\n"], System.StringSplitOptions.TrimEntries);
+                }
 
-                evaluatedName.SetText(
-                    Language.GetTextValue($"Mods.GvMod.Skills.{evaluatedSkill.LocalizationKey}.DisplayName")); 
+                if (adjacentLines.Length >= 2)
+                {
+                    evaluatedNameFirstLine.SetText(adjacentLines[0]);
+                    evaluatedName.SetText(adjacentLines[1]);
+                }
+                else
+                {
+                    evaluatedNameFirstLine.SetText("");
+                    evaluatedName.SetText(adjacentLines[0]);
+                }
+
                 evaluatedCost.SetText($"{evaluatedSkill.SPCost} SP"); // Localization unecessary 
 
                 if (evaluatedSkill.CooldownTime > 0)
@@ -245,6 +284,7 @@ namespace GvMod.Common.UI
                 SelectedSkillButton.SetImage(DefaultSkill);
                 SelectedSkillFrame.SetImage(DefaultFrame);
 
+                SelectedSkillNameFirstLine.SetText("");
                 SelectedSkillName.SetText("None"); // Change to use localizations
                 SelectedSkillCost.SetText(""); // Localization unecessary 
 
@@ -254,9 +294,30 @@ namespace GvMod.Common.UI
             }
 
             SpecialSkill skill = adept.septima.AvailableSkills[adept.SelectedSkill];
+            string? name = skill.GetFinalName(Main.LocalPlayer, adept);
+            string nameKey = skill.GetNewNameKey(Main.LocalPlayer, adept);
+            string[] lines;
+            if (name == null)
+            {
+                lines = Language.GetTextValue($"Mods.GvMod.Skills.{nameKey}.DisplayName").
+                    Split(["\n"], System.StringSplitOptions.TrimEntries);
+            }
+            else
+            {
+                lines = name.Split(["\n"], System.StringSplitOptions.TrimEntries);
+            }
 
-            SelectedSkillName.SetText(Language.
-                GetTextValue($"Mods.GvMod.Skills.{skill.LocalizationKey}.DisplayName")); 
+            if (lines.Length >= 2)
+            {
+                SelectedSkillNameFirstLine.SetText(lines[0]);
+                SelectedSkillName.SetText(lines[1]);
+            }
+            else
+            {
+                SelectedSkillNameFirstLine.SetText("");
+                SelectedSkillName.SetText(lines[0]);
+            }
+
             SelectedSkillCost.SetText($"{skill.SPCost} SP"); // Localization unecessary 
 
             if (skill.CooldownTime > 0)
@@ -300,8 +361,16 @@ namespace GvMod.Common.UI
 
                         if (evaluatedSkill.InternalName != "Default" && evaluatedSkill.LocalizationKey != "Default")
                         {
-                            UICommon.TooltipMouseText(Language.
-                                GetTextValue($"Mods.GvMod.Skills.{evaluatedSkill.LocalizationKey}.Description"));
+                            string? description = evaluatedSkill.GetFinalDescription(Main.LocalPlayer, adept);
+                            string nameKey = evaluatedSkill.GetNewNameKey(Main.LocalPlayer, adept);
+                            if (description == null)
+                            {
+                                UICommon.TooltipMouseText(Language.
+                                    GetTextValue($"Mods.GvMod.Skills.{nameKey}.Description"));
+                            } else
+                            {
+                                UICommon.TooltipMouseText(description);
+                            }
                         }
                     }
                 }

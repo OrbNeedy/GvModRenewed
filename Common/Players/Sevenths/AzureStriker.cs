@@ -4,6 +4,7 @@ using GvMod.Common.GlobalNPCs;
 using GvMod.Common.Players.Skills;
 using GvMod.Common.Utils;
 using GvMod.Content;
+using GvMod.Content.Buffs;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,7 @@ namespace GvMod.Common.Players.Sevenths
         public int[] spheresIndexes = { -1, -1, -1 };
         public float sphereBaseRotation = 0;
         public int pulsarBonusTimer = 0;
-        public static int maxPulsarBonusTimer = 1200;
+        public const int maxPulsarBonusTimer = 1200;
 
         public int attackFrame = 0;
         public int attackTimer = 0;
@@ -33,34 +34,46 @@ namespace GvMod.Common.Players.Sevenths
 
         public int ArmedPhenomenonClawCooldown = 0;
 
-        public override float BaseBasicAttackDamage { get; protected set; } = 5;
+        public override float BaseBasicAttackDamage { get; protected set; } = 7;
         public override float BaseSecondaryAttackDamage { get; protected set; } = 20;
         public override List<SpecialSkill> SkillList { get; protected set; } = new() { new SpecialSkill(),
             new Astrasphere(), new GalvanicPatch(), new Luxcalibur(), new VoltaicChains(), new AlchemicalField(), 
             new InfiniteSurge(), new GalvanicRenewal(), new SeptimalBurst(), new SeptimalShield(), 
-            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere(), new GFree(), new Electroshock(), 
-            new Shadowstriker()
+            new SeptimalSurge(), new SplitSecond(), new GrandStrizer(), new Dragonsphere().SetUnlockConditions(
+                [CustomConditions.FirstDragonVein]), new GFree(), new Electroshock().
+            SetUnlockConditions([CustomConditions.FifthDragonVein]), new Shadowstriker().
+            SetUnlockConditions([CustomConditions.ThirdDragonVein])
         };
         public override float EPUseBase { get; protected set; } = 0.75f;
-        public override float EPRecoveryBaseRate { get; protected set; } = 0.004761904762f;
+        public override float EPRecoveryBaseRate { get; protected set; } = 1f / 210f;
         public override int EPCooldownBaseTimer { get; protected set; } = 90;
-        public override float OverheatRecoveryBaseRate { get; protected set; } = 0.002380952381f;
-        public override float SPRecoveryBaseRate { get; protected set; } = 0.000185f;
+        public override float OverheatRecoveryBaseRate { get; protected set; } = 1f / 420f;
+        public override float SPRecoveryBaseRate { get; protected set; } = 1f / 5400f;
         public override int PrevasionEPCooldownBaseTimer { get; protected set; } = 90;
 
         public override SeptimaType Type { get; protected set; } = SeptimaType.AzureStriker;
         public override string InternalName => "AzureStriker";
         public override Color MainColor => new Color(77, 242, 229);
 
-        public override void InitializeSeptima(Player player, SeptimaPlayer adept, Mod mod)
+        public override void PostLoadSeptima(Mod mod)
         {
-            NPCDamageResistances = new() {
+            int headID = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Head);
+            ArmorIDs.Head.Sets.DrawFullHair[headID] = true;
+        }
+
+        public override Dictionary<int, Resistance> GetNPCResistances()
+        {
+            return new()
+            {
                 [NPCID.WaterSphere] = Resistance.Penetrate,
                 [NPCID.Sharkron] = Resistance.Penetrate,
                 [NPCID.Sharkron2] = Resistance.Penetrate
             };
+        }
 
-            ProjectileDamageResistances = new()
+        public override Dictionary<int, Resistance> GetProjectileResistances()
+        {
+            return new()
             {
                 [ProjectileID.WaterBolt] = Resistance.Overheat,
                 [ProjectileID.WaterGun] = Resistance.Penetrate,
@@ -76,16 +89,26 @@ namespace GvMod.Common.Players.Sevenths
                 [ProjectileID.MartianTurretBolt] = Resistance.Absorb,
                 [ProjectileID.CultistBossLightningOrbArc] = Resistance.Ignore,
                 [ProjectileID.CultistBossLightningOrb] = Resistance.Penetrate,
+                [ProjectileID.MedusaHead] = Resistance.Overheat,
+                [ProjectileID.MedusaHeadRay] = Resistance.Overheat,
+                [ProjectileID.Sharknado] = Resistance.Overheat,
+                [ProjectileID.Cthulunado] = Resistance.Overheat,
                 [ModContent.ProjectileType<Flashfield>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<FlashphereProjectile>()] = Resistance.Penetrate,
                 [ModContent.ProjectileType<AstrasphereProjectile>()] = Resistance.Penetrate,
                 [ModContent.ProjectileType<AstrasphereOrbits>()] = Resistance.Penetrate,
                 [ModContent.ProjectileType<LuxcaliburProjectile>()] = Resistance.Penetrate,
                 [ModContent.ProjectileType<VoltaicChainProjectile>()] = Resistance.Penetrate,
-                [ModContent.ProjectileType<GrandStrizerProjectile>()] = Resistance.Penetrate
+                [ModContent.ProjectileType<GrandStrizerProjectile>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<WideThunder>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<SoulSiphonExplosion>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<GorgonGazeBeam>()] = Resistance.Penetrate,
+                [ModContent.ProjectileType<GorgoneiaBeam>()] = Resistance.Penetrate
             };
+        }
 
-            int headID = EquipLoader.GetEquipSlot(mod, "AzureStrikerArmedPhenomenon", EquipType.Head);
-            ArmorIDs.Head.Sets.DrawFullHair[headID] = true;
+        public override void InitializeSeptima(Player player, SeptimaPlayer adept, Mod mod)
+        {
         }
 
         public override void LoadSeptima(Mod mod)
@@ -106,31 +129,8 @@ namespace GvMod.Common.Players.Sevenths
                 EquipType.HandsOn, name: "AzureStrikerArmedPhenomenon");
         }
 
-        public override void PostLoadSeptima(Player player, SeptimaPlayer adept)
-        {
-            base.PostLoadSeptima(player, adept);
-        }
-
         public override void MiscEffects(Player player, SeptimaPlayer adept)
         {
-            attackTimer++;
-            if (attackTimer >= 2)
-            {
-                attackFrame += Main.rand.Next(-3, 3);
-                attackTimer = 0;
-                if (attackFrame > 6)
-                {
-                    attackFrame = 0;
-                }
-                if (attackFrame < 0)
-                {
-                    attackFrame = 6;
-                }
-            }
-
-            attackRotation -= 0.001745329252f;
-            sphereBaseRotation += MathHelper.TwoPi / 100;
-
             if (flashfieldIndex > -1)
             {
                 Projectile flashfield = Main.projectile[flashfieldIndex];
@@ -142,16 +142,9 @@ namespace GvMod.Common.Players.Sevenths
                 activeFlashfield = false;
             }
 
-            AllowPrevasion = !activeFlashfield;
-
-            if (ArmedPhenomenonClawCooldown > 0)
-            {
-                ArmedPhenomenonClawCooldown--;
-            }
+            AllowPrevasion = !activeFlashfield && (!player.wet || adept.Stage >= 5);
 
             player.buffImmune[BuffID.Electrified] = true;
-
-            if (pulsarBonusTimer > 0) pulsarBonusTimer--;
         }
 
         public override void MovementEffects(Player player, SeptimaPlayer adept)
@@ -170,7 +163,7 @@ namespace GvMod.Common.Players.Sevenths
             // Main.NewText("Frames: " + adept.MainSkillUseTime);
             if (player.wet)
             {
-                if (adept.Stage <= 5)
+                if (adept.Stage < 5)
                 {
                     if (adept.ForceOverheat()) return true;
                 } else if (adept.Stage <= 7)
@@ -321,7 +314,7 @@ namespace GvMod.Common.Players.Sevenths
                 Projectile.NewProjectile(player.GetSource_FromThis("Septima"), player.Center, Vector2.Zero, 
                     ModContent.ProjectileType<Thunder>(), finalDamage, 0, player.whoAmI, 1);
             }
-            return adept.SecondarySkillUseTime >= 60 ? 600 : 0;
+            return adept.SecondarySkillUseTime >= 60 ? 480 : 0;
         }
 
         public override void OnLevelUp(Player player, SeptimaPlayer adept)
@@ -340,7 +333,7 @@ namespace GvMod.Common.Players.Sevenths
 
                 for (int i = 0; i < adept.TaggedNPCs.targetCount; i++)
                 {
-                    if (i > 9) break;
+                    if (i >= 9) break;
                     Tag currentTag = adept.TaggedNPCs.GetTagByIndex(i);
                     NPC target = Main.npc[currentTag.targetIndex];
                     float totalDistance = player.Center.Distance(target.Center);
@@ -376,16 +369,17 @@ namespace GvMod.Common.Players.Sevenths
                             bounds.Width = (int)(140 * (currentPosition.Distance(target.Center)/128));
                         }
 
-                        Main.EntitySpriteDraw(
-                            thunder.Value,
-                            currentPosition - Main.screenPosition,
-                            bounds,
-                            Color.White * alpha,
-                            rotationToNext,
-                            new Vector2(0, 38),
-                            1f,
-                            SpriteEffects.None
-                        );
+                        drawInfo.DrawDataCache.Add(
+                            new DrawData(
+                                thunder.Value,
+                                currentPosition - Main.screenPosition,
+                                bounds,
+                                Color.White * alpha,
+                                rotationToNext,
+                                new Vector2(2, 38),
+                                1f,
+                                SpriteEffects.None
+                        ));
 
                         if (currentPosition.Distance(target.Center) <= 128) break;
 
@@ -401,6 +395,8 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void OnDnizerActive(Player player, SeptimaPlayer adept)
         {
+            if (Main.myPlayer != player.whoAmI) return;
+
             for (int i = -5; i < 6; i++)
             {
                 Vector2 offset = new Vector2(120 * i, 0);
@@ -436,7 +432,7 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void OnOverheatRecovery(Player player, SeptimaPlayer adept)
         {
-            if (player.GetModPlayer<SetBonusPlayer>().pulsarUpgrade)
+            if (player.GetModPlayer<SetBonusPlayer>().pulsarUpgrade && Main.myPlayer == player.whoAmI)
             {
                 int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().
                     ApplyTo(50 + (adept.Level * 0.25f) * (1 + (adept.Stage * 0.05f)));
@@ -460,7 +456,7 @@ namespace GvMod.Common.Players.Sevenths
 
         public override void ArmedPhenomenonPreUpdate(Player player, SeptimaPlayer adept, int potency)
         {
-            if (player.ItemAnimationActive)
+            if (player.ItemAnimationActive && Main.myPlayer == player.whoAmI)
             {
                 Item item = player.HeldItem;
                 if (item.axe <= 0 && item.pick <= 0 && item.hammer <= 0 && item.createTile == -1 &&
@@ -486,7 +482,7 @@ namespace GvMod.Common.Players.Sevenths
         {
             if (!adept.Overheated)
             {
-                player.wingTimeMax += 30 + (15 * potency);
+                player.wingTimeMax += 20 + (20 * potency);
             }
 
             player.noFallDmg = true;
@@ -524,28 +520,20 @@ namespace GvMod.Common.Players.Sevenths
                 {
                     float stageDamage = adept.Stage * 1.75f;
                     float levelDamage = adept.Level * 0.2f;
-                    /*Main.NewText("Base damage: " + BaseBasicAttackDamage);
-                    Main.NewText("Stage damage: " + stageDamage);
-                    Main.NewText("Level damage: " + levelDamage);
-                    Main.NewText("Septima Damage Modifier: " + 
-                        player.GetDamage<SeptimaDamage>().Additive);
-                    Main.NewText("Main Damage Modifier: " +
-                        player.GetDamage<MainAttackDamage>().Additive);*/
                     returnValue = BaseBasicAttackDamage + stageDamage + levelDamage;
-                    //Main.NewText("Final damage: " + returnValue);
                 }
             }
             
             return returnValue;
         }
 
-        public override float GetTagSkillPower(Player player, SeptimaPlayer adept, Tag tag, int tagCount)
+        public override float GetTagSkillPower(Player player, SeptimaPlayer adept, Tag tag, int tagCount = 1)
         {
             float returnValue = (BaseBasicAttackDamage + (adept.Level * 0.08f) + (adept.Stage)) * 
                 (1f + ((float)tag.tagLevel * 0.5f)) / (1f + ((float)tagCount * 0.02f));
             if (player.GetModPlayer<PlayerBuffs>().DilationReticles)
             {
-                returnValue *= 0.7f;
+                returnValue *= 0.5f;
             }
             return returnValue;
         }
@@ -554,6 +542,45 @@ namespace GvMod.Common.Players.Sevenths
         {
             float returnValue = 10 + (adept.Stage * 3) + (adept.Level * 0.4f);
             return returnValue;
+        }
+
+        public override bool GetSuperState(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrection = player.GetModPlayer<ResurrectionPlayer>();
+            PlayerBuffs buffs = player.GetModPlayer<PlayerBuffs>();
+
+            bool gv2SuperCheck = player.HasBuff<SeptimalSurgeBuff>() && resurrection.resurrectionPower >= 2;
+            bool gv3SuperCheck = adept.DnizerMode;
+
+            return (gv2SuperCheck || gv3SuperCheck) && !adept.Overheated;
+        }
+
+        public override void ResetEffects(Player player, SeptimaPlayer adept)
+        {
+            if (ArmedPhenomenonClawCooldown > 0)
+            {
+                ArmedPhenomenonClawCooldown--;
+            }
+
+            attackTimer++;
+            if (attackTimer >= 2)
+            {
+                attackFrame += Main.rand.Next(-3, 3);
+                attackTimer = 0;
+                if (attackFrame > 6)
+                {
+                    attackFrame = 0;
+                }
+                if (attackFrame < 0)
+                {
+                    attackFrame = 6;
+                }
+            }
+
+            attackRotation -= 0.001745329252f;
+            sphereBaseRotation += MathHelper.TwoPi / 100;
+
+            if (pulsarBonusTimer > 0) pulsarBonusTimer--;
         }
     }
 }

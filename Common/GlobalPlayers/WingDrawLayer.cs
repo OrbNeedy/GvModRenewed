@@ -91,9 +91,7 @@ namespace GvMod.Common.GlobalPlayers
                         1f,
                         drawInfo.playerEffect);
 
-                    if ((drawInfo.drawPlayer.GetModPlayer<SeptimaPlayer>().DnizerMode ||
-                        drawInfo.drawPlayer.GetModPlayer<ResurrectionPlayer>().resurrected) &&
-                        !drawInfo.drawPlayer.GetModPlayer<SeptimaPlayer>().Overheated)
+                    if (drawInfo.drawPlayer.GetModPlayer<SeptimaPlayer>().SuperState)
                     {
                         item.shader = GameShaders.Armor.GetShaderIdFromItemId(
                             ModContent.ItemType<PowerfulDye>());

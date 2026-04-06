@@ -36,7 +36,7 @@ namespace GvMod.Content.Items.Accessories
             {
                 float pulseAmount = Main.mouseTextColor / 255f;
 
-                Color textColor = SeptimaPlayer.GetStaticSeptima(lastSeptima).MainColor * pulseAmount;
+                Color textColor = SeptimaTemplates.GetSeptimaTemplate(lastSeptima).MainColor * pulseAmount;
                 tooltips.Insert(index + 1, new TooltipLine(Mod, "GlaiveSeptimaName",
                     Language.GetText($"Mods.GvMod.ArmedPhenomenon.{lastSeptima.ToString()}.Name").
                     Format(textColor.Hex3())));
@@ -132,7 +132,7 @@ namespace GvMod.Content.Items.Accessories
                 .AddIngredient<Glaive>()
                 .AddIngredient<SpiritualStone>(75)
                 .AddIngredient<PureBlancCells>(20)
-                .AddCondition(CraftConditions.NearDragonVein)
+                .AddCondition(CustomConditions.NearDragonVein)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();
         }

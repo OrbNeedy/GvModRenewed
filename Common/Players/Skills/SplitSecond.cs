@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace GvMod.Common.Players.Skills
 {
@@ -25,6 +24,9 @@ namespace GvMod.Common.Players.Skills
             {
                 Dust.NewDustPerfect(player.Center, DustID.Clentaminator_Cyan);
             }
+
+            // Clear chaffed 
+            //player.ClearBuff(ModContent.BuffType<>());
 
             return true;
         }

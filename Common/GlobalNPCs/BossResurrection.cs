@@ -21,7 +21,7 @@ namespace GvMod.Common.GlobalNPCs
 
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if (source.Context == "Resurrected")
+            if (source?.Context == "Resurrected")
             {
                 resurrected = true;
                 npc.takenDamageMultiplier += 5;

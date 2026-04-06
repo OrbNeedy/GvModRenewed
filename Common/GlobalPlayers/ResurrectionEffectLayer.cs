@@ -114,9 +114,6 @@ namespace GvMod.Common.GlobalPlayers
 
             switch (resurrection.type)
             {
-                case AnthemAuraType.LumenWeak:
-                case AnthemAuraType.Lumen:
-                    return;
                 case AnthemAuraType.Djinn:
                     boundSize = new Vector2(142, 142);
                     offset = new Vector2(0, 0);

@@ -1,4 +1,6 @@
-﻿using GvMod.Content.Items.Accessories;
+﻿using GvMod.Common.Players;
+using GvMod.Common.Players.Sevenths;
+using GvMod.Content.Items.Accessories;
 using GvMod.Content.Items.Materials;
 using GvMod.Content.Items.Pickups;
 using GvMod.Content.Items.Upgrades;
@@ -28,14 +30,8 @@ namespace GvMod.Common.GlobalNPCs
                 npcLoot.Add(ItemDropRule.ByCondition(new MirrorShardDropCondition(), 
                     ModContent.ItemType<MirrorShard>(), 4));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<UniversalUpgradeItem>(), 250, 1, 5));
-                npcLoot.Add(ItemDropRule.ByCondition(new SeptimaLumpCondition(),
-                    ModContent.ItemType<SeptimaLump>(), 1, 10, 20));
                 npcLoot.Add(ItemDropRule.ByCondition(new Conditions.BeatAnyMechBoss(),
                     ModContent.ItemType<MysteriousGemstone>(), 4));
-            } else
-            {
-                npcLoot.Add(ItemDropRule.ByCondition(new SeptimaLumpCondition(),
-                    ModContent.ItemType<SeptimaLump>(), 10));
             }
 
             if (npc.boss || npc.rarity >= 4)
@@ -139,6 +135,40 @@ namespace GvMod.Common.GlobalNPCs
                     break;
             }
             base.ModifyNPCLoot(npc, npcLoot);
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            Player closestPlayer = Main.player[Player.FindClosest(npc.position, npc.width, npc.height)];
+            SeptimaPlayer adept = closestPlayer.GetModPlayer<SeptimaPlayer>();
+
+            if (!NPCID.Sets.NeverDropsResourcePickups[npc.type] && closestPlayer.RollLuck(5) == 0 && 
+                npc.lifeMax > 1 && npc.damage > 0 && Main.rand.NextBool(2) && 
+                adept.CurrentEP < adept.GetTotalMaxEP())
+            {
+                Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<SeptimaLump>());
+
+                if (npc.boss)
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Item.NewItem(npc.GetSource_Loot(), npc.getRect(), ModContent.ItemType<SeptimaLump>());
+                    }
+                }
+            }
+
+            if (Main.LocalPlayer.GetModPlayer<SeptimaPlayer>().septimaType == SeptimaType.Rebirth &&
+                Main.LocalPlayer.GetModPlayer<PlayerBuffs>().CorpseCollectionAllowed)
+            {
+                foreach (int key in Rebirth.SpawnMap.Keys)
+                {
+                    if (Rebirth.SpawnMap[key].Contains(npc.type))
+                    {
+                        Item.NewItem(npc.GetSource_Death(), npc.Hitbox, key);
+                        break;
+                    }
+                }
+            }
         }
     }
 }

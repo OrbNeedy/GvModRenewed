@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 using Terraria;
 using GvMod.Content;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace GvMod.Common.Players.Skills
 {
@@ -37,11 +36,6 @@ namespace GvMod.Common.Players.Skills
         public override bool MiscUpdate(Player player, SeptimaPlayer adept)
         {
             return adept.SpecialSkillUseTime < 90;
-        }
-
-        public override bool? CustomUnlockCondition(Player player, SeptimaPlayer adept)
-        {
-            return adept.DragonVeinsVisited[0];
         }
     }
 }

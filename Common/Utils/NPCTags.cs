@@ -30,6 +30,7 @@ namespace GvMod.Common.Utils
         // Indexes
         public List<int> taggedTargets { get; private set; } = new();
         // Tag levels, up to 3
+        // TODO: Make the max tag level vary with septima
         public List<int> tagLevel { get; private set; } = new();
         // Tag timer, when reaching 0 will be removed
         public List<int> tagTimer { get; private set; } = new();
@@ -90,7 +91,7 @@ namespace GvMod.Common.Utils
             targetCount--;
         }
 
-        public void AddTag(int index, int timer = 600, int level = 1)
+        public Tag AddTag(int index, int timer = 600, int level = 1)
         {
             for (int i = 0; i < targetCount; i++)
             {
@@ -103,7 +104,7 @@ namespace GvMod.Common.Utils
                         tagLevel[i] = Math.Clamp(tagLevel[i], 0, 3);
                     }
                     tagTimer[i] = timer;
-                    return;
+                    return new Tag(taggedTargets[i], tagLevel[i], tagTimer[i], damageTimer[i]);
                 }
             }
 
@@ -113,6 +114,7 @@ namespace GvMod.Common.Utils
             tagTimer.Add(timer);
             damageTimer.Add(0);
             targetCount++;
+            return new Tag(index, level, timer, 0);
         }
 
         public Tag GetTag(int npcIndex)
@@ -129,7 +131,7 @@ namespace GvMod.Common.Utils
 
         public Tag GetTagByIndex(int index)
         {
-            if (targetCount > index)
+            if (targetCount > index && index >= 0)
             {
                 return new Tag(taggedTargets[index], tagLevel[index], tagTimer[index], damageTimer[index]);
             }
@@ -138,7 +140,7 @@ namespace GvMod.Common.Utils
 
         public void QueueTagDeletion(int index)
         {
-            if (targetCount > index)
+            if (targetCount > index && index >= 0)
             {
                 deletionQueue.Add(index);
             }

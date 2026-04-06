@@ -28,12 +28,9 @@ namespace GvMod.Common.GlobalPlayers
             if (prevasion.PrevasionIframes > 0)
             {
                 SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
-                SpriteBatchState tempState = SpriteBatchExt.GetState(Main.spriteBatch);
 
                 int time = prevasion.BasePrevasionIframes - prevasion.PrevasionIframes;
                 float displacement = (float)Math.Sin(time / 8) * prevasion.PrevasionIframes;
-
-                SpriteBatchExt.Restart(Main.spriteBatch, tempState, SpriteSortMode.Immediate);
 
                 Rectangle playerRect = PlayerRenderTarget.
                     getPlayerTargetSourceRectangle(player.whoAmI);
@@ -53,9 +50,6 @@ namespace GvMod.Common.GlobalPlayers
                     position + new Vector2(-displacement, 0),
                     sourceRectangle,
                     adept.septima.MainColor * 0.5f);
-                //Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-
-                SpriteBatchExt.Restart(Main.spriteBatch, tempState);
             }
         }
     }

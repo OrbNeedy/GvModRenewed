@@ -7,16 +7,14 @@ using Terraria.ObjectData;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Enums;
-using System.Collections.Generic;
 using Terraria.Audio;
-using Terraria.GameContent.Drawing;
 using GvMod.Content.Items.Upgrades;
 
 namespace GvMod.Content.Tiles
 {
     public class Upgrade1Tile : ModTile
     {
-        private Asset<Texture2D> texture;
+        //private Asset<Texture2D> texture;
         private readonly int animationFrameWidth = 18;
 
         public override void SetStaticDefaults()

@@ -2,6 +2,7 @@
 using GvMod.Content.Buffs;
 using GvMod.Content.Items.Upgrades;
 using Microsoft.Xna.Framework;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,6 +23,8 @@ namespace GvMod.Common.Players
 
     public class ResurrectionPlayer : ModPlayer
     {
+        public float forcedRebirthResurrection = 0;
+        public Vector2 rebirthResurrectionPosition = Vector2.Zero;
         public bool resurrected = false;
         public bool canResurrect = false;
         public bool wearingNecklace = false;
@@ -30,16 +33,102 @@ namespace GvMod.Common.Players
         public ulong resurrectionTime = 0;
         public AnthemAuraType type = AnthemAuraType.LumenWeak;
 
-        public override void ResetEffects()
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
         {
-            //Main.NewText("Resurrection Player's ResetEffects.");
-            if (resurrected) resurrectionTime++;
-            resurrected = false;
-            canResurrect = false;
-            wearingNecklace = false;
-            if (breakNecklace > 0) breakNecklace--;
-            resurrectionPower = 0;
-            base.ResetEffects();
+            SyncRebirth(Player.whoAmI, forcedRebirthResurrection);
+        }
+
+        public static void SyncRebirth(int whoAmI, float forcedResurrection)
+        {
+            ModPacket packet = ModContent.GetInstance<GvMod>().GetPacket();
+            packet.Write((byte)MessageType.ResurrectionSync); // ID
+            packet.Write((byte)whoAmI); // Player
+            packet.Write((byte)forcedResurrection); // Force Resurrection
+            packet.Send(ignoreClient: whoAmI);
+        }
+
+        public static void SyncResurrection(int whoAmI, bool resurrected, byte auraType)
+        {
+            ModPacket packet = ModContent.GetInstance<GvMod>().GetPacket();
+            packet.Write((byte)MessageType.ReincarnationVisualSync); // ID
+            packet.Write((byte)whoAmI); // Player
+            packet.Write(resurrected); // Anthem Resurrection
+            packet.Write(auraType); // Aura type
+            packet.Send(ignoreClient: whoAmI);
+        }
+
+        public static void ReceiveResurrectSync(BinaryReader reader, int whoAmI)
+        {
+            int player = reader.ReadByte();
+            // If server, the target is the player who sent the message
+            if (Main.dedServ)
+            {
+                player = whoAmI;
+            }
+
+            float forcedResurrect = reader.ReadByte();
+
+            // If the target is not the player who sent the message, change it locally
+            if (player != Main.myPlayer)
+            {
+                Main.player[player].GetModPlayer<ResurrectionPlayer>().forcedRebirthResurrection = forcedResurrect;
+            }
+
+            // If it's the server, send the change to everyone else
+            if (Main.dedServ)
+            {
+                SyncRebirth(player, forcedResurrect);
+            }
+        }
+
+        public static void ReceiveVisualResurrectSync(BinaryReader reader, int whoAmI)
+        {
+            int player = reader.ReadByte();
+            // If server, the target is the player who sent the message
+            if (Main.dedServ)
+            {
+                player = whoAmI;
+            }
+
+            bool resurrect = reader.ReadBoolean();
+            byte auraType = reader.ReadByte();
+
+            // If the target is not the player who sent the message, change it locally
+            if (player != Main.myPlayer)
+            {
+                ResurrectionPlayer resurectee = Main.player[player].GetModPlayer<ResurrectionPlayer>();
+                resurectee.resurrected = resurrect;
+                resurectee.type = (AnthemAuraType)auraType;
+            }
+
+            // If it's the server, send the change to everyone else
+            if (Main.dedServ)
+            {
+                SyncResurrection(player, resurrect, auraType);
+            }
+        }
+
+        public override void CopyClientState(ModPlayer targetCopy)
+        {
+            ResurrectionPlayer clone = (ResurrectionPlayer)targetCopy;
+            clone.forcedRebirthResurrection = forcedRebirthResurrection;
+            clone.resurrected = resurrected;
+            clone.type = type;
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {
+            ResurrectionPlayer clone = (ResurrectionPlayer)clientPlayer;
+
+            if (forcedRebirthResurrection != clone.forcedRebirthResurrection)
+            {
+                SyncRebirth(Player.whoAmI, forcedRebirthResurrection);
+            }
+
+            if (resurrected != clone.resurrected || type != clone.type)
+            {
+                SyncResurrection(Player.whoAmI, resurrected, (byte)type);
+            }
         }
 
         public override void SaveData(TagCompound tag)
@@ -89,8 +178,7 @@ namespace GvMod.Common.Players
 
         public override void PostUpdate()
         {
-            //Main.NewText("Resurrection Player's PostUpdate.");
-            base.PostUpdate();
+
         }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
@@ -161,6 +249,38 @@ namespace GvMod.Common.Players
             }
 
             base.Kill(damage, hitDirection, pvp, damageSource);
+        }
+
+        public override void UpdateDead()
+        {
+            rebirthResurrectionPosition = Player.Center;
+            if (forcedRebirthResurrection > 0)
+            {
+                Player.respawnTimer = 0;
+            }
+        }
+
+        public override void ResetEffects()
+        {
+            //Main.NewText("Resurrection Player's ResetEffects.");
+            if (resurrected) resurrectionTime++;
+            resurrected = false;
+            canResurrect = false;
+            wearingNecklace = false;
+            if (breakNecklace > 0) breakNecklace--;
+            resurrectionPower = 0;
+
+            //Main.NewText("Rebirth position: " + rebirthResurrectionPosition);
+            //Main.NewText("Player position: " + Player.Center);
+            if (forcedRebirthResurrection > 0)
+            {
+                Player.statLife = (int)(Player.statLifeMax2 * forcedRebirthResurrection);
+                Player.Center = rebirthResurrectionPosition;
+                forcedRebirthResurrection = 0;
+            } else
+            {
+                rebirthResurrectionPosition = Player.Center;
+            }
         }
     }
 }

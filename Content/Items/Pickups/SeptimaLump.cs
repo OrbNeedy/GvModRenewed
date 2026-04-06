@@ -33,5 +33,10 @@ namespace GvMod.Content.Items.Pickups
             player.GetModPlayer<SeptimaPlayer>().CurrentEP += 15f * Item.stack;
             return false;
         }
+
+        public override bool CanStackInWorld(Item source)
+        {
+            return false;
+        }
     }
 }

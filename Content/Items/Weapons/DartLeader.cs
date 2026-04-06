@@ -40,12 +40,12 @@ namespace GvMod.Content.Items.Weapons
             [DartLeaderUpgrades.None] = new Color(29, 210, 210),
             [DartLeaderUpgrades.Naga] = new Color(26, 10, 204),
             [DartLeaderUpgrades.Technos] = new Color(18, 255, 18),
-            [DartLeaderUpgrades.Orochi] = new Color(255, 213, 0),
+            [DartLeaderUpgrades.Orochi] = new Color(250, 245, 0),
             [DartLeaderUpgrades.Mizuchi] = new Color(255, 13, 13),
             [DartLeaderUpgrades.Vasuki] = new Color(204, 0, 190),
             [DartLeaderUpgrades.VasukiVisuals] = new Color(204, 0, 190),
             [DartLeaderUpgrades.Ouroboros] = new Color(64, 255, 150),
-            [DartLeaderUpgrades.Dullahan] = new Color(250, 201, 55)
+            [DartLeaderUpgrades.Dullahan] = new Color(255, 190, 50)
         };
 
         public override void SetDefaults()

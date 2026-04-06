@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Terraria;
 
 namespace GvMod.Common.Players.Skills
 {
@@ -8,6 +10,8 @@ namespace GvMod.Common.Players.Skills
         public virtual string LocalizationKey { get; set; } = "Default";
         public virtual int LevelRequirement { get; set; } = 0;
         public virtual int StageRequirement { get; set; } = 0;
+        public virtual List<Condition> AlternateUnlockConditions { get; set; } = new();
+        public virtual List<Condition> UnlockConditions { get; set; } = new();
         public virtual int SPCost { get; set; } = 0;
         public virtual bool Invincible { get; set; } = false;
         public virtual int MaxCooldownTime { get; set; } = 0;
@@ -18,6 +22,90 @@ namespace GvMod.Common.Players.Skills
         /// Note: <see cref="Player.noFallDmg"/> is essential for skills that stop the player, if not true, the player will die of fall damage even if it was activated mid air.
         /// </summary>
         public virtual bool AllowsMovement { get; set; } = true;
+
+        public virtual SpecialSkill SetLevel(int level)
+        {
+            LevelRequirement = level;
+            return this;
+        }
+
+        public virtual SpecialSkill SetStage(int stage)
+        {
+            StageRequirement = stage;
+            return this;
+        }
+
+        public virtual SpecialSkill SetUnlockConditions(params Condition[] conditions)
+        {
+            UnlockConditions.Clear();
+            foreach (Condition condition in conditions)
+            {
+                UnlockConditions.Add(condition);
+            }
+            return this;
+        }
+
+        public virtual SpecialSkill SetAlternativeConditions(List<Condition> conditions)
+        {
+            AlternateUnlockConditions = conditions;
+            return this;
+        }
+
+        public virtual SpecialSkill SetLocalization(string key)
+        {
+            LocalizationKey = key;
+            return this;
+        }
+
+        public virtual SpecialSkill SetIconNames(string name)
+        {
+            InternalName = name;
+            return this;
+        }
+
+        /// <summary>
+        /// Allows overriding the name of the skill even if it's not being used.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <returns>Null to proceed with regular translation.</returns>
+        public virtual string? GetFinalName(Player player, SeptimaPlayer adept)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Allows overriding the key for the name of the skill even if it's not being used.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <returns>Null to proceed with regular translation.</returns>
+        public virtual string GetNewNameKey(Player player, SeptimaPlayer adept)
+        {
+            return LocalizationKey;
+        }
+
+        /// <summary>
+        /// Allows overriding the description of the skill even if it's not being used.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <returns>Null to proceed with regular translation.</returns>
+        public virtual string? GetFinalDescription(Player player, SeptimaPlayer adept)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Allows overriding the description of the skill even if it's not being used.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="adept"></param>
+        /// <returns>Null to proceed with regular translation.</returns>
+        public virtual string GetNewDescriptionKey(Player player, SeptimaPlayer adept)
+        {
+            return LocalizationKey;
+        }
 
         /// <summary>
         /// Runs whenever the skill is being set up, useful to make small differences between septimas with the same 
@@ -42,7 +130,7 @@ namespace GvMod.Common.Players.Skills
         }
 
         /// <summary>
-        /// Used only the frame when the skill is being used, runs after <seealso cref="CanUse(Player, SeptimaPlayer)"/> returns true.
+        /// Used only the frame when the skill is activated, runs after <seealso cref="CanUse(Player, SeptimaPlayer)"/> returns true.
         /// </summary>
         /// <param name="player"></param>
         /// <param name="adept"></param>
@@ -80,6 +168,15 @@ namespace GvMod.Common.Players.Skills
 
         }
 
+        // Because so many skills do this exact thing
+        public void KeepPlayerInPlace(Player player)
+        {
+            player.noFallDmg = true;
+            player.velocity = new Vector2(0, 0.0000001f);
+            player.position = player.oldPosition;
+            player.fallStart = (int)player.Center.Y;
+        }
+
         public virtual void NPCHitUpdate(Player player, SeptimaPlayer adept, NPC npc, 
             ref Player.HurtModifiers modifiers)
         {
@@ -95,6 +192,17 @@ namespace GvMod.Common.Players.Skills
 
         }
 
+        public virtual void NPCHurtUpdate(Player player, SeptimaPlayer adept, NPC npc, Player.HurtInfo info)
+        {
+
+        }
+
+        public virtual void ProjectileHurtUpdate(Player player, SeptimaPlayer adept, Projectile proj, 
+            Player.HurtInfo info)
+        {
+
+        }
+
         /// <summary>
         /// Happens any time the skill is forced to end early, used for special interactions and stopping processes.
         /// </summary>
@@ -102,32 +210,6 @@ namespace GvMod.Common.Players.Skills
         /// <param name="adept"></param>
         public virtual void ForcedSkillEnd(Player player, SeptimaPlayer adept)
         {
-        }
-
-        /// <summary>
-        /// A custom check for skills that unlock only if certain conditions are met.
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="adept"></param>
-        /// <returns>True to unlock the skill, this will count even if the level and stage requirements are false.
-        /// <br/>Return null to ignore this.</returns>
-        public virtual bool? CustomUnlockCondition(Player player, SeptimaPlayer adept)
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Similar to <see cref="CustomUnlockCondition(Player, SeptimaPlayer)"/>, it's a condition checked to 
-        /// unlock a skill.<br/>
-        /// Unlike it, the condition needs to be true in order to unlock the skill, even if stage, level or the 
-        /// other custom <br/>condition are true.
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="adept"></param>
-        /// <returns></returns>
-        public virtual bool ForcedUnlockCondition(Player player, SeptimaPlayer adept)
-        {
-            return true;
         }
     }
 }

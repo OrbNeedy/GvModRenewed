@@ -28,10 +28,10 @@ namespace GvMod.Content.Projectiles
         private Vector2 OriginPosition = Vector2.Zero;
         private int timer = 0;
 
-        private Asset<Texture2D> ChainTip;
-        private Asset<Texture2D> ChainSegments;
-        private Asset<Texture2D> ElectrifyExtras;
-        private Asset<Texture2D> ChainBreak;
+        private static Asset<Texture2D> ChainTip;
+        private static Asset<Texture2D> ChainSegments;
+        private static Asset<Texture2D> ElectrifyExtras;
+        private static Asset<Texture2D> ChainBreak;
         private int FrameTimer = 0;
         private int Frame = 0;
         private int ExtrasFrameTimer = 0;
@@ -76,11 +76,6 @@ namespace GvMod.Content.Projectiles
 
         public override void OnSpawn(IEntitySource source)
         {
-            ChainTip = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/VoltaicChainProjectile");
-            ChainSegments = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/ChainSegment");
-            ElectrifyExtras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/ChainExtras");
-            ChainBreak = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/ChainBreak");
-
             soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/ChainMove2") with
             {
                 PitchVariance = 0.1f,
@@ -229,7 +224,7 @@ namespace GvMod.Content.Projectiles
 
         public override bool ShouldUpdatePosition()
         {
-            return timer < MoveTime;
+            return timer < MoveTime && Projectile.timeLeft > BreakTime;
         }
 
         public override bool? CanHitNPC(NPC target)

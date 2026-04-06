@@ -21,6 +21,46 @@ namespace GvMod.Common.Players.Skills
         private int fieldIndex = -1;
         private float initialPower = 0;
 
+        public override string GetNewNameKey(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrectionState = player.GetModPlayer<ResurrectionPlayer>();
+
+            if (resurrectionState.resurrected)
+            {
+                if (resurrectionState.resurrectionPower >= 2)
+                {
+                    return "AstrasphereMandala1";
+                }
+
+                if (resurrectionState.resurrectionPower >= 3 || player.HasBuff<SeptimalSurgeBuff>())
+                {
+                    return "AstrasphereMandala2";
+                }
+            }
+
+            return base.GetNewNameKey(player, adept);
+        }
+
+        public override string GetNewDescriptionKey(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrectionState = player.GetModPlayer<ResurrectionPlayer>();
+
+            if (resurrectionState.resurrected)
+            {
+                if (resurrectionState.resurrectionPower >= 2)
+                {
+                    return "AstrasphereMandala1";
+                }
+
+                if (resurrectionState.resurrectionPower >= 3 || player.HasBuff<SeptimalSurgeBuff>())
+                {
+                    return "AstrasphereMandala2";
+                }
+            }
+
+            return base.GetNewDescriptionKey(player, adept);
+        }
+
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
             player.noFallDmg = true;

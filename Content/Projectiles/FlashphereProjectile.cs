@@ -11,8 +11,8 @@ namespace GvMod.Content.Projectiles
 {
     public class FlashphereProjectile : ModProjectile
     {
-        private Asset<Texture2D> field;
-        private Asset<Texture2D> extras;
+        private static Asset<Texture2D> field;
+        private static Asset<Texture2D> extras;
         private float extrasRotation = 0;
 
         private Rectangle bounds;
@@ -22,6 +22,12 @@ namespace GvMod.Content.Projectiles
         private bool hideExtras = false;
 
         private SlotId soundID;
+
+        public override void SetStaticDefaults()
+        {
+            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
+            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
+        }
 
         public override void SetDefaults()
         {
@@ -53,16 +59,16 @@ namespace GvMod.Content.Projectiles
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.Size = new Vector2(268);
-            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
+            //field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
             bounds = new Rectangle(0, 0, 360, 362);
             Projectile.netUpdate = true;
 
             soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlasphereUse") with
             {
                 PitchVariance = 0.1f,
-                Volume = 0.5f
+                Volume = 0.75f
             }, Projectile.Center, StopSound);
-            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
+            //extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
         }
 
         public override void AI()
@@ -81,7 +87,7 @@ namespace GvMod.Content.Projectiles
                 soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlasphereUse") with
                 {
                     PitchVariance = 0.1f,
-                    Volume = 0.5f
+                    Volume = 0.75f
                 }, Projectile.Center, StopSound);
             }
             else
@@ -91,7 +97,7 @@ namespace GvMod.Content.Projectiles
                     soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlasphereUse") with
                     {
                         PitchVariance = 0.1f,
-                        Volume = 0.5f
+                        Volume = 0.75f
                     }, Projectile.Center, StopSound);
                 }
             }

@@ -10,7 +10,8 @@ namespace GvMod.Content.Items.Accessories.Lenses
     public class LifeLoupe : ModItem
     {
         private float EPUseDecrease = 10;
-        private float EPCooldownIncrease = 15;
+        private float EPCooldownIncrease = 25;
+        private float DamageDecrease = 15;
 
         public override void SetDefaults()
         {
@@ -20,14 +21,14 @@ namespace GvMod.Content.Items.Accessories.Lenses
         }
 
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(EPUseDecrease, 
-            EPCooldownIncrease);
+            DamageDecrease, EPCooldownIncrease);
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PlayerBuffs>().LifeLoupe = true;
             player.GetModPlayer<SeptimaPlayer>().EPUseModifier += EPUseDecrease / 100f;
             player.GetModPlayer<SeptimaPlayer>().EPCooldownModifier += EPCooldownIncrease / 100f;
-            player.GetDamage<MainAttackDamage>() -= EPUseDecrease / 100f;
+            player.GetDamage<SeptimaDamage>() -= DamageDecrease / 100f;
         }
 
         public override void AddRecipes()

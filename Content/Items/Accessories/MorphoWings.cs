@@ -12,7 +12,8 @@ namespace GvMod.Content.Items.Accessories
     public enum WingDust
     {
         Lumen1, 
-        Lumen2
+        Lumen2, 
+        Morpho
     }
 
     public enum SpecialWingEquip
@@ -57,7 +58,7 @@ namespace GvMod.Content.Items.Accessories
             PlayerBuffs effects = player.GetModPlayer<PlayerBuffs>();
             if (!hideVisual)
             {
-                effects.dustType.AddRange(new List<WingDust> { WingDust.Lumen1, WingDust.Lumen2 });
+                effects.dustType.AddRange(new List<WingDust> { WingDust.Morpho });
                 effects.specialWingType = SpecialWingEquip.Morpho;
             }
 
@@ -74,7 +75,7 @@ namespace GvMod.Content.Items.Accessories
         public override void UpdateVanity(Player player)
         {
             PlayerBuffs effects = player.GetModPlayer<PlayerBuffs>();
-            effects.dustType.AddRange(new List<WingDust> { WingDust.Lumen1, WingDust.Lumen2 });
+            effects.dustType.AddRange(new List<WingDust> { WingDust.Morpho });
             effects.specialWingType = SpecialWingEquip.Morpho;
             base.UpdateVanity(player);
         }

@@ -1,7 +1,4 @@
 ﻿using GvMod.Common.Players;
-using GvMod.Common.Systems;
-using GvMod.Content.Items.Accessories.Lenses;
-using GvMod.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

@@ -29,6 +29,26 @@ namespace GvMod.Common.Players.Skills
         private bool EarlyCancel { get; set; } = false;
         private float initialPower = 0;
 
+        public override string GetNewNameKey(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrectionState = player.GetModPlayer<ResurrectionPlayer>();
+            if (resurrectionState.resurrected && resurrectionState.resurrectionPower >= 2)
+            {
+                return "VoltaicChainsThunder";
+            }
+            return base.GetNewNameKey(player, adept);
+        }
+
+        public override string GetNewDescriptionKey(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrectionState = player.GetModPlayer<ResurrectionPlayer>();
+            if (resurrectionState.resurrected && resurrectionState.resurrectionPower >= 2)
+            {
+                return "VoltaicChainsThunder";
+            }
+            return base.GetNewDescriptionKey(player, adept);
+        }
+
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
             player.noFallDmg = true;

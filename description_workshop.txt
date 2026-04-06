@@ -1,30 +1,65 @@
-The Azure Striker Mod is a mod that allows you to become the Azure Striker.
+The Azure Striker Mod allows you to utilize the power of the seventh life wave.
 
-It adds a new class, the septima class, which has no weapons and rely on the player's natural powers (their septima).
+It adds a new class, the septima class, which doesn't rely on weapons, instead mainly using the player's seventh life wave, or more commonly known as septima.
 The content added includes:
-* 39 accessories
-* 6 armor sets
-* One weapon with an upgrade system that includes 
-	* 7 upgrades, which can be combined in the same weapon
-* A skill system based on ASG1 and ASG2's system, with 15 different special skills, ranging from buffs to attacks
+* Two separate septimas: Azure Striker and Rebirth, with different skills and play styles
+* 37 accessories
+* 7 armor sets
+* A skill system based on ASG1 and ASG2's system, with 23 different special skills, ranging from buffs to attacks
 
-For people unfamiliar with Gunvolt, here is an introduction to the gameplay:
-The player has two different resources to watch for, their EP and SP.
-EP is the bar at the top of the screen.
-SP are the yellow bars at the bottom left corner.
-EP is used whenever the player activates their main attack, and SP is used whenever the player uses any special skill.
-EP recovers quickly, however SP recovers very slowly.
-When the player runs out of EP, they enter an overheated state, where EP recovers slower and they are unable to use the resource until it fills up completely.
-To the left, under the inventory, there is an icon which shows what skill is selected.
-When using a skill, the cost of the skill will be deducted from the SP bar and the skill will activate.
-Skills can be unlocked through consuming items and progressing in the game to increase the Level and Stage, which are shown under the EP bar.
-To deal aditional damage to targets, search for weapons to tag them with.
-Tagged enemies are dealt more damage from the player's main attack, tag damage is also unavoidable.
-The higher the tag level, the higher the damage.
-
-That is all! Enjoy
+To start, select a septima in the start menu, then try to craft a weapon to tag enemies, as your septima is otherwise very weak.
+Once you start exploring the world, you may find strange capsules on the ground around the world and in chests, you can use these to upgrade your septima and not only make it stronger, but also unlock special skills to help you along the way.
+From this point you can create accessories and armor with the new materials found from beating enemies.
 
 Changelog 
+0.6
++ Added Rebirth septima, which includes it's unique Armed Phenomenon, Dnizer mode and Pulsar Armor bonuses, based on Elise from Gunvolt 1.
+	* Rebirth has the new skills: Resurrection, Soul Cleanse, Soul Siphon, Resurrect, Unlimited Animus, Gorgoneia, and Eternity Kunai.
+	* Some skills are shared between Azure Striker and Rebirth, but may have a different name.
++ Reduced the Azure Striker's stage needed to use the Main Skill underwater from 6 to 5.
++ Azure Striker's main attack base damage increased from 5 to 7.
++ Azure Striker's Luxcalibur base damage increased from 220 to 260.
++ Azure Striker's Luxcalibur level damage scaling increased from 50% to 65%.
++ Azure Striker's Luxcalibur stage damage scaling increased from 800% to 1000%.
++ Azure Striker's Luxcalibur launch version projectile duration incresed from 2 additional seconds to 2.5 additional seconds.
++ Azure Striker's Luxcalibur launch version shoot cooldown reduced from 1.5 seconds to 1 second.
++ Azure Striker's Grand Strizer base damage increased from 300 to 320.
++ Azure Striker's Grand Strizer stage damage scaling increased from 1000% to 1200%.
++ Azure Striker's Armed Phenomenon flight time increase base increased from 1/2 a second to 2/3 of a second (Max increased from 5/4 of a second to 4/3 of a second).
++ Azure Striker's secondary skill cooldown timer reduced from 10 seconds to 8 seconds.
++ Increased the frequency of upgrades found in the world.
++ Added more visual effects for prevasion.
++ Universal Upgrade item's level cap increased from 100 to 200 before Moonlord is defeated and 200 to unlimited after its defeat.
++ Skill selection now displays different skill names and descriptions for skills that change based on the state of the player.
+- Azure Striker can no longer prevade while wet unless its at stage 5 or higher.
+- Azure Striker's Luxcaliburg duration decreased from 2 seconds to 1.5 seconds.
+- Azure Striker now overheats upon contact with the Duke's Sharknado and Cthulunado.
+- Decreased tag damage when using Dilation Reticles for the Azure Striker from 70% to 50%.
+- Flashphere and Thor's Hammer now penetrate prevasion.
+- Life Loupe now decreases all septima damage by 15% instead of decreasing 10% of main attack damage.
+- Life Loupe EP recovery cooldown increased from 15% to 25%.
+* Fixed septima drawn effects not being properly placed in the Player Layers.
+* Fixed multiplayer crashes.
+* Fixed crashes when spawning an NPC with DragonLens.
+* Fixed visual and sound effects in multiplayer.
+* Fixed resurrection aura's visible alpha pixels.
+* Fixed Spanish translation's leftover english segments.
+* Septima lumps no longer stack in the world.
+* Septima lumps drop logic changed to more closely resemble that of hearts and mana stars.
+* Orochi upgade and Dullahan upgrade text color's made more different from one another.
+* Skills that disable player movement no longer reset gravity.
+* Voltaic Chains no longer move while in the breaking animation.
+* Reduced the max amount of electric effects on Azure Striker's main attack.
+* Changed the dust used for overheat and recharge.
+* Skill list no longer changes the place of skills at seemingly random.
+* Changed skill sorting method to function exclusively with level.
+* Glorious Strizer no longer makes the player walk on the air.
+* Stoned, Frozen and Webbed now force the player to go into overheat and disable EP recovery while they are applied.
+* special skills that disable movement no longer unmount the player upon using, but can't mount while using these skills.
+* Conditions for the special visual effects of the Joule Wings now vary based on player septima.
+* Changed mod Icon.
+
+0.5.1
 + Added full Pulsar Set.
 + Increased pulsar fragments droped by the pilars.
 + Increased Azure Striker's Armed Phenomenon Attack scaling from source potency.

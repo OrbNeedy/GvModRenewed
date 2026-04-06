@@ -22,8 +22,8 @@ namespace GvMod.Content.Projectiles
         private int Behavior { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         private int timer = 0;
         private int cycle = 0;
-        private Asset<Texture2D> field;
-        private Asset<Texture2D> extras;
+        private static Asset<Texture2D> field;
+        private static Asset<Texture2D> extras;
         private float extrasRotation = 0;
 
         private Rectangle bounds;
@@ -31,6 +31,12 @@ namespace GvMod.Content.Projectiles
         private int frame = 0;
         private int frameTimer = 0;
         private bool hideExtras = false;
+
+        public override void SetStaticDefaults()
+        {
+            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
+            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
+        }
 
         public override void SetDefaults()
         {
@@ -62,7 +68,6 @@ namespace GvMod.Content.Projectiles
             {
                 case (int)AstraspheredBehavior.Launch:
                     Projectile.Size = new Vector2(268);
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
                     bounds = new Rectangle(0, 0, 360, 362);
                     Projectile.timeLeft += 90;
                     Projectile.netUpdate = true;
@@ -75,7 +80,6 @@ namespace GvMod.Content.Projectiles
                     break;
                 default:
                     Projectile.Size = new Vector2(268);
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereProjectile");
                     bounds = new Rectangle(0, 0, 360, 362);
                     Projectile.netUpdate = true;
 
@@ -86,7 +90,6 @@ namespace GvMod.Content.Projectiles
                     }, Projectile.Center, StopSound);
                     break;
             }
-            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
             timer++;
         }
 

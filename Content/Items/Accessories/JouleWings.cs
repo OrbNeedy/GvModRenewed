@@ -1,5 +1,6 @@
 ﻿using GvMod.Common.Players;
 using GvMod.Content.Items.Materials;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -50,12 +51,12 @@ namespace GvMod.Content.Items.Accessories
             PlayerBuffs effects = player.GetModPlayer<PlayerBuffs>();
             if (!hideVisual)
             {
+                effects.dustType.AddRange(new List<WingDust> { WingDust.Lumen1, WingDust.Lumen2 });
                 effects.specialWingType = SpecialWingEquip.Joule;
             }
-
-            if (player.velocity.Y != 0)
+            else
             {
-                if (hideVisual)
+                if (player.velocity.Y != 0)
                 {
                     effects.specialWingType = SpecialWingEquip.Joule;
                 }
@@ -73,6 +74,7 @@ namespace GvMod.Content.Items.Accessories
         public override void UpdateVanity(Player player)
         {
             PlayerBuffs effects = player.GetModPlayer<PlayerBuffs>();
+            effects.dustType.AddRange(new List<WingDust> { WingDust.Lumen1, WingDust.Lumen2 });
             effects.specialWingType = SpecialWingEquip.Joule;
             base.UpdateVanity(player);
         }

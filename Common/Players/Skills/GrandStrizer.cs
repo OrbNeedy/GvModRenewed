@@ -20,7 +20,7 @@ namespace GvMod.Common.Players.Skills
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
             player.noFallDmg = true;
-            player.velocity = Vector2.Zero;
+            player.velocity = new Vector2(0, 0.0000001f);
             player.position = player.oldPosition;
             player.fallStart = (int)player.Center.Y;
             base.MoveUpdate(player, adept);
@@ -28,7 +28,7 @@ namespace GvMod.Common.Players.Skills
 
         public override bool OnSkillUse(Player player, SeptimaPlayer adept)
         {
-            float baseDamage = 300 + (10 * adept.Stage) + (int)(0.85f * adept.Level);
+            float baseDamage = 320 + (12 * adept.Stage) + (int)(0.85f * adept.Level);
             baseDamage *= MathHelper.Clamp(1 + (player.statLife / player.statLifeMax2), 1, 2);
             player.oldPosition = player.position;
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);

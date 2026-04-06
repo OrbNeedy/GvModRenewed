@@ -10,18 +10,28 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace GvMod.Common.Players
 {
     public class PlayerBuffs : ModPlayer
     {
+        public bool CorpseCollectionAllowed { get; set; } = true;
         public bool AlchemicalField { get; set; } = false;
+        public bool UnlimitedAnimus { get; set; } = false;
         public bool InfiniteSurge { get; set; } = false;
+        public bool SpiritCleanse { get; set; } = false;
         public bool ArmedPhenomenonVisuals { get; set; } = false;
         public int ArmedPhenomenonStats { get; set; } = 0;
         public bool FreeFloat { get; set; } = false;
         public bool Reviberoptics { get; set; } = false;
+        /// <summary>
+        /// Life steal.
+        /// </summary>
         public bool LifeLoupe { get; set; } = false;
+        /// <summary>
+        /// Increased untagged damage, decreased tagged damage.
+        /// </summary>
         public bool DilationReticles { get; set; } = false;
         private Vector2 flyingVelocity = Vector2.Zero;
         public SpecialWingEquip specialWingType = SpecialWingEquip.None;
@@ -37,6 +47,19 @@ namespace GvMod.Common.Players
             IL_PlayerDrawLayers.DrawPlayer_21_Head_TheFace += ModifyEyes_DrawPlayer_21_Head_TheFace;
         }
 
+        public override void SaveData(TagCompound tag)
+        {
+            tag["CorpseCollection"] = CorpseCollectionAllowed;
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.ContainsKey("CorpseCollection"))
+            {
+                CorpseCollectionAllowed = tag.GetBool("CorpseCollection");
+            }
+        }
+
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
         }
@@ -45,21 +68,22 @@ namespace GvMod.Common.Players
         {
             if (FreeFloat)
             {
+                float playerAcceleration = Player.runAcceleration * Player.wingRunAccelerationMult;
                 if (Player.controlLeft)
                 {
-                    flyingVelocity.X -= Player.runAcceleration;
+                    flyingVelocity.X -= playerAcceleration;
                 }
                 if (Player.controlRight)
                 {
-                    flyingVelocity.X += Player.runAcceleration;
+                    flyingVelocity.X += playerAcceleration;
                 }
                 if (Player.controlUp)
                 {
-                    flyingVelocity.Y -= Player.runAcceleration;
+                    flyingVelocity.Y -= playerAcceleration;
                 }
                 if (Player.controlDown)
                 {
-                    flyingVelocity.Y += Player.runAcceleration;
+                    flyingVelocity.Y += playerAcceleration;
                 }
 
                 if (flyingVelocity.Length() > 0)
@@ -84,6 +108,25 @@ namespace GvMod.Common.Players
             {
                 Player.gravity = 0;
                 Player.fallStart = (int)Player.Center.Y;
+            }
+
+            if (SpiritCleanse && Main._rand.NextBool(600))
+            {
+                int maxDebuffClears = 3;
+                for (int i = 0; i < Player.MaxBuffs; i++)
+                {
+                    if (maxDebuffClears <= 0) break;
+
+                    // Debuff and can be cleared by the nurse
+                    if (Main.debuff[Player.buffType[i]] && 
+                        !BuffID.Sets.NurseCannotRemoveDebuff[Player.buffType[i]] &&
+                        Main.buffNoSave[Player.buffType[i]])
+                    {
+                        Player.DelBuff(i);
+                        i--;
+                        maxDebuffClears--;
+                    }
+                }
             }
             base.PreUpdate();
         }
@@ -112,9 +155,12 @@ namespace GvMod.Common.Players
                 case WingDust.Lumen2:
                     type = ModContent.DustType<LumenDust2>();
                     break;
+                case WingDust.Morpho:
+                    type = ModContent.DustType<MorphoDust>();
+                    break;
             }
 
-            if (Player.velocity.Y != 0 && Player.controlJump && type != -1 &&
+            if (Player.velocity.Y != 0 && type != -1 &&
                 Main.rand.NextBool(45))
             {
                 Dust.NewDust(Player.position + new Vector2(-8, -12), Player.width + 16, Player.height + 24, 
@@ -176,7 +222,9 @@ namespace GvMod.Common.Players
         public override void ResetEffects()
         {
             AlchemicalField = false;
+            UnlimitedAnimus = false;
             InfiniteSurge = false;
+            SpiritCleanse = false;
             ArmedPhenomenonVisuals = false;
             ArmedPhenomenonStats = 0;
             FreeFloat = false;

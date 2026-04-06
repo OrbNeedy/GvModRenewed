@@ -4,6 +4,7 @@ using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GvMod.Content.Projectiles
@@ -11,19 +12,25 @@ namespace GvMod.Content.Projectiles
     public class GrandStrizerProjectile : ModProjectile
     {
         private int Behavior { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
-        private int timer = 0;
-        private int cycle = 0;
-        private Asset<Texture2D> field;
-        private Asset<Texture2D> extras;
-        private float extrasRotation = 0;
+        //private int timer = 0;
+        //private int cycle = 0;
+        private static Asset<Texture2D> field;
+        //private static Asset<Texture2D> extras;
+        //private float extrasRotation = 0;
 
         private Rectangle bounds = new Rectangle(0, 0, 404, 296);
         private Vector2 visualScale = new Vector2(0.125f, 0.4f);
         private bool darken = false;
-        private int extrasFrame = 0;
+        //private int extrasFrame = 0;
         private int frame = 0;
         private int frameTimer = 0;
-        private bool hideExtras = false;
+        //private bool hideExtras = false;
+
+        public override void SetStaticDefaults()
+        {
+            //extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
+            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/GrandStrizerProjectile");
+        }
 
         public override void SetDefaults()
         {
@@ -61,12 +68,11 @@ namespace GvMod.Content.Projectiles
             switch (Behavior)
             {
                 default:
-                    field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/GrandStrizerProjectile");
+                    //field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/GrandStrizerProjectile");
                     Projectile.netUpdate = true;
                     break;
             }
-            extras = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/AstrasphereExtras");
-            timer++;
+            //timer++;
         }
 
         public override void AI()
@@ -84,13 +90,56 @@ namespace GvMod.Content.Projectiles
             }
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            timer++;
+            //timer++;
             TextureCycles();
         }
 
         public override bool ShouldUpdatePosition()
         {
             return true;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            for (int i = 0; i < 35; i++)
+            {
+                Color color = Color.White;
+                float randomColorFloat = Main._rand.NextFloat();
+                if (randomColorFloat <= 1f/3f)
+                {
+                    color = Color.DodgerBlue;
+                } else if (randomColorFloat <= 2f / 3f)
+                {
+                    color = Color.LightSeaGreen;
+                }
+                
+                Vector2 velocity = new Vector2(0, 16).RotatedByRandom(MathHelper.TwoPi);
+                Dust.NewDust(target.Center - target.Size / 2, (int)target.Size.X,
+                    (int)target.Size.Y, DustID.MartianSaucerSpark, velocity.X, velocity.Y, 
+                    newColor: color);
+            }
+        }
+
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            Color color = Color.White;
+            float randomColorFloat = Main._rand.NextFloat();
+            if (randomColorFloat <= 1f / 3f)
+            {
+                color = Color.DodgerBlue;
+            }
+            else if (randomColorFloat <= 2f / 3f)
+            {
+                color = Color.LightSeaGreen;
+            }
+
+            for (int i = 0; i < 35; i++)
+            {
+                Vector2 velocity = new Vector2(0, 16).RotatedByRandom(MathHelper.TwoPi);
+                Dust.NewDust(target.Center - target.Size / 2, (int)target.Size.X,
+                    (int)target.Size.Y, DustID.MartianSaucerSpark, velocity.X, velocity.Y,
+                    newColor: color);
+            }
         }
 
         public override void OnKill(int timeLeft)

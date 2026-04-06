@@ -22,14 +22,61 @@ Projectiles: {
 	AzureStrikerClaw.DisplayName: Dragon Claw
 	FlashphereProjectile.DisplayName: Astrasphere
 	ShadowstrikerProjectile.DisplayName: Shadowstriker
-	WideThunder.DisplayName: Thunder
+	WideThunder.DisplayName: Thor's Hammer
+	Kunai.DisplayName: Kunai
+	RebirthZombie.DisplayName: Zombie
+	GorgonGazeBeam.DisplayName: Gorgon Gaze
+	SoulSiphonProjectile.DisplayName: Soul Siphon
+	EyeOfCthulhu.DisplayName: Ojo de Cthulhu
+	Skeletron.DisplayName: Skeletron
+	CthulhuServant.DisplayName: Sirviente de Cthulhu
+	SkeletronArm.DisplayName: Brazo de Skeletron
+	SkullProjectile.DisplayName: Calavera
+	QueenBee.DisplayName: Reina Abeja
+	Stinger.DisplayName: Aguijon
+	Plantera.DisplayName: Plantera
+	PlanteraSeed.DisplayName: Semilla de Plantera
+	PlanteraTentacle.DisplayName: Tentaculo de Plantera
+	Spore.DisplayName: Espora
+	ThornBall.DisplayName: Bola de Espinas
+	Bubble.DisplayName: Burbuja
+	DukeFishron.DisplayName: Duke Fishron
+	Sharknado.DisplayName: Sharknado
+	SharknadoSpawner.DisplayName: Sharknado
+	Sharkron.DisplayName: Sharkron
+	QueenSlime.DisplayName: Reina Slime
+	QueenSmash.DisplayName: Aplastamiento de Reina
+	RoyalGel.DisplayName: Gel Real
+	EaterofWorlds.DisplayName: Devorador de Mundos
+	BrainOfCthulhu.DisplayName: Cerebro de Cthulhu
+	Creeper.DisplayName: Creeper
+	RebirthHook.DisplayName: Gancho
+	RebirthHitbox.DisplayName: Tacleada
+	GorgoneiaBeam.DisplayName: Gorgoneia
+	ZombieBat.DisplayName: Murcielago Zombie
+	ZombieBee.DisplayName: Abeja Zombie
+	ZombieBigBat.DisplayName: Murcielago Grande Zombie
+	ZombieCrimera.DisplayName: Crimera Zombie
+	ZombieEaterOfSouls.DisplayName: Devorador de Almas Zombie
+	ZombieFlyingSnake.DisplayName: Serpiente Voladora Zombie
+	ZombieHellBat.DisplayName: Murcielago Infernal Zombie
+	ZombieHornet.DisplayName: Avispa Zombie
+	ZombieIceBat.DisplayName: Murcielago Helado Zombie
+	ZombiePigron.DisplayName: Pigron Zombie
+	ZombiePixie.DisplayName: Hada Zombie
+	ZombieScorpion.DisplayName: Escorpion Zombie
+	SoulSiphonExplosion.DisplayName: Explosion
+	ZombieFlyingEye.DisplayName: Ojo Volador Zombie
+	ZombieSlime.DisplayName: Slime Zombie
+	ZombieWanderingEye.DisplayName: Ojo Errante Zombie
 }
 
 DamageClasses: {
 	SeptimaDamage.DisplayName: Daño Septima
-	MainAttackDamage.DisplayName: Da{o principal
+	MainAttackDamage.DisplayName: Daño principal
 	SecondaryAttackDamage.DisplayName: Daño secundario
 	SpecialAttackDamage.DisplayName: Daño especial
+	SeptimaSummonHybrid.DisplayName: Daño de septima-invocador
 }
 
 Items: {
@@ -628,7 +675,7 @@ Items: {
 			'''
 			Aumenta el daño principal en {0}%.
 			Aumenta el daño principal aún más por {1}% mientras se está 
-			bajo los efectos del himno
+			bajo los efectos del himno.
 			'''
 	}
 
@@ -640,7 +687,6 @@ Items: {
 			Aumenta la recuperación de EP en {0}%.
 			Aumenta la recuperación de EP aún más luego de vencer a 
 			Skeletron.
-			Increased EP recovery after defeating Skeletron.
 			'''
 		UpgradeTooltip: Aumenta la recuperación de EP en {0}%.
 	}
@@ -724,9 +770,9 @@ Items: {
 		DisplayName: Lupa de vida
 		Tooltip:
 			'''
-			El daño con marca roba vida, pero aumenta el uso de EP y reduce el 
-			daño de ataque principal en {0}%, también aumenta el tiempo que toma 
-			en recuperar EP en {1}%.
+			El daño con marca roba vida, pero aumenta el uso de EP  en {0}% y 
+			reduce el daño de septima general en {1}%, también aumenta el 
+			tiempo que toma en recuperar EP en {2}%.
 			'''
 	}
 
@@ -918,6 +964,124 @@ Items: {
 			Aumenta la recuperación de sobrecalentamiento en {3}%.
 			'''
 	}
+
+	SteelKunai: {
+		DisplayName: Kunai
+		Tooltip:
+			'''
+			Un kunai simple hecho para ser lanzado.
+			Mientras seleccionas esto con la septima {$UI.SeptimaNames.Rebirth}, 
+			usa la habilidad principal para lanzar el cadaver más arribaa a la 
+			izquierda de tu inventario con el, marcando al enemigo y reviviendo 
+			el cadaver para que te obedezca.
+			'''
+	}
+
+	Corpse: {
+		DisplayName: Cadaver
+		Tooltip:
+			'''
+			Un cuerpo muerto
+			Inutil para muchos, pero un adepto con {$UI.SeptimaNames.Rebirth} 
+			puede revivir estos cuerpos muertos como zombies.
+			Mientras lo seleccionas, usa la habilidad principal para revivirlo, 
+			creando un zombie más fuerte que uno revivido por Kunai.
+			'''
+	}
+
+	AffirmationItem: {
+		// DisplayName: Affirmation Item
+		// Tooltip: ""
+	}
+
+	NegationItem: {
+		// DisplayName: Negation Item
+		// Tooltip: ""
+	}
+
+	BatCorpse: {
+		DisplayName: Cadaver de Murcielago
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	BeeCorpse: {
+		DisplayName: Cadaver de Abeja
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	BigBatCorpse: {
+		DisplayName: Cadaver de Murcielago Grande
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	CrimeraCorpse: {
+		DisplayName: Cadaver de Crimera
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	EaterOfSoulsCorpse: {
+		DisplayName: Cadaver de Devorador de Almas
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	FlyingSnakeCorpse: {
+		DisplayName: Cadaver de Serpiente Voladora
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	HellBatCorpse: {
+		DisplayName: Cadaver de Murcielago Infernal
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	HornetCorpse: {
+		DisplayName: Cadaver de Avispa
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	IceBatCorpse: {
+		DisplayName: Cadaver de Murcielago Helado
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	PigronCorpse: {
+		DisplayName: Cadaver de Pigron
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	PixieCorpse: {
+		DisplayName: Cadaver de Hada
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	ScorpionCorpse: {
+		DisplayName: Cadaver de Escorpion
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	CorpsePreservingGuide: {
+		DisplayName: Guia de Preservación de Cadaveres
+		Tooltip:
+			'''
+			Una guía de como preservar un cadaver de monstruo 
+			luego de matarlo. Muchos lo encuentran morbido.
+			'''
+	}
+
+	FlyingEyeCorpse: {
+		DisplayName: Cadaver de Ojo Demoniaco
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	SlimeCorpse: {
+		DisplayName: Cadaver de Slime
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
+
+	WanderingEyeCorpse: {
+		DisplayName: Cadaver de Ojo Errante
+		Tooltip: "{$Items.Corpse.Tooltip}"
+	}
 }
 
 PrevasionDescription:
@@ -1005,27 +1169,82 @@ Buffs: {
 		DisplayName: G Free
 		Description: Puedes volar en el aire sin interrupciones.
 	}
+
+	SoulPetrification: {
+		DisplayName: Petrificación de Alma
+		Description:
+			'''
+			Fuiste petrificado.
+			Oprime izquierda y derecha para ser liberado más rápido.
+			'''
+	}
+
+	SoulCleanseBuff: {
+		DisplayName: Limpieza de Alma
+		Description: Los efectos negativos en ti son lentamente limpiados.
+	}
+
+	UnlimitedAnimusBuff: {
+		DisplayName: Unlimited Animus
+		Description: Posees el poder supremo.
+	}
 }
 
-UI.LevelDescriptor:
-	'''
-	Lvl {0}
-	Fase {1}
-	'''
+UI: {
+	LevelDescriptor:
+		'''
+		Lvl {0}
+		Fase {1}
+		'''
+
+	SeptimaDescription: {
+		AzureStriker:
+			'''
+			Azure Striker, una Septima que controla los electrones, permitiendole al usuario generar y manipular la electricidad. Con estas habilidades, puede atacar a multiples enemigos simultaneamente, desacelerar su caida al usar el campo electromagnetico de la tierra, e incluso aumentar las funciones vitales del usuario.
+			La debilidad más grande de esta septima es el agua, ya que va a sobrecalentar instantaneamente al usuario si intenta atacar mientras está sumergido, y todo ataque de agua va a penetrar su prevasion.
+			'''
+		EnergyWool:
+			'''
+			Energy Wool creates a fibrous energy source in the form of strings, this allows the user to make objects out of it, and even tie up enemies, at advanced levels, a user of Energy Wool might even transform itself into strings to simulate teleportation and prevasion.
+			The strings created are prone to being destroyed with enough fire, making that it's main weakness.
+			'''
+		Rebirth:
+			'''
+			Rebirth tiene el poder principal de regresar la vida a los muertos, aunque usuarios debiles pueden tener esto dificil, aún les permite revivir a otros como zombies, esta septima también otorga la habilidad Gorgon Gaze, la cual convierte a los que la ven en piedra.
+			El poder de tomar siempre triunfará sobre el deseo de tener; La debilidad de esta septima viene de fuerzas muy grandes como para tomar de ellas.
+			'''
+	}
+
+	SeptimaNames: {
+		AzureStriker: Azure Striker
+		EnergyWool: Energy Wool
+		Rebirth: Rebirth
+	}
+}
 
 Configs: {
 	GameplayConfig: {
-		DisplayName: Configuraci�n de juego
-		Headers.Resurrection: Resurecci�n
+		DisplayName: Configuración de juego
+		Headers.Resurrection: Resurección
 
 		BossResurrection: {
-			Label: Resurecci�n de jefe
+			Label: Resurección de jefe
 			Tooltip:
 				'''
 				Apagar para deshabilitar la posibilidad de que los jefes revivan luego de morir 
 				si ya fueron derrotados antes.
 				Esto no va a alterar la resurecci�n del jugador.
 				'''
+		}
+	}
+
+	ClientConfig: {
+		DisplayName: Configuración de Cliente
+		Headers.SeptimaSelection: Selección de Septima
+
+		MrPlaguesButtonOffsetY: {
+			Label: Ajuste de posición Y por MrPlagues
+			Tooltip: Ajuste de posición si se juega con MrPlagues Authentic Races.
 		}
 	}
 }
@@ -1039,6 +1258,24 @@ Skills: {
 	Astrasphere: {
 		DisplayName: Astrasphere
 		Description: Libera una esfera de fuerza electrica alrededor del jugador.
+	}
+
+	AstrasphereMandala1: {
+		DisplayName: Astrasphere Mandala
+		Description:
+			'''
+			Libera una esfera de fuerza electrica alrededor del jugador, luego la lanza
+			a la posición del mouse.
+			'''
+	}
+
+	AstrasphereMandala2: {
+		DisplayName: Astrasphere Mandala
+		Description:
+			'''
+			Libera una esfera de fuerza electrica alrededor del jugador, luego la lanza
+			a la posición del mouse. Al final, lanza esferas electricas afuera.
+			'''
 	}
 
 	Default: {
@@ -1087,7 +1324,16 @@ Skills: {
 
 	Luxcalibur: {
 		DisplayName: Luxcalibur
-		Description: Libera una espada electrica en direcci�n al mouse.
+		Description: Libera una espada electrica en dirección al mouse.
+	}
+
+	LuxcaliburLauncher: {
+		DisplayName: Luxcalibur Launcher
+		Description:
+			'''
+			Libera una espada electrica en dirección al mouse. Luego de un momento, 
+			la espada es lanzada a la dirección que apunta.
+			'''
 	}
 
 	SeptimalBurst: {
@@ -1117,8 +1363,102 @@ Skills: {
 
 	VoltaicChains: {
 		DisplayName: Voltaic Chains
-		Description: Deploys electrifying chains, the power increases with the number of targets hit.
+		Description:
+			'''
+			Libera cadenas electricas, el poder aumenta con la cantidad de enemigos 
+			atrapados.
+			'''
 	}
+
+	VoltaicChainsThunder: {
+		DisplayName: Voltaic Chains Thunder
+		Description:
+			'''
+			Libera cadenas electricas, el poder aumenta con la cantidad de enemigos 
+			atrapados. Cuando las cadenas desaparecen, un crashbolt impactará la 
+			posición del mouse.
+			'''
+	}
+
+	AnimaReturn: {
+		DisplayName: Anima Return
+		Description: Manipula el alma para forzar al cuerpo a sanarse ligeramente.
+	}
+
+	ReAnimate: {
+		DisplayName: Re-Animate
+		Description: Manipula el alma para forzar al cuerpo a sanarse completamente.
+	}
+
+	Resurrection: {
+		DisplayName: Resurrection
+		Description:
+			'''
+			Obliga a jugadores cercanos a revivir, ignorando tiempo de reaparición
+			y ubicación.
+			'''
+	}
+
+	Resurexionn: {
+		DisplayName: ReSURexIOnnN
+		Description:
+			'''
+			Muere muere muere muere MUERE
+			MUERE muere muere muere muere muere MUERE
+			Muere muere MUERE muere muere
+			'''
+	}
+
+	SoulSiphon: {
+		DisplayName: Soul Siphon
+		Description: Roba el alma de enemigos en un area grande para sanar y hace explotar el resto.
+	}
+
+	SoulCleanse: {
+		DisplayName: Soul Cleanse
+		Description:
+			'''
+			Refuerza el alma del usuario para renovarse constantemente, limpiando debuffs
+			que pueda tener.
+			'''
+	}
+
+	OffensiveResurrection: {
+		DisplayName: Revivir
+		Description:
+			'''
+			Obliga al ultimo jefe que mataste a revivir en la ubicación del mouse y 
+			atacar a tus enemigos.
+			'''
+	}
+
+	Gorgoneia: {
+		DisplayName: Gorgoneia
+		Description:
+			'''
+			Dispara multiples rayos de luz poderosos que petrifican enemigos por 
+			más tiempo.
+			'''
+	}
+
+	UnlimitedAnimus: {
+		DisplayName: Unlimited Animus
+		Description: Manifesta la habilidad suprema para volverse temporalmente inmortal.
+	}
+
+	EternityKunai: {
+		DisplayName: Eternity Kunai
+		Description:
+			'''
+			Lanza una gran cantidad de Kunais incluso si no tienes, reviviendo 
+			cadaveres de tu inventario aleatoriamente sin consumirlos.
+			'''
+	}
+}
+
+CorpseCollection: {
+	Allowed: Robar cadaveres enemigos está activado.
+	Disabled: Robar cadaveres enemigos está desactivado.
 }
 
 Generation: {
@@ -1163,13 +1503,60 @@ ArmedPhenomenon: {
 			Un vistazo al aterrador poder de un dragón primordial.
 			'''
 	}
+
+	Rebirth: {
+		Name: "[c/{0}:{$UI.SeptimaNames.Rebirth}]"
+		Description:
+			'''
+			Moverse por cuerdas o ganchos aumenta la defensa y ataque. Otorga 
+			inmunidad a ataques fisicos debiles mientras que se viaja por 
+			ganchos.
+			Permite el uso de un gancho especial que daña enemigos.
+			La habilidad suprema de controlar las almas fue liberada.
+			'''
+	}
 }
 
-PulsarHeadBonus.AzureStriker:
-	'''
+PulsarHeadBonus: {
+	AzureStriker:
+		'''
 
-	Al sobrecalentarse, hay una posibilidad de recuperarse al instante y 
-	recuperar un SP cada 20 segundos.
-	Cuando se recupera del sobrecalentamiento, libera un rayo.
-	'''
-Conditions.MinimalDistance: Estar cerca a una vena dragón.
+		Al sobrecalentarse, hay una posibilidad de recuperarse al instante y 
+		recuperar un SP cada 20 segundos.
+		Cuando se recupera del sobrecalentamiento, libera un rayo.
+		'''
+	Rebirth:
+		'''
+
+		Usar la resurección también activa la resurección de jefes si es 
+		posible.
+		Revivir a un jefe también revive a todos los jugadores cercanos.
+		Cuando revives a jugadores o jefes, entra en un super estado por 
+		un corto periodo de tiempo.
+		Golpear a enemigos que no sean jefes con menos de 50% de la salud 
+		tiene una posibilidad de matarlos instantaneamente, la cual aumenta 
+		con salud perdida.
+		'''
+}
+
+Conditions: {
+	MinimalDistance: Estar cerca a una vena dragón.
+	SpecificDragonVein: Visitar una vena dragón en especifico.
+	AnyDragonVein: Visitar cualquier vena dragón.
+	AdeptStage2: Llegar a la fase 2.
+	AdeptStage3: Llegar a la fase 3.
+	AdeptStage4: Llegar a la fase 4.
+	AdeptStage5: Llegar a la fase 5.
+	AdeptStage6: Llegar a la fase 6.
+	AdeptStage7: Llegar a la fase 7.
+	AdeptStage8: Llegar a la fase 8.
+	AdeptStage9: Llegar a la fase 9.
+	AdeptStage10: Llegar a la fase 10.
+}
+
+Death: {
+	VanishingWorld: "{0} no pudo controlar su poder."
+	SpiritPoison: El alma de {0} era muy debil.
+}
+
+RebirthSadism: Tu lo encuentras instructivo.

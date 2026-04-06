@@ -97,10 +97,5 @@ namespace GvMod.Common.Players.Skills
 
             return adept.SpecialSkillUseTime < 120;
         }
-
-        public override bool? CustomUnlockCondition(Player player, SeptimaPlayer adept)
-        {
-            return adept.DragonVeinsVisited[4];
-        }
     }
 }

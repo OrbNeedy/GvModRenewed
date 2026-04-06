@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GvMod.Content;
+﻿using GvMod.Content;
 using GvMod.Content.Buffs;
 using GvMod.Content.Projectiles;
 using Microsoft.Xna.Framework;
@@ -25,18 +20,34 @@ namespace GvMod.Common.Players.Skills
 
         public float initialPower = 0;
 
+        public override string GetNewNameKey(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrectionState = player.GetModPlayer<ResurrectionPlayer>();
+            if (resurrectionState.resurrected && resurrectionState.resurrectionPower >= 2)
+            {
+                return "LuxcaliburLauncher";
+            }
+            return base.GetNewNameKey(player, adept);
+        }
+
+        public override string GetNewDescriptionKey(Player player, SeptimaPlayer adept)
+        {
+            ResurrectionPlayer resurrectionState = player.GetModPlayer<ResurrectionPlayer>();
+            if (resurrectionState.resurrected && resurrectionState.resurrectionPower >= 2)
+            {
+                return "LuxcaliburLauncher";
+            }
+            return base.GetNewDescriptionKey(player, adept);
+        }
+
         public override void MoveUpdate(Player player, SeptimaPlayer adept)
         {
-            player.noFallDmg = true;
-            player.velocity = new Vector2(0, 0.0000001f);
-            player.position = player.oldPosition;
-            player.fallStart = (int)player.Center.Y;
-            base.MoveUpdate(player, adept);
+            KeepPlayerInPlace(player);
         }
 
         public override bool OnSkillUse(Player player, SeptimaPlayer adept)
         {
-            float baseDamage = 220 + (8 * adept.Stage) + (0.5f * adept.Level);
+            float baseDamage = 260 + (10 * adept.Stage) + (0.65f * adept.Level);
             player.oldPosition = player.position;
             int finalDamage = (int)player.GetTotalDamage<SpecialAttackDamage>().ApplyTo(baseDamage);
 
@@ -80,9 +91,9 @@ namespace GvMod.Common.Players.Skills
 
         public override bool MiscUpdate(Player player, SeptimaPlayer adept)
         {
-            if (initialPower >= 2) return adept.SpecialSkillUseTime < 165;
+            if (initialPower >= 2) return adept.SpecialSkillUseTime < 130;
 
-            return adept.SpecialSkillUseTime < 120;
+            return adept.SpecialSkillUseTime < 90;
         }
 
         public override void StatUpdate(Player player, SeptimaPlayer adept)

@@ -40,8 +40,8 @@ namespace GvMod.Content.Items.Upgrades
 
                 // Level cap until moonlord is 100, 200 after Moonlord so septima damage has a chance to get through 
                 // other modded content post-moonlord
-                if (NPC.downedMoonlord) return adept.UpgradeLevel(0, 200);
-                else return adept.UpgradeLevel(0, 100);
+                if (NPC.downedMoonlord) return adept.UpgradeLevel(0);
+                else return adept.UpgradeLevel(0, 200);
             }
             return null;
         }

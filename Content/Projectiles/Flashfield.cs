@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
@@ -12,20 +11,18 @@ namespace GvMod.Content.Projectiles
 {
     public class Flashfield : ModProjectile
     {
-        private Vector2 target = new Vector2(0, 0);
-        private int timer = 0;
-        private int cycle = 0;
-        private Asset<Texture2D> field;
-        private Asset<Texture2D> extras;
-        private float extrasRotation = 0;
+        private static Asset<Texture2D> field;
 
         private Rectangle bounds;
-        private int extrasFrame = 0;
         private int frame = 0;
         private int frameTimer = 0;
-        private bool hideExtras = false;
 
         private SlotId soundID;
+
+        public override void SetStaticDefaults()
+        {
+            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Flashfield");
+        }
 
         public override void SetDefaults()
         {
@@ -45,14 +42,13 @@ namespace GvMod.Content.Projectiles
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
             Projectile.tileCollide = false;
-            Projectile.timeLeft = 3;
+            Projectile.timeLeft = 5;
             Projectile.ownerHitCheck = true;
             Projectile.netImportant = true;
         }
 
         public override void OnSpawn(IEntitySource source)
         {
-            field = ModContent.Request<Texture2D>("GvMod/Content/Projectiles/Flashfield");
             bounds = new Rectangle(0, 0, 382, 378);
             soundID = SoundEngine.PlaySound(new SoundStyle("GvMod/Assets/Sfx/FlashfieldActive") with
             {
@@ -97,7 +93,7 @@ namespace GvMod.Content.Projectiles
 
         private bool StopSound(ActiveSound soundInstance)
         {
-            if (Projectile.active)
+            if (Projectile.active && Projectile.ModProjectile is Flashfield)
             {
                 return true;
             } else

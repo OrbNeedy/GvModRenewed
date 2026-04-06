@@ -27,5 +27,28 @@ namespace GvMod.Common.GlobalNPCs
                 adept.septima.DrawAttack(ref drawInfo, player, adept);
             }
         }
+
+        public class SeptimaEffectLayerBehindPlayer : PlayerDrawLayer
+        {
+            public override Position GetDefaultPosition()
+            {
+                return new BeforeParent(PlayerDrawLayers.ForbiddenSetRing);
+            }
+
+            protected override void Draw(ref PlayerDrawSet drawInfo)
+            {
+                Player player = drawInfo.drawPlayer;
+                if (player.DeadOrGhost) return;
+
+                SeptimaPlayer adept = player.GetModPlayer<SeptimaPlayer>();
+                if (adept.septima == null) return;
+
+                adept.septima.DrawPassiveBack(ref drawInfo, player, adept);
+                if (adept.UsingMainSkill)
+                {
+                    adept.septima.DrawAttackBack(ref drawInfo, player, adept);
+                }
+            }
+        }
     }
 }

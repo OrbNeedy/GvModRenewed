@@ -24,6 +24,7 @@ namespace GvMod.Common.UI
         UIImage SelectedSkillIcon;
         UIImageButton SelectedSkillButton;
         UIImage SelectedSkillFrame;
+        UIText SkillNameSecondLine;
         UIText SkillName;
         UIText SkillCost;
         UIImage SkillOverheatSeal;
@@ -81,6 +82,13 @@ namespace GvMod.Common.UI
             SkillOverheatMeter.Left.Set(48, 0f);
             SkillOverheatMeter.Top.Set(36, 0f);
 
+            SkillNameSecondLine = new UIText("");
+            SkillNameSecondLine.Width.Set(72, 0f);
+            SkillNameSecondLine.Height.Set(12, 0f);
+            SkillNameSecondLine.Left.Set(0, 0f);
+            SkillNameSecondLine.Top.Set(-22, 0f);
+            SkillNameSecondLine.HAlign = 0.5f;
+
             SkillName = new UIText("None");
             SkillName.Width.Set(72, 0f);
             SkillName.Height.Set(12, 0f);
@@ -97,6 +105,7 @@ namespace GvMod.Common.UI
 
             area.Append(SelectedSkillFrame);
             area.Append(SelectedSkillIcon);
+            area.Append(SkillNameSecondLine);
             area.Append(SkillName);
             area.Append(SkillCost);
             area.Append(SelectedSkillButton);
@@ -123,6 +132,7 @@ namespace GvMod.Common.UI
                 SelectedSkillIcon.SetImage(DefaultSkill);
                 SelectedSkillFrame.SetImage(DefaultFrame);
 
+                SkillNameSecondLine.SetText("");
                 SkillName.SetText("None"); // Change to use localizations
                 SkillCost.SetText(""); // Localization unecessary 
 
@@ -132,8 +142,29 @@ namespace GvMod.Common.UI
             }
 
             SpecialSkill skill = adept.septima.AvailableSkills[adept.SelectedSkill];
+            string? name = skill.GetFinalName(Main.LocalPlayer, adept);
+            string nameKey = skill.GetNewNameKey(Main.LocalPlayer, adept);
+            string[] lines;
+            if (name == null)
+            {
+                lines = Language.GetTextValue($"Mods.GvMod.Skills.{nameKey}.DisplayName").
+                    Split(["\n"], System.StringSplitOptions.TrimEntries);
+            } else
+            {
+                lines = name.Split(["\n"], System.StringSplitOptions.TrimEntries);
+            }
 
-            SkillName.SetText(Language.GetTextValue($"Mods.GvMod.Skills.{skill.LocalizationKey}.DisplayName")); 
+            if (lines.Length >= 2)
+            {
+                SkillNameSecondLine.SetText(lines[0]);
+                SkillName.SetText(lines[1]);
+            }
+            else
+            {
+                SkillNameSecondLine.SetText("");
+                SkillName.SetText(lines[0]);
+            }
+
             SkillCost.SetText($"{skill.SPCost} SP"); // Localization unecessary 
 
             // Add the cooldown seal and it's meter if the skill is on cooldown
@@ -158,7 +189,7 @@ namespace GvMod.Common.UI
             }
 
             // Change the frame depending on the player's SP and skill cost
-            if (skill.SPCost > adept.CurrentSP)
+            if (!adept.CanUseSpecialSkill(skill))
             {
                 SelectedSkillFrame.SetImage(CooldownFrame);
             } else

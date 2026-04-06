@@ -42,8 +42,8 @@ namespace GvMod.Common.Systems
             int surfaceSuccesses = 0;
             int attempts = 0;
             int surfaceAttempts = 0;
-            int maxSuccesses = (Main.maxTilesX / 80) + (Main.maxTilesY / 80);
-            int surfaceMaxSuccesses = (Main.maxTilesX / 280) +(Main.maxTilesY / 280);
+            int maxSuccesses = (Main.maxTilesX / 40) + (Main.maxTilesY / 40);
+            int surfaceMaxSuccesses = (Main.maxTilesX / 210) + (Main.maxTilesY / 210);
 
             ModContent.GetInstance<GvMod>().Logger.Debug($"Trying to add upgrade items to the world");
 
@@ -86,12 +86,14 @@ namespace GvMod.Common.Systems
 
                 if (Main.tile[x, y].TileType == ModContent.TileType<Upgrade1Tile>())
                 {
-                    successes++;
+                    surfaceSuccesses++;
                 }
             }
 
-            ModContent.GetInstance<GvMod>().Logger.Debug($"Added {successes + surfaceSuccesses} upgrades after" +
-                $" {attempts + surfaceAttempts} attempts");
+            ModContent.GetInstance<GvMod>().Logger.Debug($"Added {successes} upgrades after" +
+                $" {attempts} attempts");
+            ModContent.GetInstance<GvMod>().Logger.Debug($"Added {surfaceSuccesses} surface upgrades after" +
+                $" {surfaceAttempts} attempts");
         }
     }
 

@@ -13,7 +13,7 @@ using GvMod.Content.Buffs;
 using Terraria.Audio;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria.DataStructures;
+using System.IO;
 
 namespace GvMod.Common.Players
 {
@@ -35,13 +35,20 @@ namespace GvMod.Common.Players
         // Used to evolve septimas
         public int Stage { get; set; } = 1;
         // This is permanent max, it's affected by permanent upgrades and limited by SeptimaUpgrades
+        public const int InitialMaxEP = 100;
         public int BaseMaxEP { get; set; } = 100;
         // This one is affected by equipment and other modifiers, it's reset later
+        /// <summary>
+        /// A temporary modification to max EP. Not a multiplier.
+        /// </summary>
         public int ModifiedMaxEP { get; set; } = 0;
         public float CurrentEP { get; set; } = 100;
         public int EPCooldownTimer { get; set; } = 0;
         // This is permanent max, it's affected by permanent upgrades and limited by SeptimaUpgrades.
         // Up to two upgrades are planned
+        /// <summary>
+        /// Permanent max. Use <see cref="ModifiedMaxSP"/> for a temporary upgrade.
+        /// </summary>
         public int BaseMaxSP { get; set; } = 2;
         // This one is affected by equipment and other modifiers, it's reset later
         public int ModifiedMaxSP { get; set; } = 0;
@@ -62,6 +69,7 @@ namespace GvMod.Common.Players
         public bool UsingSecondarySkill { get; set; } = false;
         public int SecondarySkillUseTime { get; set; } = 0;
         public bool UsingSpecialSkill { get; set; } = false;
+        public bool SuperState { get; set; } = false;
         public int SpecialSkillUseTime { get; set; } = 0;
         public NPCTags TaggedNPCs = new();
         public List<string> QueuedSkills = new();
@@ -97,23 +105,11 @@ namespace GvMod.Common.Players
         public bool[] DragonVeinsVisited { get; set; } = new bool[MaxDragonVeins] { false, false, false, false, false, false, 
             false };
 
-        static SeptimaType[] _selectableSeptimas = { SeptimaType.AzureStriker };
-        public static Septima _templateSeptimaClass = new Septima();
-        public static Septima[] _templateSeptimas = { new AzureStriker() };
-
         public override void Initialize()
         {
             if (septima == null)
             {
-                // septimaType = _selectableSeptimas[Main.rand.Next(0, _selectableSeptimas.Length)];
-                septimaType = _templateSeptimas[Main.rand.Next(0, _templateSeptimas.Length)].Type;
-                switch (septimaType)
-                {
-                    case SeptimaType.AzureStriker:
-                    default:
-                        septima = new AzureStriker();
-                        break;
-                }
+                SetSeptima(septimaType);
             }
 
             septima.InitializeSeptima(Player, this, Mod);
@@ -127,6 +123,101 @@ namespace GvMod.Common.Players
         {
         }
 
+        public override void CopyClientState(ModPlayer targetCopy)
+        {
+            SeptimaPlayer adept = (SeptimaPlayer)targetCopy;
+
+            adept.DoubleTap = DoubleTap;
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {
+            SeptimaPlayer adept = (SeptimaPlayer)clientPlayer;
+
+            if (adept.DoubleTap != DoubleTap)
+            {
+                SyncRecharge(Player.whoAmI, DoubleTap);
+            }
+        }
+
+        public static void SyncRecharge(int whoAmI, bool recharge)
+        {
+            ModPacket packet = ModContent.GetInstance<GvMod>().GetPacket();
+            packet.Write((byte)MessageType.PrevasionVisualSync); // ID
+            packet.Write((byte)whoAmI); // Player
+            packet.Write(recharge); // Recharge State
+            packet.Send(ignoreClient: whoAmI);
+        }
+
+        public static void ReceiveRechargeSync(BinaryReader reader, int whoAmI)
+        {
+            int player = reader.ReadByte();
+            // If server, the target is the player who sent the message
+            if (Main.dedServ)
+            {
+                player = whoAmI;
+            }
+
+            bool recharge = reader.ReadBoolean();
+
+            // If the target is not the player who sent the message, change it locally
+            if (player != Main.myPlayer)
+            {
+                SeptimaPlayer adept = Main.player[player].GetModPlayer<SeptimaPlayer>();
+                adept.DoubleTap = recharge;
+            }
+
+            // If it's the server, send the change to everyone else
+            if (Main.dedServ)
+            {
+                SyncRecharge(player, recharge);
+                // Main.player[player].GetModPlayer<ResurrectionPlayer>().SyncRebirth(player, forcedResurrect);
+            }
+        }
+
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        {
+            SyncState(Player.whoAmI, Overheated, (byte)septimaType);
+        }
+
+        public static void SyncState(int whoAmI, bool overheat, byte septimaType)
+        {
+            ModPacket packet = ModContent.GetInstance<GvMod>().GetPacket();
+            packet.Write((byte)MessageType.SeptimaStateSync); // ID
+            packet.Write((byte)whoAmI); // Player
+            packet.Write(overheat); // Overheat state
+            packet.Write(septimaType); // Septima type
+            packet.Send(ignoreClient: whoAmI);
+        }
+
+        public static void ReceiveStateSync(BinaryReader reader, int whoAmI)
+        {
+            int player = reader.ReadByte();
+            // If server, the target is the player who sent the message
+            if (Main.dedServ)
+            {
+                player = whoAmI;
+            }
+
+            bool overheat = reader.ReadBoolean();
+            byte septimaType = reader.ReadByte();
+
+            // If the target is not the player who sent the message, change it locally
+            if (player != Main.myPlayer)
+            {
+                SeptimaPlayer adept = Main.player[player].GetModPlayer<SeptimaPlayer>();
+                adept.Overheated = overheat;
+                adept.SetSeptima((SeptimaType)septimaType);
+            }
+
+            // If it's the server, send the change to everyone else
+            if (Main.dedServ)
+            {
+                SyncState(player, overheat, septimaType);
+                // Main.player[player].GetModPlayer<ResurrectionPlayer>().SyncRebirth(player, forcedResurrect);
+            }
+        }
+
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (UsingSpecialSkill)
@@ -134,7 +225,7 @@ namespace GvMod.Common.Players
                 //Main.NewText("Checking");
                 if (!septima.AvailableSkills[SelectedSkill].AllowsMovement)
                 {
-                    //Main.NewText("No movement");
+                    // Main.NewText("No movement");
                     Player.controlJump = false;
                     Player.controlDown = false;
                     Player.controlLeft = false;
@@ -144,8 +235,14 @@ namespace GvMod.Common.Players
                     Player.controlUseTile = false;
                     Player.controlThrow = false;
                     Player.controlHook = false;
-                    Player.gravDir = 1f;
+                    Player.controlMount = false;
+                    // Player.gravDir = 1f;
                 }
+            }
+
+            if (KeybindSystem.abilityMenu.JustPressed)
+            {
+                ModContent.GetInstance<UISystem>().SwitchUIVisibility();
             }
 
             if (Player.DeadOrGhost || Player.CCed) return;
@@ -205,11 +302,6 @@ namespace GvMod.Common.Players
             {
                 ChangeSkill(-1);
             }
-
-            if (KeybindSystem.abilityMenu.JustPressed)
-            {
-                ModContent.GetInstance<UISystem>().SwitchUIVisibility();
-            }
         }
 
         public void ChangeSkill(int displacement)
@@ -237,6 +329,7 @@ namespace GvMod.Common.Players
             EPCooldownTimer = 0;
             SecondarySkillCooldown = 0;
             StageCheck();
+            septima.CalculateSkills(Player, this);
         }
 
         public override void SaveData(TagCompound tag)
@@ -255,6 +348,14 @@ namespace GvMod.Common.Players
             }
 
             tag["SelectedSkill"] = SelectedSkill;
+
+            septima.PreSaveTag();
+
+            foreach (KeyValuePair<string, int> pair in septima.SaveTags)
+            {
+                // Key looks like "AzureStriker:Kudos"
+                tag[septimaType.ToString() + "." + pair.Key] = pair.Value;
+            }
         }
 
         public override void LoadData(TagCompound tag)
@@ -264,7 +365,7 @@ namespace GvMod.Common.Players
                 septimaType = (SeptimaType)tag.GetInt("SeptimaType");
                 if (septima.Type != septimaType)
                 {
-                    septima = GetSeptima(septimaType);
+                    SetSeptima(septimaType);
                 }
             }
             if (tag.ContainsKey("SeptimaSubType"))
@@ -288,15 +389,18 @@ namespace GvMod.Common.Players
             {
                 BaseMaxSP = tag.GetInt("MaxSP");
             }
+
+            DragonVeinsVisited = new bool[MaxDragonVeins];
             for (int i = 0; i < DragonVeinsVisited.Length; i++)
             {
                 if (tag.ContainsKey($"DragonVein{i}"))
                 {
                     DragonVeinsVisited[i] = tag.GetBool($"DragonVein{i}");
+                } else
+                {
+                    DragonVeinsVisited[i] = false;
                 }
             }
-
-            septima.CalculateSkills(Player, this);
 
             if (tag.ContainsKey("SelectedSkill"))
             {
@@ -305,11 +409,22 @@ namespace GvMod.Common.Players
             }
 
             septima.PostLoadSeptima(Player, this);
+
+            foreach (string key in septima.SaveTags.Keys)
+            {
+                string compoundedKey = septimaType.ToString() + "." + key;
+                if (tag.ContainsKey(compoundedKey))
+                {
+                    septima.SaveTags[key] = tag.GetInt(compoundedKey);
+                }
+            }
+
+            septima.PostTagLoad();
         }
 
         public override void PreUpdateMovement()
         {
-            base.PreUpdateMovement();
+            septima.DirectMovementEffects(Player, this);
         }
 
         public override void PreUpdateBuffs()
@@ -323,8 +438,17 @@ namespace GvMod.Common.Players
             base.PreUpdateBuffs();
         }
 
+        public override void PostUpdateBuffs()
+        {
+            if (Player.CCed)
+            {
+                ForceOverheat();
+            }
+        }
+
         public override void PreUpdate()
         {
+            //Main.NewText("Speed length: " + Player.velocity.Length());
             TaggedNPCs.Update(this);
 
             //Main.NewText("Dragon vein state: " + DragonVeinsVisited.Count(true) + " visited");
@@ -332,10 +456,10 @@ namespace GvMod.Common.Players
             /*int count = 0;
             foreach (SpecialSkill skill in septima.AvailableSkills)
             {
-                //Main.NewText($"Skill {count}: {skill.InternalName}");
+                Main.NewText($"Skill {count}: {skill.InternalName}");
                 count++;
             }*/
-            
+
             if (Main.rand.NextBool(1200))
             {
                 // Main.NewText("Random skill calculation triggered.", Color.Red);
@@ -424,10 +548,6 @@ namespace GvMod.Common.Players
                     if (!special.AllowsMovement)
                     {
                         //Player.webbed = true;
-                        if (Player.mount.Active)
-                        {
-                            Player.mount.Dismount(Player);
-                        }
                         Player.CancelAllBootRunVisualEffects();
                     }
                     SpecialSkillUseTime++;
@@ -452,16 +572,22 @@ namespace GvMod.Common.Players
                 // If using the main skill, consume EP, increase MainSkillUseTime, and set the EP cooldown timer
                 if (septima.MainSkillUse(Player, this))
                 {
-                    for (int i = 0; i < TaggedNPCs.targetCount; i++)
-                    {
-                        Tag currentTag = TaggedNPCs.GetTagByIndex(i);
-                        int finalDamage = septima.TagEffect(Player, this, i, ref TaggedNPCs);
-                        TryTriggerTagLifesteal(finalDamage);
-                    }
-                    CurrentEP -= septima.EPUseBase * GetTotalEPUseModifier();
-                    EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
+                    ConsumeEP(septima.EPUseBase);
                 }
+
+                for (int i = 0; i < TaggedNPCs.targetCount; i++)
+                {
+                    Tag currentTag = TaggedNPCs.GetTagByIndex(i);
+                    int finalDamage = septima.TagEffect(Player, this, i, ref TaggedNPCs);
+                    TryTriggerTagLifesteal(finalDamage);
+                }
+                
                 MainSkillUseTime++;
+
+                if (septima.CanChargeWhileAttacking && EPCooldownTimer > 0)
+                {
+                    EPCooldownTimer--;
+                }
             }
             else
             {
@@ -472,6 +598,27 @@ namespace GvMod.Common.Players
                     EPCooldownTimer--;
                 }
             }
+        }
+
+        /// <summary>
+        /// Consumes the passed EP applying cooldown and use modifiers.
+        /// </summary>
+        /// <param name="amount"></param>
+        public void ConsumeEP(float amount)
+        {
+            CurrentEP -= amount * GetTotalEPUseModifier();
+            EPCooldownTimer = (int)(septima.EPCooldownBaseTimer * GetTotalEPCooldownModifier());
+        }
+
+        public void ConsumeEP(float amount, float cooldown)
+        {
+            CurrentEP -= amount * GetTotalEPUseModifier();
+            EPCooldownTimer = (int)(cooldown * GetTotalEPCooldownModifier());
+        }
+
+        public bool CanConsumeEP(float amount)
+        {
+            return CurrentEP >= (amount * GetTotalEPUseModifier()) && !Overheated && !Player.CCed;
         }
 
         public void TryTriggerTagLifesteal(int damage)
@@ -494,6 +641,7 @@ namespace GvMod.Common.Players
             {
                 int cooldownRegistered = septima.SecondarySkillUse(Player, this);
                 SecondarySkillUseTime++;
+                UsingSecondarySkill = true;
                 if (cooldownRegistered > 0)
                 {
                     UsingSecondarySkill = false;
@@ -508,9 +656,12 @@ namespace GvMod.Common.Players
 
         private void RechargeLogic()
         {
+            if (Main.myPlayer != Player.whoAmI) return;
+
             int maxRechargeTimer = 30;
             int maxRechargeDelay = 50;
 
+            // Trigger
             if (RechargeDelay <= 0 && DoubleTap && !UsingMainSkill && !UsingSecondarySkill && 
                 !UsingSpecialSkill && !Overheated && septima.AllowRecharge && 
                 Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
@@ -533,19 +684,20 @@ namespace GvMod.Common.Players
                     Player.immune = true;
                     int iframes = (int)(maxRechargeTimer * ChargeguardLevel * 0.5f);
                     //Main.NewText("[Title Card] of " + iframes);
-                    Player.AddImmuneTime(ImmunityCooldownID.General, iframes);
+                    Player.SetImmuneTimeForAllTypes(iframes);
+                    /*Player.AddImmuneTime(ImmunityCooldownID.General, iframes);
                     Player.AddImmuneTime(ImmunityCooldownID.Bosses, iframes);
                     Player.AddImmuneTime(ImmunityCooldownID.TileContactDamage, iframes);
                     Player.AddImmuneTime(ImmunityCooldownID.Lava, iframes);
                     Player.AddImmuneTime(ImmunityCooldownID.WrongBugNet, iframes);
-                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, iframes);
+                    Player.AddImmuneTime(ImmunityCooldownID.DD2OgreKnockback, iframes);*/
                     ChargeguardCooldown = 300;
                 }
 
                 int limit = Main.rand.Next(5, 10);
                 for (int i = 0; i < limit; i++)
                 {
-                    Dust.NewDust(Player.position, Player.width, Player.height, DustID.MartianSaucerSpark);
+                    Dust.NewDust(Player.position, Player.width, Player.height, DustID.ShimmerSpark, newColor: septima.MainColor);
                 }
 
                 if (Player.GetModPlayer<PlayerPrevasion>().PrevasionIframes <= 0)
@@ -575,12 +727,25 @@ namespace GvMod.Common.Players
             }
         }
 
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            septima.ModifyHitNPC(Player, this, target, ref modifiers);
+        }
+
         public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
         {
+            septima.ModifyNPCHurt(Player, this, npc, ref modifiers);
+
             //Main.NewText($"Player hit");
-            if (septima.NPCDamageResistances.ContainsKey(npc.type))
+            if (SeptimaTemplates.NPCDamageResistances[septima.Type].ContainsKey(npc.type))
             {
-                switch (septima.NPCDamageResistances[npc.type])
+                //Main.NewText("Resistance: " + SeptimaTemplates.NPCDamageResistances[septima.Type][npc.type]);
+                switch (SeptimaTemplates.NPCDamageResistances[septima.Type][npc.type])
                 {
                     case Resistance.Penetrate:
                         break;
@@ -591,7 +756,7 @@ namespace GvMod.Common.Players
                         modifiers.Cancel();
                         break;
                     case Resistance.Absorb:
-                        CurrentEP += modifiers.FinalDamage.Base / 100;
+                        CurrentEP += modifiers.FinalDamage.Base / 100f;
                         modifiers.Cancel();
                         break;
                 }
@@ -604,11 +769,18 @@ namespace GvMod.Common.Players
             }
         }
 
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        {
+            septima.ModifyHurt(Player, this, ref modifiers);
+        }
+
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
-            if (septima.ProjectileDamageResistances.ContainsKey(proj.type))
+            septima.ModifyProjectileHurt(Player, this, proj, ref modifiers);
+
+            if (SeptimaTemplates.NPCDamageResistances[septima.Type].ContainsKey(proj.type))
             {
-                switch (septima.ProjectileDamageResistances[proj.type])
+                switch (SeptimaTemplates.NPCDamageResistances[septima.Type][proj.type])
                 {
                     case Resistance.Penetrate:
                         break;
@@ -619,7 +791,7 @@ namespace GvMod.Common.Players
                         modifiers.Cancel();
                         break;
                     case Resistance.Absorb:
-                        CurrentEP += modifiers.FinalDamage.Base / 100;
+                        CurrentEP += modifiers.FinalDamage.Base / 100f;
                         modifiers.Cancel();
                         break;
                 }
@@ -633,11 +805,32 @@ namespace GvMod.Common.Players
 
         public override void OnHurt(Player.HurtInfo info)
         {
+            septima.OnHurt(Player, this, info);
+
             if (UsingSpecialSkill)
             {
                 septima.AvailableSkills[SelectedSkill].HurtUpdate(Player, this, info);
             }
-            base.OnHurt(info);
+        }
+
+        public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
+        {
+            septima.OnHurtByNPC(Player, this, npc, hurtInfo);
+
+            if (UsingSpecialSkill)
+            {
+                septima.AvailableSkills[SelectedSkill].NPCHurtUpdate(Player, this, npc, hurtInfo);
+            }
+        }
+
+        public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo)
+        {
+            septima.OnHurtByProjectile(Player, this, proj, hurtInfo);
+
+            if (UsingSpecialSkill)
+            {
+                septima.AvailableSkills[SelectedSkill].ProjectileHurtUpdate(Player, this, proj, hurtInfo);
+            }
         }
 
         public override void OnRespawn()
@@ -666,6 +859,9 @@ namespace GvMod.Common.Players
 
         public override void ResetEffects()
         {
+            SuperState = septima.GetSuperState(Player, this);
+            septima.ResetEffects(Player, this);
+
             ModifiedMaxEP = 0;
             ModifiedMaxSP = 0;
 
@@ -745,15 +941,28 @@ namespace GvMod.Common.Players
         }
 
         /// <summary>
+        /// Increases the level of the adept and checks if the stage can increase too.
+        /// </summary>
+        /// <param name="minLevel">Minimum level the player needs to be able to increase it via this method (Exclusive).</param>
+        /// <returns>True if the upgrade was successful, false if it wasn't.</returns>
+        public bool UpgradeLevel(int minLevel)
+        {
+            if (Level < minLevel) return false;
+
+            Level++;
+
+            StageCheck();
+            septima.CalculateSkills(Player, this, true);
+
+            return true;
+        }
+
+        /// <summary>
         /// Checks the state of the player and the world to determine if the stage can increase or not. <br/>
         /// Runs after a boss is defeated, the player levels up, or enters the world.
         /// </summary>
         public void StageCheck()
         {
-            // Main.NewText("Beginning check");
-
-            // Upgrade condition idea: A system of points scattered at random in the world which the player has to 
-            // visit before the upgrade can happen, perhaps at the endgame
             bool stageChanged = false;
             int checks = 0;
             // I pray to god this never makes an infinite loop
@@ -861,10 +1070,12 @@ namespace GvMod.Common.Players
         /// </summary>
         /// <param name="resetBuffs">Forces buffs related to EP duration to be reset.</param>
         /// <param name="ignoreBuffs">Forces overheat even with buffs that give infinite EP.</param>
-        /// <returns>False if a buff prevented the forced overheat.</returns>
+        /// <returns>False if a buff prevented the forced overheat. Also returns true if the player is already overheated.</returns>
         public bool ForceOverheat(bool resetBuffs = false, bool ignoreBuffs = false)
         {
             //Main.NewText("Forcing overheat");
+            if (Overheated) return true;
+
             bool returnValue = true;
             if (Player.HasBuff<InfiniteSurgeBuff>() || Player.HasBuff<DnizerBuff>())
             {
@@ -892,12 +1103,16 @@ namespace GvMod.Common.Players
 
             for (int i = 0; i < 50; i++)
             {
-                Dust.NewDustPerfect(Player.Center, DustID.MartianSaucerSpark);
+                Dust.NewDustPerfect(Player.Center, DustID.ShimmerSpark, newColor: septima.MainColor);
             }
 
             //Main.NewText("Successfully overheated");
             //Main.NewText("Overheated: " + Overheated);
             //Main.NewText("CurrentEP: " + CurrentEP);
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                SyncPlayer(-1, Main.myPlayer, false);
+            }
 
             return returnValue;
         }
@@ -921,6 +1136,8 @@ namespace GvMod.Common.Players
 
         public float GetTotalEPRecoveryModifier()
         {
+            if (Player.CCed) return 0;
+
             float returnValue = EPRecoveryModifier + septima.EPRecoveryModifier;
             if (returnValue < 0.01f) returnValue = 0.01f;
             return returnValue;
@@ -942,6 +1159,8 @@ namespace GvMod.Common.Players
 
         public float GetTotalOverheatRecoveryModifier()
         {
+            if (Player.CCed) return 0;
+
             float returnValue = OverheatRecoveryModifier;
             if (returnValue < 0.01f) returnValue = 0.01f;
             return returnValue;
@@ -954,8 +1173,10 @@ namespace GvMod.Common.Players
 
         public bool CanUseMainSkill()
         {
-            return CurrentEP > 0 && !Overheated && septima.CanUseMainSkill(Player, this) && !UsingSpecialSkill
-                && !UsingSecondarySkill && !Player.CCed && RechargeTimer <= 0;
+            bool epDiscriminator = (CurrentEP > 0 && !Overheated && septima.CanUseMainSkill(Player, this)) || 
+                septima.CanUseMainSkillNoEP(Player, this);
+            return epDiscriminator && !UsingSpecialSkill && !UsingSecondarySkill && !Player.CCed && 
+                RechargeTimer <= 0;
         }
 
         public bool CanUseSecondarySkill()
@@ -970,48 +1191,18 @@ namespace GvMod.Common.Players
                         !UsingSecondarySkill && !Player.CCed && special.CooldownTime <= 0 && RechargeTimer <= 0;
         }
 
-        public static Septima GetSeptima(SeptimaType type)
+        public void SetSeptima(Septima septima)
         {
-            switch (type)
-            {
-                case SeptimaType.AzureStriker:
-                    return new AzureStriker();
-                default:
-                    return new Septima();
-            }
+            if (septima.Type == this.septima?.Type) return;
+
+            this.septima = septima;
+            this.septima.InitializeSeptima(Player, this, Mod);
+            septimaType = this.septima.Type;
         }
 
-        public static Septima GetSeptima(int type)
+        public void SetSeptima(SeptimaType septima)
         {
-            switch (type)
-            {
-                case (int)SeptimaType.AzureStriker:
-                    return new AzureStriker();
-                default:
-                    return new Septima();
-            }
-        }
-
-        public static Septima GetStaticSeptima(SeptimaType type)
-        {
-            switch (type)
-            {
-                case SeptimaType.AzureStriker:
-                    return _templateSeptimas[0];
-                default:
-                    return _templateSeptimaClass;
-            }
-        }
-
-        public static Septima GetStaticSeptima(int type)
-        {
-            switch (type)
-            {
-                case (int)SeptimaType.AzureStriker:
-                    return _templateSeptimas[0];
-                default:
-                    return _templateSeptimaClass;
-            }
+            SetSeptima(SeptimaTemplates.GetNewSeptima(septimaType));
         }
     }
 }
